@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>City Builder!</title>
+		
+		<link href="https://fonts.googleapis.com/css?family=Lato|Open+Sans|Roboto:500i" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="css/main.css">
+	</head>
+	
+	<body>
+		<div id="editor">
+			<section id="tilesets">
+				<h2> Tileset </h2>
+				
+				<div>
+					<!-- <div id="custom_select" class="border_box"><select name="tileset_select"><select></div> Esto es para cambiar el Tileset. Mira Ignacio, estoy programando! -->
+					<div id="tileset"><div id="tileset_container"></div></div>
+					
+				</div>
+			</section>
+			
+			<section id="layers">
+				<h2> Layers </h2>
+				
+				<div>
+					<ul id="layerlist"></ul>
+					<div class="buttons">
+						<a href="#" id="layers_add" style="padding-left: 15px"><span class="icon-plus-sign" ></span> Add layer</a>
+					</div>
+				</div>
+				
+			</section>
+		</div>
+		
+		<div id="canvas_wrapper">
+			<h2> Canvas </h2>
+			<!-- copypaste furioso -->
+			<div id="canvas" oncontextmenu="return false;">
+				<div id="tiles"></div>
+				<div class="selection"></div>
+				<div id="viewport"></div>
+				<div class="warning border-box"></div>
+			</div>
+		</div>
+	</body>
+</html>
