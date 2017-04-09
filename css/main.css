@@ -70,12 +70,12 @@ a:hover { text-decoration: underline; }
 #custom_select:hover { background-image: url("../img/icons/select_arrow_hover.png"); }
 
 #tileset {
+	height: 400px;
 	background-color: #FFF;
 	background-image: url("../img/icons/transparent.png");
 	margin-left: 5%;
 	margin-right: 5%;
 	border: 5px solid #555;
-	border-top: 5px solid #555;
 	border-radius: 3px 3px 3px 3px;
 }
 
@@ -98,5 +98,4 @@ a:hover { text-decoration: underline; }
 	background-color: #FFF;
 }
 
-#tileset { height: 400px;}
 #tilesets select[name=tileset_select] option { color: #333; }

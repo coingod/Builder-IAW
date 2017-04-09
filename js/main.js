@@ -1,4 +1,4 @@
-require(["jquery", "modules/editor"], function($, Editor) {
+require(["libs/jquery", "editor"], function($, Editor) {
 	$(document).ready(function() {
 		Editor.initialize();
 	});

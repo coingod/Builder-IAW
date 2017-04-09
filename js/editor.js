@@ -20,14 +20,17 @@ define([
 	Editor.Tileset = Tileset.initialize(Editor);
 	Editor.Layers = Layers.initialize(Editor);
 
-	//Estado del mouse
-	$(document).on("mousedown mouseup", function(e) {
-			Editor.mousedown = (e.type == "mousedown") && (e.which == 1);
-		});	
-	// e.which indica el click que fue realizado: 1=izquierdo
-	
-	// Disable selection
-	$("#tileset, #canvas_wrapper").disableSelection();
+	Editor.initialize = function() {
+		
+		//Estado del mouse
+		$(document).on("mousedown mouseup", function(e) {
+				Editor.mousedown = (e.type == "mousedown") && (e.which == 1);
+			});	
+		// e.which indica el click que fue realizado: 1=izquierdo
+		
+		// Disable selection
+		$("#tileset, #canvas_wrapper").disableSelection();
 	};
-return Editor;
+	
+	return Editor;
 });
