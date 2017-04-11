@@ -16,11 +16,11 @@ define([
 		$("#canvas").on("mousedown mousemove mouseup", function(event) {
 			
 			//Obtenemos el Tileset que esta activo
-			var tileset = Editor.active_tileset;
+			//var tileset = Editor.active_tileset;
 			
 			//Obtenemos las dimensiones de los tiles
-			var tw = tileset.tilesize.width;
-			var th = tilset.tilesize.height;
+			var tw = 32;//tileset.tilesize.width;
+			var th = 32;//tilset.tilesize.height;
 			
 			//Obtenemos el offset del canvas con respecto al documento
 			var offset = $("#canvas").offset();
@@ -42,6 +42,10 @@ define([
 			});
 		});
 		
+		//Dibujamos la grilla del mapa
+		Canvas.updatePosition();
+		Canvas.updateGrid();
+
 		return this;
 	};
 	
@@ -50,11 +54,11 @@ define([
 	Canvas.draw = function() {
 		
 		//Obtenemos el Tileset que esta activo
-		var tileset = Editor.active_tileset;
+		//var tileset = Editor.active_tileset;
 		
 		//Obtenemos las dimensiones de los tiles
-		var tw = tileset.tilesize.width;
-		var th = tilset.tilesize.height;
+		var tw = 32;//tileset.tilesize.width;
+		var th = 32;//tilset.tilesize.height;
 		
 		//Calculamos la posicion del cursor
 		var cxp = Canvas.cx * tw;
@@ -67,12 +71,27 @@ define([
 	
 	//Dibujamos la grilla del mapa en base a una imagen en base64
 	//que representa una celda vacia con bordes marcados
-	Canvas.update = function() {
+	Canvas.updateGrid = function() {
+
+		//Obtenemos el Tileset que esta activo
+		//var tileset = Editor.active_tileset;
+		
+		//Obtenemos las dimensiones de los tiles
+		var tw = 32;//tileset.tilesize.width;
+		var th = 32;//tilset.tilesize.height;
+
 		$("#canvas").css("backgroundImage", "url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAMklEQVRYhe3OMREAAAwCserARf2bqww6hLufyUx3Kf8DAAAAAAAAAAAAAAAAADwBpNgeRAMGfl/2RdEAAAAASUVORK5CYII=)");
 		$("#canvas").find(".cursor").css({
 			width: tw,
 			height: th
 		});
+	};
+
+	//Calcula la posicion del canvas para que este se encuentre centrado
+	Canvas.updatePosition = function() {
+		var top = $(window).height()/2 - $("#canvas").height()/2;
+		var left = $(window).width()/2 - $("#canvas").width()/4;
+		$("#canvas").css({ top: top, left: left });
 	};
 	
 	return Canvas;
