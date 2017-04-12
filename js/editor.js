@@ -2,8 +2,9 @@ define([
 	"jquery-ui", 
 	"canvas",
 	"tileset",
-	"utils"
-], function($, Canvas, Tileset, Utils) {
+	"utils",
+	"layers"
+], function($, Canvas, Tileset, Utils, Layers) {
 	var Editor = {};
 	
 	Editor.tool="draw"; //Que es lo que estoy haciendo, dibujando, rellenando, eliminando
@@ -13,6 +14,7 @@ define([
 	Editor.Canvas = Canvas.initialize(Editor);
 	Editor.Tileset=Tileset.initialize(Editor);
 	Editor.Utils=Utils.initialize(Editor);
+	Editor.Layers=Layers.initialize(Editor);
 	
 
 	Editor.initialize = function() {
