@@ -3,32 +3,32 @@ define([
 	"views/tilesets"
 ], function($, TilesetView) {
 	
-	var Tileset, Editor;	
+	var Tileset={}, Editor;	
 	
 	Tileset.initialize = function(namespace){
-	Editor = namespace;
+		Editor = namespace;
 		this.view = TilesetView.initialize(Editor);
 
-		// this.add("img/tilesets/forest_tiles.png", {
-		// 	tilesize: { width: 16, height: 16 },
-		// 	alpha: [255, 0, 255]
-		// });
+		 this.add("img/tilesets/forest_tiles.png", {
+		 	tilesize: { width: 16, height: 16 },
+		 	alpha: [255, 0, 255]
+		 });
 		// this.add("img/tilesets/margin.png", {
 		// 	tilesize: { width: 64, height: 64 },
 		// 	margin: 4
 		// });
 
-		this.add("img/tilesets/mage_city.png", {
-			tilesize: { width: 32, height: 32 }
-		});
+		//this.add("img/tilesets/mage_city.png", {
+		//	tilesize: { width: 32, height: 32 }
+		//});
 
 		return this;	
 		
 	};
 	
 	Tileset.set = function(name) {
-		var tileset = this.Tileset;
-		Editor.active_tileset = tileset;
+		var tileset = Tileset;
+		Editor.Tileset = tileset;
 
 		$("#tileset_container").css({
 			width: tileset.width,
@@ -51,11 +51,14 @@ define([
 				css;
 
 			img.src = source;
+			img.setAttribute('crossOrigin', 'anonymous');
+			bfr.canvas.setAttribute('crossOrigin', 'anonymous');
+			var that = this;
+			
 			img.addEventListener("load", function() {
 				//Se ejecuta cuando un recurso y sus recursos dependientes terminan de ser cargados
 				bfr.canvas.width = argumentos.width = this.width;
 				bfr.canvas.height = argumentos.height = this.height;
-
 				// Procesado tileset
 				if (argumentos.alpha) { argumentos.base64 = Tileset.setAlpha(this, argumentos.alpha); }
 				if (argumentos.margin) { argumentos.base64 = Tileset.slice(this, argumentos); }
@@ -69,7 +72,7 @@ define([
 				argumentos.name = name;
 
 				Tileset = argumentos;
-				Tileset.set(name);
+				that.set(name);
 
 				// Add a global css class so tiles can use
 				// it in conjunction with background-position
@@ -89,7 +92,7 @@ define([
 
 				// Update custom scrollbars and grid
 				$("#tileset").jScrollPane();
-				Editor.Canvas.update_grid();
+				//Editor.Canvas.update_grid();
 
 			}, false);	
 	};
