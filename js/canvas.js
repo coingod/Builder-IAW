@@ -43,8 +43,8 @@ define([
 		});
 		
 		//Dibujamos la grilla del mapa
-		Canvas.updatePosition();
-		Canvas.updateGrid();
+		this.updatePosition();
+		this.updateGrid();
 
 		return this;
 	};

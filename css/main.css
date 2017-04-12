@@ -66,6 +66,35 @@ h2{
 	background-image: none !important;
 }
 
+/* ==================== */
+/* ====== LAYERS ====== */
+/* ==================== */
+
+/* Lista de capas */
+ul#layerlist {
+	list-style: none;
+}
+
+/* Items de la lista de capas */ 
+ul#layerlist > li {
+	color: #FFF;
+	text-shadow: -1px -1px rgba(0, 0, 0, 0.5);
+
+	padding: 5px 10px 10px 10px;
+	background-color: #666;
+
+	border-top: 1px solid #999;
+	border-bottom: 1px solid #333;
+
+	cursor: pointer;
+}
+
+/* Estilo de la capa actual */
+ul#layerlist > li.current {
+	background-color: #2881ab;
+	border-top: 1px solid #83d8ff;
+}
+
 /* ====================== */
 /* ====== TILESETS ====== */
 /* ====================== */
