@@ -1,13 +1,13 @@
 define([
 	"jquery-ui",
-	"views/tilesets"
-], function($, TilesetView) {
+], function($) {
 	
 	var Tileset={}, Editor;	
 	
 	Tileset.initialize = function(namespace){
 		Editor = namespace;
-		this.view = TilesetView.initialize(Editor);
+		$("#tileset_container").on("mousedown mouseup mousemove", this.makeSelection);
+
 
 		// this.add("img/tilesets/forest_tiles.png", {
 		// 	tilesize: { width: 16, height: 16 },
@@ -36,7 +36,7 @@ define([
 		}).attr("class", "ts_" + tileset.id);
 
 		//$("#tilesets select").val(name); NO SIRVE POR AHORA
-		this.reset_selection();
+		this.resetSelection();
 	};
 	
 	
@@ -160,11 +160,43 @@ define([
 		return bfr.canvas.toDataURL();
 	};
 	
-	Tileset.reset_selection = function() {
+	Tileset.resetSelection = function() {
 		$("#canvas .cursor").remove();
 		$("#tileset .selection").remove();
 		delete Editor.selection;
 	};
 	
+	Tileset.makeSelection = function(e) {
+		//if (!$("#tilesets select option:selected").length) { return; } Esto servirá cuando se use mas de un tileset
+		var tileset, tw, th, ex, ey;
+
+		Editor.Utils.make_selection(e, "#tileset_container");
+
+		if (e.type == "mouseup") {
+			//Soltamos el mouse
+			
+			tileset = Editor.Tileset;
+			tw = tileset.tilesize.width;
+			th = tileset.tilesize.height;
+
+			sx = Editor.selection[0][0] * tw;
+			sy = Editor.selection[0][1] * th;
+			ex = Editor.selection[1][0] * tw;
+			ey = Editor.selection[1][1] * th;
+
+			if (!$("#canvas .cursor").length)
+			{ $("#canvas").append("<div class='cursor'></div>"); }
+
+			$("#canvas .cursor").css({
+				width: (ex-sx) + tw,
+				height: (ey-sy) + th,
+				backgroundColor: "transparent",
+				backgroundPosition: (-sx) + "px " + (-sy) + "px"
+			}).attr("class", "cursor ts_" + tileset.id);
+
+			$("#tileset_container").find(".selection").remove();
+			delete Editor.selection.custom;
+		}
+	};
 	return Tileset;
 });
