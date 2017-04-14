@@ -26,7 +26,7 @@ define([
 		// e.which indica el click que fue realizado: 1=izquierdo
 		
 		// Disable selection
-		//$("#tileset, #canvas_wrapper").disableSelection();
+		$("#tileset, #canvas_wrapper").disableSelection();
 	};
 	
 	return Editor;

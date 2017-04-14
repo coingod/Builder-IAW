@@ -92,7 +92,7 @@ define([
 
 				// Update custom scrollbars and grid
 				$("#tileset").jScrollPane();
-				//Editor.Canvas.update_grid();
+				Editor.Canvas.update_grid();
 
 			}, false);	
 	};
