@@ -9,7 +9,7 @@ define([
 		filetypes: ["png", "jpg", "jpeg"]
 	};
 
-	TilesetView.tmp = {};
+	TilesetView.tmp = {}; //Auxiliar
 
 	TilesetView.initialize = function(namespace) {
 
@@ -21,14 +21,14 @@ define([
 		//$("body").on("click", "#tilesets_add", this.add);
 		//$("body").on("click", "#tilesets_remove", this.remove);
 
-		this.add;
+		//this.add;
 		$("#tileset_container").on("mousedown mouseup mousemove", this.make_selection);
 		
 		//$("#tileset_remove").on("click", this.remove);
 
 		return this;
 	};
-
+/*
 	// Todo disallow mixing different tilesizes
 	TilesetView.add = function(e) {
 
@@ -42,19 +42,20 @@ define([
 			margin: +$("#dialog input[name=tile_margin]").val(),
 			alpha: $("#dialog input[name=tile_alpha]").val()
 
-		}, hex = opts.alpha.match(/^#?(([0-9a-fA-F]{3}){1,2})$/), type, data;
+		}, hex = opts.alpha.match(/^#?(([0-9a-fA-F]{3}){1,2})$/) //Chequeamos que el color este en hexadecimal (#FFFFFF)
+		, type, data;
 		
-		// Parse HEX to rgb
+		// Parseamos HEX a rgb
 		if (hex && hex[1]) {
 			hex = hex[1];
 
-			if (hex.length == 3) {
+			if (hex.length == 3) { // #FFF
 				opts.alpha = [
 					parseInt(hex[0]+hex[0], 16),
 					parseInt(hex[1]+hex[1], 16),
 					parseInt(hex[2]+hex[2], 16)
 				];
-			} else if (hex.length == 6) {
+			} else if (hex.length == 6) { //#FFFFFF + precision
 				opts.alpha = [
 					parseInt(hex[0]+hex[1], 16),
 					parseInt(hex[2]+hex[3], 16),
@@ -66,8 +67,6 @@ define([
 		} else if (opts.alpha.match(/^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])(, ?|$)){3}$/)) {
 			opts.alpha = _.map(opts.alpha.split(","), function(num) { return parseInt(num, 10); });
 		} else { opts.alpha = null; }
-
-		// $("#loading").show();
 
 		// URL or FileReader event
 		if (!window.FileReader) {
@@ -82,14 +81,12 @@ define([
 		// Wrong file type
 		if (TilesetView.config.filetypes.indexOf(type.toLowerCase()) == -1) {
 			alert("Wrong file type in \"" + opts.name + "\"\nSupported file types: " + TilesetView.config.filetypes.join(", "));
-			//$("#loading").hide();
 
 		// Tileset does already exist
 		} else if ($("#tilesets select option:contains(" + opts.name + ")").length) {
 			alert("File \"" + opts.name + "\" does already exist.");
-			//$("#loading").hide();
 
-		// Process tileset
+			// Process tileset
 		} else {
 			if (window.FileReader) {
 				var reader = new FileReader();
@@ -117,16 +114,16 @@ define([
 			$("#dialog input[name=tileset_file_overlay]").val(TilesetView.tmp.name);
 		}
 	};
-
+*/
 	TilesetView.make_selection = function(e) {
-
-		if (!$("#tilesets select option:selected").length) { return; }
+		//if (!$("#tilesets select option:selected").length) { return; } Esto servirá cuando se use mas de un tileset
 		var tileset, tw, th, ex, ey;
 
 		Editor.Utils.make_selection(e, "#tileset_container");
 
 		if (e.type == "mouseup") {
-
+			//Soltamos el mouse
+			
 			tileset = Editor.Tileset;
 			tw = tileset.tilesize.width;
 			th = tileset.tilesize.height;
@@ -136,15 +133,15 @@ define([
 			ex = Editor.selection[1][0] * tw;
 			ey = Editor.selection[1][1] * th;
 
-			if (!$("#canvas .selection").length)
-			{ $("#canvas").append("<div class='selection'></div>"); }
+			if (!$("#canvas .cursor").length)
+			{ $("#canvas").append("<div class='cursor'></div>"); }
 
-			$("#canvas .selection").css({
+			$("#canvas .cursor").css({
 				width: (ex-sx) + tw,
 				height: (ey-sy) + th,
 				backgroundColor: "transparent",
 				backgroundPosition: (-sx) + "px " + (-sy) + "px"
-			}).attr("class", "selection ts_" + tileset.id);
+			}).attr("class", "cursor ts_" + tileset.id);
 
 			$("#tileset_container").find(".selection").remove();
 			delete Editor.selection.custom;

@@ -13,7 +13,6 @@ define([
 	};
 
 	Utils.make_selection = function(e, container) {
-
 		var tileset = Editor.Tileset,
 			tw = tileset.tilesize.width,
 			th = tileset.tilesize.height,
@@ -21,16 +20,16 @@ define([
 			$container = $(container),
 			offset =  $container.offset(),
 
-			// Current x position relative to the tileset area
+			// Posicion relativa al tileset
 			x = Math.floor(((e.pageX - offset.left) + $container.scrollTop()) / tw) * tw,
 			y = Math.floor(((e.pageY - offset.top) + $container.scrollLeft()) / th) * th,
 
 			$selection = $container.find(".selection");
 
-		// Create and append selection div
-		if (e.type == "mousedown") {
+		
+		if (e.type == "mousedown") { // Crear div seleccion
 
-			if (!$selection.length)
+			if (!$selection.length) //no hay seleccion actualmente
 			{ $container.append("<div class='selection'></div>"); }
 
 			$selection.css({
@@ -42,10 +41,9 @@ define([
 
 			delete Editor.selection;
 			Editor.tmp_selection = [[x, y], new Array(2)];
-
+			
 		} else if (e.type == "mousemove") {
-
-			// Resize selection div in the correct direction
+			// Redibujamos el div selection en donde corresponda
 			if (Editor.mousedown) {
 
 				var sx = Editor.tmp_selection[0][0],
@@ -54,16 +52,16 @@ define([
 					w = Math.abs((x-sx) + tw),
 					h = Math.abs((y-sy) + th);
 
-				// Selection goes right
+				// mouse hacia la derecha
 				if (sx <= x) { $selection.css({ left: sx, width: w }); }
-				// Selection goes left
+				// mouse hacia la izquierda
 				else { $selection.css({ left: x, width: w + tw*2 }); }
-				// Selection goes down
+				// mouse hacia abajo
 				if (sy <= y) { $selection.css({ top: sy, height: h }); }
-				// Selection goes up
+				// mouse hacia arriba
 				else { $selection.css({ top: y, height: h + th*2 }); }
 
-			// Hover selection
+			// Hover 
 			} else {
 				if (!$selection.length)
 				{ $container.append("<div class='selection'></div>"); }
@@ -74,15 +72,15 @@ define([
 				});
 			}
 
-		} else if (e.type == "mouseup" && Editor.tmp_selection) {
-
+		} else if (e.type == "mouseup" && Editor.tmp_selection) { 
+			//Estamos soltando el mouse y tenemos un tile seleccionado
 			var s = Editor.tmp_selection,
 				id = $("select[name=tileset_select] option:selected").index(),
 				sx, sy, ex, ey
 
 			s[1][0] = x;
 			s[1][1] = y;
-
+			//NO TENGO GANAS DE REVISAR ESTE CODIGO AHORA PERO HACELO LUCAS DEL FUTURO
 			// Normalize selection, so that the start coordinates
 			// are smaller than the end coordinates
 			sx = s[0][0] < s[1][0] ? s[0][0] : s[1][0];

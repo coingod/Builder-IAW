@@ -9,7 +9,7 @@ define([
 	
 	Editor.tool="draw"; //Que es lo que estoy haciendo, dibujando, rellenando, eliminando
 	Editor.mousedown=false; //Mouse presionado
-	Editor.selection=null;
+	Editor.selection=null; //Tile seleccionado
 	
 	Editor.Canvas = Canvas.initialize(Editor);
 	Editor.Tileset=Tileset.initialize(Editor);
