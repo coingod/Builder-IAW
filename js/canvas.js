@@ -40,11 +40,17 @@ define([
 				top: y * th,
 				left: x * tw
 			});
+
+			//Si el usuario hace click izquierdo en el canvas debemos dibujar
+			if (event.type == "mousedown" && event.which == 1) {
+				//Dibujamos el tile actual en el canvas
+				Canvas.draw();
+			}
 		});
 		
 		//Dibujamos la grilla del mapa
-		this.updatePosition();
-		this.updateGrid();
+		Canvas.updatePosition();
+		Canvas.updateGrid();
 
 		return this;
 	};
@@ -55,7 +61,15 @@ define([
 		
 		//Obtenemos el Tileset que esta activo
 		//var tileset = Editor.active_tileset;
-		
+
+		//Obtenemos la capa actualmente activa
+		var currentLayer = Editor.Layers.currentLayer();
+
+		//Vinculamos a la capa actual con el CSS de la imagen del tileset
+		//Esto fuerza a una capa a tener un solo tileset activo, cambiar mas adelante!
+		$(currentLayer.layer).addClass("ts_mage_city_png");//("ts_" + tileset.id);
+		//$(currentLayer.layer).attr("data-tileset", "mage_city.png");//tileset.name);
+
 		//Obtenemos las dimensiones de los tiles
 		var tw = 32;//tileset.tilesize.width;
 		var th = 32;//tilset.tilesize.height;
@@ -63,10 +77,33 @@ define([
 		//Calculamos la posicion del cursor
 		var cxp = Canvas.cx * tw;
 		var cyp = Canvas.cy * th;
+
+		//Obtenemos el offset del tile seleccionado del tileset
+		var offset = $("#canvas").find(".cursor").css("background-position").split(" ");
+		var ofx = parseInt(offset[0], 10);
+		var	ofy = parseInt(offset[1], 10);
 		
-		$("#canvas").find(".cursor").find("div").each(function() {
-			//Agregar Tile a la capa actual
-		});
+		//Preparo el atributo con las coordenadas normalizadas actuales
+		var coords = Canvas.cx + "." + Canvas.cy;
+		//Busco en la capa actual algun div con las coordenadas del cursor
+		var div = $(currentLayer.layer).find("div[data-coords='" + coords + "']");
+		//Si encontre un resultado, entonces ya tengo un tile almacenado
+		var tile = div;
+		//Si no hay resultado quiere decir que aun no hay nada en esta posicion
+		if(div.length == 0) {
+			//Debemos crear un div con el atributo data-coords
+			tile = $("<div data-coords='" + coords + "'></div>");
+			//Agregamos al CSS la posicion
+			tile.css({
+				position: "absolute",
+				left: cxp,
+				top: cyp
+			});
+			//Agregamos al CSS el offset del tile en el tileset
+			tile.css("background-position", ofx + "px " + ofy + "px");
+			//Agregamos el nuevo elemento a la capa
+			$(currentLayer.layer).append(tile);
+		}
 	};
 	
 	//Dibujamos la grilla del mapa en base a una imagen en base64
