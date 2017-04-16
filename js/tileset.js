@@ -17,9 +17,12 @@ define([
 		// 	tilesize: { width: 64, height: 64 },
 		// 	margin: 4
 		// });
-
-		this.add("img/tilesets/mage_city.png", {
-			tilesize: { width: 32, height: 32 }
+		//this.add("img/tilesets/mage_city.png", {
+		//	tilesize: { width: 32, height: 32 }
+		//});
+		
+		this.add("img/tilesets/spritesheet.png", {
+			tilesize: { width: 64, height: 64 }
 		});
 
 		return this;	

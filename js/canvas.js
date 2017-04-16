@@ -19,8 +19,8 @@ define([
 			//var tileset = Editor.active_tileset;
 			
 			//Obtenemos las dimensiones de los tiles
-			var tw = 32;//tileset.tilesize.width;
-			var th = 32;//tilset.tilesize.height;
+			var tw = 64;//tileset.tilesize.width;
+			var th = 64;//tilset.tilesize.height;
 			
 			//Obtenemos el offset del canvas con respecto al documento
 			var offset = $("#canvas").offset();
@@ -47,6 +47,12 @@ define([
 				Canvas.draw();
 			}
 		});
+
+		//Modificamos el tamaño del mapa en funcion del tamaño de los tiles
+		$("#canvas").css({
+				width: 13 * 64,//tw
+				height: 10 * 64//th
+			});
 		
 		//Dibujamos la grilla del mapa
 		Canvas.updatePosition();
@@ -67,12 +73,12 @@ define([
 
 		//Vinculamos a la capa actual con el CSS de la imagen del tileset
 		//Esto fuerza a una capa a tener un solo tileset activo, cambiar mas adelante!
-		$(currentLayer.layer).addClass("ts_mage_city_png");//("ts_" + tileset.id);
-		//$(currentLayer.layer).attr("data-tileset", "mage_city.png");//tileset.name);
+		$(currentLayer.layer).addClass("ts_spritesheet_png");//("ts_" + tileset.id);
+		//$(currentLayer.layer).attr("data-tileset", "spritesheet.png");//tileset.name);
 
 		//Obtenemos las dimensiones de los tiles
-		var tw = 32;//tileset.tilesize.width;
-		var th = 32;//tilset.tilesize.height;
+		var tw = 64;//tileset.tilesize.width;
+		var th = 64;//tilset.tilesize.height;
 		
 		//Calculamos la posicion del cursor
 		var cxp = Canvas.cx * tw;
@@ -114,10 +120,20 @@ define([
 		//var tileset = Editor.active_tileset;
 		
 		//Obtenemos las dimensiones de los tiles
-		var tw = 32;//tileset.tilesize.width;
-		var th = 32;//tilset.tilesize.height;
+		var tw = 64;//tileset.tilesize.width;
+		var th = 64;//tilset.tilesize.height;
 
-		$("#canvas").css("backgroundImage", "url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAMklEQVRYhe3OMREAAAwCserARf2bqww6hLufyUx3Kf8DAAAAAAAAAAAAAAAAADwBpNgeRAMGfl/2RdEAAAAASUVORK5CYII=)");
+		//Construimos la imagen de una celda vacia
+		var grid = document.createElement("canvas");
+		var bfr = grid.getContext("2d");
+		grid.width = tw;
+		grid.height = th;
+		bfr.fillStyle = "rgba(0, 0, 0, 0.1)";
+		bfr.fillRect(0, th-1, tw, 1);
+		bfr.fillRect(tw-1, 0, 1, th);
+
+		//$("#canvas").css("backgroundImage", "url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAMklEQVRYhe3OMREAAAwCserARf2bqww6hLufyUx3Kf8DAAAAAAAAAAAAAAAAADwBpNgeRAMGfl/2RdEAAAAASUVORK5CYII=)");
+		$("#canvas").css("backgroundImage", "url(" + grid.toDataURL() + ")");
 		$("#canvas").find(".cursor").css({
 			width: tw,
 			height: th
