@@ -12,8 +12,8 @@ define([
 		
 		Editor = editor;
 		
-		//Movimiento del Cursor
-		$("#canvas").on("mousedown mousemove mouseup", function(event) {
+		//Comportamiento del Cursor
+		$("#canvas").on("mousedown mousemove", function(event) {
 			
 			//Obtenemos el Tileset que esta activo
 			//var tileset = Editor.active_tileset;
@@ -41,10 +41,18 @@ define([
 				left: x * tw
 			});
 
-			//Si el usuario hace click izquierdo en el canvas debemos dibujar
-			if (event.type == "mousedown" && event.which == 1) {
-				//Dibujamos el tile actual en el canvas
-				Canvas.draw();
+			//Si el usuario hace click
+			if (event.type == "mousedown") {
+				//click izquierdo
+				if (event.which == 1) {
+					//Dibujamos el tile actual en el canvas
+					Canvas.draw();
+				}
+				//click derecho
+				else if (event.which == 3) {
+					//Removemos el tile actual en el canvas
+					Canvas.remove();
+				}
 			}
 		});
 
@@ -55,14 +63,15 @@ define([
 			});
 		
 		//Dibujamos la grilla del mapa
-		Canvas.updatePosition();
 		Canvas.updateGrid();
+		
+		//Nos aseguramos de que el canvas se acomode a la ventana
+		$(window).on("resize", Canvas.updatePosition() );
 
 		return this;
 	};
 	
-	//Dibujamos el elemento selecionado del tileset 
-	//en la posicion del cursor en la capa actual
+	//Dibujamos el elemento selecionado del tileset en la posicion del cursor de la capa actual
 	Canvas.draw = function() {
 		
 		//Obtenemos el Tileset que esta activo
@@ -112,6 +121,22 @@ define([
 		}
 	};
 	
+	//Removemos el elemento en la posicion del cursor de la capa actual
+	Canvas.remove = function() {
+
+		//Obtenemos la capa actualmente activa
+		var currentLayer = Editor.Layers.currentLayer();
+		//Preparo el atributo con las coordenadas normalizadas actuales
+		var coords = Canvas.cx + "." + Canvas.cy;
+		//Busco en la capa actual algun div con las coordenadas del cursor
+		var div = $(currentLayer.layer).find("div[data-coords='" + coords + "']");
+		//Si encontre un resultado puedo eliminarlo
+		if(div.length != 0) {
+			//Elimino el tile de la capa
+			div.remove();
+		}
+	};
+
 	//Dibujamos la grilla del mapa en base a una imagen en base64
 	//que representa una celda vacia con bordes marcados
 	Canvas.updateGrid = function() {
@@ -143,7 +168,7 @@ define([
 	//Calcula la posicion del canvas para que este se encuentre centrado
 	Canvas.updatePosition = function() {
 		var top = $(window).height()/2 - $("#canvas").height()/2;
-		var left = $(window).width()/2 - $("#canvas").width()/4;
+		var left = $("#canvas_wrapper").width()/2 + $("#editor").width() - $("#canvas").width()/2;
 		$("#canvas").css({ top: top, left: left });
 	};
 	

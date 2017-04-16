@@ -36,8 +36,8 @@ h2{
 	position: absolute;
 	z-index: 0;
 
-	width: 800px;
-	height: 608px;
+	/*width: 800px;
+	height: 608px;*/
 
 	display: block;
 	background-color: #FFF;
@@ -62,7 +62,8 @@ h2{
 	box-shadow: inset 0px 0px 0px 1px #000;
 }
 
-.nobg {
+/* Evitamos que las capas en el canvas dibujen el tilset asignado */
+.layer {
 	background-image: none !important;
 }
 
@@ -76,23 +77,35 @@ ul#layerlist {
 }
 
 /* Items de la lista de capas */ 
-ul#layerlist > li {
+ul#layerlist li {
 	color: #FFF;
 	text-shadow: -1px -1px rgba(0, 0, 0, 0.5);
 
-	padding: 5px 10px 10px 10px;
+	padding: 5px 10px 5px 10px;
 	background-color: #666;
 
 	border-top: 1px solid #999;
 	border-bottom: 1px solid #333;
 
+	width: 90%;
+
 	cursor: pointer;
 }
 
 /* Estilo de la capa actual */
-ul#layerlist > li.current {
+ul#layerlist li.current {
 	background-color: #2881ab;
 	border-top: 1px solid #83d8ff;
+}
+
+/* Estilo del icono de activada/desactivada */
+ul#layerlist li > span {
+	float: right;
+}
+
+/* Estilo de los botones Agregar y Eliminar capa */
+.buttons {
+	text-align: center;
 }
 
 /* ====================== */
