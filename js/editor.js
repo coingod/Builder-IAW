@@ -7,15 +7,17 @@ define([
 ], function($, Canvas, Tileset, Utils, Layers) {
 	var Editor = {};
 	
+	
 	Editor.tool="draw"; //Que es lo que estoy haciendo, dibujando, rellenando, eliminando
 	Editor.mousedown=false; //Mouse presionado
-	Editor.selection=null; //Tile seleccionado
+	Editor.selection=null;
 	
-	Editor.Canvas = Canvas.initialize(Editor);
+	console.log(Editor.selection);
+
 	Editor.Tileset=Tileset.initialize(Editor);
-	Editor.Utils=Utils.initialize(Editor);
+	Editor.Canvas = Canvas.initialize(Editor);
 	Editor.Layers=Layers.initialize(Editor);
-	
+	//Editor.Utils=Utils.initialize(Editor);
 
 	Editor.initialize = function() {
 

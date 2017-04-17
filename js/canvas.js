@@ -2,25 +2,29 @@ define([
 	"jquery-ui"
 ], function($) {
 	
-	var Canvas = {}, Editor;
+	var Canvas = {}, Editor, tw, th;
 	
 	//Coordenadas actuales del cursor en el canvas
 	Canvas.cx = 0;
 	Canvas.cy = 0;
 	
+	
 	Canvas.initialize = function(editor) {
 		
 		Editor = editor;
+		console.log(Editor.Tileset.info.tw);
+
 		
+		var tileset=Editor.Tileset; 
+		tw=tileset.info.tw;
+		th=tileset.info.th;
+	
 		//Comportamiento del Cursor
 		$("#canvas").on("mousedown mousemove", function(event) {
 			
 			//Obtenemos el Tileset que esta activo
 			//var tileset = Editor.active_tileset;
-			
-			//Obtenemos las dimensiones de los tiles
-			var tw = 64;//tileset.tilesize.width;
-			var th = 64;//tilset.tilesize.height;
+
 			
 			//Obtenemos el offset del canvas con respecto al documento
 			var offset = $("#canvas").offset();
@@ -86,8 +90,7 @@ define([
 		//$(currentLayer.layer).attr("data-tileset", "spritesheet.png");//tileset.name);
 
 		//Obtenemos las dimensiones de los tiles
-		var tw = 64;//tileset.tilesize.width;
-		var th = 64;//tilset.tilesize.height;
+		
 		
 		//Calculamos la posicion del cursor
 		var cxp = Canvas.cx * tw;
@@ -145,12 +148,11 @@ define([
 		//var tileset = Editor.active_tileset;
 		
 		//Obtenemos las dimensiones de los tiles
-		var tw = 64;//tileset.tilesize.width;
-		var th = 64;//tilset.tilesize.height;
-
+	
 		//Construimos la imagen de una celda vacia
 		var grid = document.createElement("canvas");
 		var bfr = grid.getContext("2d");
+		
 		grid.width = tw;
 		grid.height = th;
 		bfr.fillStyle = "rgba(0, 0, 0, 0.1)";

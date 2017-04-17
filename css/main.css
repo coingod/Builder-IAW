@@ -11,7 +11,7 @@ body {
 }
 
 #editor {
-	width: 30%;
+	width: 22%;
 	height: 100%;
 	float: left;
 }
@@ -22,7 +22,7 @@ h2{
 }
 
 #canvas_wrapper {
-	width: 70%;
+	width: 75%;
 	height: 100%;
 	float: right;
 	background-color: #4183c4; 
@@ -138,32 +138,31 @@ ul#layerlist li > span {
 #custom_select:hover { background-image: url("../img/icons/select_arrow_hover.png"); }
 
 #tileset {
-	height: 400px;
-	background-color: #FFF;
-	background-image: url("../img/icons/transparent.png");
+	height: 500px;
+	background-color: #92c290;
 	margin-left: 5%;
 	margin-right: 5%;
 	border: 5px solid #555;
 	border-radius: 3px 3px 3px 3px;
 }
 
-#tilesets select[name=tileset_select] {
-	width: 110%;
-	padding: 5px 0px 0px 5px;
-	color: #CCC;
-	font-size: 14px;
-	font-weight: bold;
-	line-height: 16px;
-	text-shadow: 0px -1px #322;
-	border: 0px;
-	background: transparent;
-	-webkit-appearance: none;
+/* Lista de tiles */
+ul#tilelist {
+	list-style:none;
+	text-align:left;	
 }
 
-#tilesets select[name=tileset_select] option {
-	color: #000;
-	text-shadow: none;
-	background-color: #FFF;
+.img{
+	background-color: #002b53;
+	border-top: 1px solid #999;
 }
-
-#tilesets select[name=tileset_select] option { color: #333; }
+ul#tilelist li {
+	color: #FFF;
+	height:80px;
+	text-shadow: -1px -1px rgba(0, 0, 0, 0.5);
+	
+	background-color: #002b53;
+	border-top: 1px solid #999;
+	border-bottom: 1px solid #333;
+	width: 80%;
+}

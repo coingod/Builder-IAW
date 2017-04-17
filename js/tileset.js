@@ -1,12 +1,16 @@
 define([
 	"jquery-ui",
-], function($) {
+	"libs/underscore"
+], function($,_) {
 	
 	var Tileset={}, Editor;	
 	
+	
 	Tileset.initialize = function(namespace){
+		Tileset.info={tw:64, th:64, name:"Pepito", id:1};
 		Editor = namespace;
-		$("#tileset_container").on("mousedown mouseup mousemove", this.makeSelection);
+		//$("#tileset_container").on("mousedown mouseup mousemove", this.makeSelection);
+			console.log(Editor.selection);
 
 
 		// this.add("img/tilesets/forest_tiles.png", {
@@ -24,6 +28,8 @@ define([
 		this.add("img/tilesets/spritesheet.png", {
 			tilesize: { width: 64, height: 64 }
 		});
+		
+		$("#tilelist").on("mousedown mouseup", "li img", this.makeSelection);
 
 		return this;	
 		
@@ -32,12 +38,12 @@ define([
 	Tileset.set = function(name) {
 		var tileset = Tileset;
 		Editor.Tileset = tileset;
-
+		var widthTileset=$("#tileset").width(), 
+			heightTileset=$("#tileset").height();
 		$("#tileset_container").css({
-			width: tileset.width,
-			height: tileset.height,
-		}).attr("class", "ts_" + tileset.id);
-
+			width: widthTileset,
+			height: heightTileset,
+		}).attr("class", "ts_" + tileset.id);		
 		//$("#tilesets select").val(name); NO SIRVE POR AHORA
 		this.resetSelection();
 	};
@@ -67,12 +73,10 @@ define([
 				// Procesado tileset
 				if (argumentos.alpha) { argumentos.base64 = Tileset.setAlpha(this, argumentos.alpha); }
 				if (argumentos.margin) { argumentos.base64 = Tileset.slice(this, argumentos); }
-
-				if (!argumentos.alpha && !argumentos.margin) {
-					bfr.drawImage(this, 0, 0);
-					argumentos.base64 = bfr.canvas.toDataURL(); //toDataURL retorna string con representacion en base64 de la imagen
-				}
-
+				//argumentos.base64=Tileset.list(this,argumentos);
+				
+				Tileset.draw(this,argumentos);
+				
 				argumentos.id = id;
 				argumentos.name = name;
 
@@ -96,7 +100,7 @@ define([
 				//Lo de arriba por ahora no sirve, es para la lista de tilesets si hay mas de uno. 
 				
 				
-				$("#tileset").jScrollPane();
+				$("#tileset_container").jScrollPane();
 				Editor.Canvas.updateGrid();
 
 			}, false);	
@@ -134,11 +138,10 @@ define([
 
 	// Despedazamos el tileset para poder trabajar con cada una de las celdas
 	Tileset.slice = function(img, opts) {
-
 		var bfr = document.createElement("canvas").getContext("2d"),
 		    tw = opts.tilesize.width, // Ancho de celda
 		    th = opts.tilesize.height, //Alto de celda
-		    imgData, red,
+		    imgData, 
 		    x, y, xAct, yAct,
 		    margen = opts.margin;
 
@@ -163,6 +166,39 @@ define([
 		return bfr.canvas.toDataURL();
 	};
 	
+	Tileset.draw = function(img, opts){
+		var bufferADibujar=document.createElement("canvas").getContext("2d"),
+			tw=opts.tilesize.width,
+			th=opts.tilesize.height,
+			x,y,xAct,yAct, nroit=0;
+		
+		bufferADibujar.canvas.width=tw; //Solo dibujamos de a un tile
+		bufferADibujar.canvas.height=th;
+		
+		var celdasY=Math.floor(img.height / th);
+		var celdasX=Math.floor(img.width / tw);
+		var lista=$("#tilelist li");
+		var tile;
+		for (y = 0; y < celdasY; y++) {
+			for (x = 0; x < celdasX; x++) {
+				xAct=x*tw;
+				yAct=y*th;
+				bufferADibujar.drawImage(img,xAct,yAct,tw,th,0,0,tw,th);
+				nroit=x+y*celdasX;
+			tile=$("<li><p><span> ID Tile="+nroit+"             </span><img src="+bufferADibujar.canvas.toDataURL()+"></img></p></li>");
+				$("#tilelist").append(tile);
+				//Explicacion Parametros: 
+				//  drawImage(img,sx,sy,swidth,sheight,x,y,width,height)
+				//sx: x donde empezamos a clippear, sy: y donde empezamos a clippear
+				//swidth:ancho de la imagen a clippear, sheight: largo de la imagen a clippear
+				//x: x donde se va a dibujar en el canvas, y: y donde se va a dibujar en el canvas
+				//width: ancho disponible para dibujar en el canvas, height: alto disponible para dibujar en el canvas
+			}
+		}
+		return bufferADibujar.canvas.toDataURL();
+		
+	};
+	
 	Tileset.resetSelection = function() {
 		$("#canvas .cursor").remove();
 		$("#tileset .selection").remove();
@@ -170,14 +206,61 @@ define([
 	};
 	
 	Tileset.makeSelection = function(e) {
-		//if (!$("#tilesets select option:selected").length) { return; } Esto servirá cuando se use mas de un tileset
-		var tileset, tw, th, ex, ey;
+		console.log("Hola!");
+		var tileset = Editor.Tileset,
+			tw = tileset.tilesize.width,
+			th = tileset.tilesize.height,
+			container="#tileset_container",
+			$container = $(container),
+			offset =  $container.offset(),
+			ex,ey
+			// Posicion relativa al tileset
+			x = Math.floor(((e.pageX - offset.left) + $container.scrollTop()) / tw) * tw,
+			y = Math.floor(((e.pageY - offset.top) + $container.scrollLeft()) / th) * th,
 
-		Editor.Utils.make_selection(e, "#tileset_container");
+			$selection = $container.find(".selection");
 
-		if (e.type == "mouseup") {
-			//Soltamos el mouse
+		
+		if (e.type == "mousedown") { // Crear div seleccion
+
+			if (!$selection.length) //no hay seleccion actualmente
+			{ $container.append("<div class='selection'></div>"); }
+
+			$selection.css({
+				left: x,
+				top: y,
+				width: tw,
+				height: th
+			});
+
+			delete Editor.selection;
+			Editor.tmp_selection = [[x, y], new Array(2)];
 			
+		} else if (e.type == "mouseup" && Editor.tmp_selection) { 
+			//Estamos soltando el mouse y tenemos un tile seleccionado
+			var s = Editor.tmp_selection,
+				id = $("select[name=tileset_select] option:selected").index(),
+				sx, sy, ex, ey
+
+			s[1][0] = x;
+			s[1][1] = y;
+			//NO TENGO GANAS DE REVISAR ESTE CODIGO AHORA PERO HACELO LUCAS DEL FUTURO
+			// Normalize selection, so that the start coordinates
+			// are smaller than the end coordinates
+			sx = s[0][0] < s[1][0] ? s[0][0] : s[1][0];
+			sy = s[0][1] < s[1][1] ? s[0][1] : s[1][1];
+			ex = s[0][0] > s[1][0] ? s[0][0] : s[1][0];
+			ey = s[0][1] > s[1][1] ? s[0][1] : s[1][1];
+			
+			console.log("sx:"+sx);
+			console.log("ex:"+ex);
+			console.log("sy:"+sy);
+			console.log("ey:"+ey);
+
+			Editor.selection = [[sx/tw, sy/th], [ex/tw, ey/th]];
+		}
+
+	if (e.type == "mouseup") {
 			tileset = Editor.Tileset;
 			tw = tileset.tilesize.width;
 			th = tileset.tilesize.height;
@@ -199,7 +282,8 @@ define([
 
 			$("#tileset_container").find(".selection").remove();
 			delete Editor.selection.custom;
-		}
+	}
+			
 	};
 	return Tileset;
 });
