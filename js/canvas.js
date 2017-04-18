@@ -101,6 +101,10 @@ define([
 		var ofx = parseInt(offset[0], 10);
 		var	ofy = parseInt(offset[1], 10);
 		
+		console.log("Lucas estos valores son los que tengo en el canvas");
+		console.log("ofx: "+ofx);
+		console.log("ofy: "+ofy);
+		
 		//Preparo el atributo con las coordenadas normalizadas actuales
 		var coords = Canvas.cx + "." + Canvas.cy;
 		//Busco en la capa actual algun div con las coordenadas del cursor

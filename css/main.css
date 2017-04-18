@@ -146,23 +146,27 @@ ul#layerlist li > span {
 	border-radius: 3px 3px 3px 3px;
 }
 
-/* Lista de tiles */
+
+/* Lista de capas */
 ul#tilelist {
-	list-style:none;
-	text-align:left;	
+	list-style: none;
 }
 
-.img{
-	background-color: #002b53;
-	border-top: 1px solid #999;
-}
+/* Items de la lista de capas */ 
 ul#tilelist li {
 	color: #FFF;
-	height:80px;
 	text-shadow: -1px -1px rgba(0, 0, 0, 0.5);
-	
-	background-color: #002b53;
-	border-top: 1px solid #999;
-	border-bottom: 1px solid #333;
-	width: 80%;
+	cursor: pointer;
 }
+
+/* Estilo de la capa actual */
+ul#tilelist li.tile {
+	
+}
+
+/* Estilo del icono de activada/desactivada */
+ul#tilelist li > span {
+	padding:22px 120px 0px 0px;
+	float:right;
+}
+
