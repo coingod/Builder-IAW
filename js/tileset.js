@@ -1,7 +1,6 @@
 define([
-	"jquery-ui",
-	"libs/underscore"
-], function($,_) {
+	"jquery-ui"
+], function($) {
 	
 	var Tileset={}, Editor;	
 	
@@ -48,17 +47,22 @@ define([
 			var that = this; //Var aux para poder acceder desde el listener al metodo set
 			
 			img.addEventListener("load", function() {
-				//Se ejecuta cuando un recurso y sus recursos dependientes terminan de ser cargados
+				var buffer = document.createElement("canvas").getContext("2d");
 
+				//Se ejecuta cuando un recurso y sus recursos dependientes terminan de ser cargados
+				buffer.canvas.width = argumentos.width = this.width;
+				buffer.canvas.height = argumentos.height = this.height;
+				buffer.drawImage(this, 0,0);
 				// Procesado tileset
 				if (argumentos.alpha) { argumentos.base64 = Tileset.setAlpha(this, argumentos.alpha); }
 				if (argumentos.margin) { argumentos.base64 = Tileset.slice(this, argumentos); }
+				argumentos.base64=buffer.canvas.toDataURL();
 				argumentos.id = id;
 				argumentos.name = name;
 				argumentos.path = source;
 				
 				Tileset.draw(this,argumentos);
-				Tileset = argumentos;
+				//Tileset = argumentos;
 				that.set(name);
 
 				// estilizado de cada tile 
@@ -69,6 +73,7 @@ define([
 				css += "\tbackground-image: url('" + argumentos.base64 + "');\n";
 				css += "}";
 				$(style).append(css);
+				console.log(css);
 				$("head").append(style);
 				
 				$("#tileset_container").jScrollPane();
