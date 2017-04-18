@@ -17,15 +17,16 @@ body {
 }
 
 h2{
-	color: #FFFF00; /* Amarillo loro */
-	padding-left: 5px; /* Cada titulo tiene un margencito de 5px */
+	color: #AAA; 
+	padding-left: 3%; 
 }
 
 #canvas_wrapper {
 	width: 75%;
 	height: 100%;
 	float: right;
-	background-color: #4183c4; 
+	background-color: #673ab7; 
+	border: 5px solid #555;
 }
 
 /* ==================== */
@@ -94,8 +95,8 @@ ul#layerlist li {
 
 /* Estilo de la capa actual */
 ul#layerlist li.current {
-	background-color: #2881ab;
-	border-top: 1px solid #83d8ff;
+	background-color: #4527a0;
+	border-top: 1px solid #d1c4e9;
 }
 
 /* Estilo del icono de activada/desactivada */
@@ -139,7 +140,7 @@ ul#layerlist li > span {
 
 #tileset {
 	height: 500px;
-	background-color: #92c290;
+	background-color: #b39ddb;
 	margin-left: 5%;
 	margin-right: 5%;
 	border: 5px solid #555;
@@ -154,14 +155,13 @@ ul#tilelist {
 
 /* Items de la lista de capas */ 
 ul#tilelist li {
-	color: #FFF;
-	text-shadow: -1px -1px rgba(0, 0, 0, 0.5);
-	cursor: pointer;
+	color: #000;
+	
 }
 
 /* Estilo de la capa actual */
-ul#tilelist li.tile {
-	
+ul#tilelist li.tile > image{
+	cursor: pointer;
 }
 
 /* Estilo del icono de activada/desactivada */
