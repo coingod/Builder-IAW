@@ -167,7 +167,8 @@ define([
     //Calcula la posicion del canvas para que este se encuentre centrado
     Canvas.updatePosition = function() {
         var top = $(window).height() / 2 - $("#canvas").height() / 2;
-        var left = $("#canvas_wrapper").width() / 2 + $("#editor").width() - $("#canvas").width() / 2;
+        //var left = $("#canvas_wrapper").width() / 2 + $("#editor").width() - $("#canvas").width() / 2;
+        var left = $("#canvas_wrapper").width() / 2 - $("#canvas").width() / 2;
         $("#canvas").css({ top: top, left: left });
     };
 

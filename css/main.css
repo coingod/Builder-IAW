@@ -1,172 +1,147 @@
-html, body {
-	width: 100%;
-	height: 100%;
+/* Corremos a la derecha para dar lugar al panel del Editor */
+
+header,
+main,
+footer {
+    padding-left: 300px;
 }
 
-body {
-	font-family: 'Roboto', sans-serif;
-	background-color: #262626;
-	box-shadow: inset 0px 0px 100px rgba(0, 0, 0, 0.5);
-	overflow: hidden;
+
+/*
+nav {
+    background-color: #262626;
+    box-shadow: 0px 0px 100px rgba(0, 0, 0, 0.5);
 }
+*/
 
-#editor {
-	width: 22%;
-	height: 100%;
-	float: left;
-}
 
-h2{
-	color: #AAA; 
-	padding-left: 3%; 
-}
-
-#canvas_wrapper {
-	width: 75%;
-	height: 100%;
-	float: right;
-	background-color: #673ab7; 
-	border: 5px solid #555;
-}
-
-/* ==================== */
-/* ====== CANVAS ====== */
-/* ==================== */
-
-#canvas {
-	position: absolute;
-	z-index: 0;
-
-	/*width: 800px;
-	height: 608px;*/
-
-	display: block;
-	background-color: #FFF;
-	overflow: hidden;
-	box-shadow: 0px 0px 5px rgba(0,0,0,0.3);
-}
-
-/* Canvas con grilla desactivada */
-#canvas .nogrid {
-	background-image: none !important;
-}
-
-/* Estilizamos el cursor con respecto al canvas */
-#canvas .cursor {
-	position: absolute;
-	z-index: 99;
-	pointer-events: none;
-}
-
-/* Estilo del cursor */
-.cursor {
-	box-shadow: inset 0px 0px 0px 1px #000;
-}
-
-/* Evitamos que las capas en el canvas dibujen el tilset asignado */
-.layer {
-	background-image: none !important;
-}
-
-/* ==================== */
-/* ====== LAYERS ====== */
-/* ==================== */
-
-/* Lista de capas */
-ul#layerlist {
-	list-style: none;
-}
-
-/* Items de la lista de capas */ 
-ul#layerlist li {
-	color: #FFF;
-	text-shadow: -1px -1px rgba(0, 0, 0, 0.5);
-
-	padding: 5px 10px 5px 10px;
-	background-color: #666;
-
-	border-top: 1px solid #999;
-	border-bottom: 1px solid #333;
-
-	width: 90%;
-
-	cursor: pointer;
-}
-
-/* Estilo de la capa actual */
-ul#layerlist li.current {
-	background-color: #4527a0;
-	border-top: 1px solid #d1c4e9;
-}
-
-/* Estilo del icono de activada/desactivada */
-ul#layerlist li > span {
-	float: right;
-}
-
-/* Estilo de los botones Agregar y Eliminar capa */
-.buttons {
-	text-align: center;
-}
-
-/* ====================== */
 /* ====== TILESETS ====== */
-/* ====================== */
 
 #tileset_container {
-	position: relative;
-	float:left;
+    position: relative;
+    float: left;
 }
 
 #custom_select {
-	width: 100%;
-	height: 30px;
-	overflow: hidden;
-
-	text-shadow: 0px -1px #333;
-	text-decoration: none;
-	border-radius: 3px 3px 0px 0px;
-	
-	box-shadow: inset 0px 1px #777;
-	background-color: #555;
-	
-	background-image: url("../img/icons/select_arrow.png");
-	background-position: right;
-	background-repeat: no-repeat;
-
+    width: 100%;
+    height: 30px;
+    overflow: hidden;
+    text-shadow: 0px -1px #333;
+    text-decoration: none;
+    border-radius: 3px 3px 0px 0px;
+    box-shadow: inset 0px 1px #777;
+    background-color: #555;
+    background-image: url("../img/icons/select_arrow.png");
+    background-position: right;
+    background-repeat: no-repeat;
 }
 
-#custom_select:hover { background-image: url("../img/icons/select_arrow_hover.png"); }
+#custom_select:hover {
+    background-image: url("../img/icons/select_arrow_hover.png");
+}
 
 #tileset {
-	height: 500px;
-	background-color: #b39ddb;
-	margin-left: 5%;
-	margin-right: 5%;
-	border: 5px solid #555;
-	border-radius: 3px 3px 3px 3px;
+    height: 500px;
+    /*background-color: #b39ddb;*/
+    margin-left: 5%;
+    margin-right: 5%;
+    border: 5px solid #555;
+    border-radius: 3px 3px 3px 3px;
 }
 
 
-/* Lista de capas */
-ul#tilelist {
-	list-style: none;
+/* ====== CANVAS ====== */
+
+#canvas {
+    position: absolute;
+    z-index: 0;
+    display: block;
+    background-color: #FFF;
+    overflow: hidden;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
 }
 
-/* Items de la lista de capas */ 
-ul#tilelist li {
-	color: #000;
-	
+
+/* Canvas con grilla desactivada */
+
+#canvas .nogrid {
+    background-image: none !important;
 }
+
+
+/* Estilizamos el cursor con respecto al canvas */
+
+#canvas .cursor {
+    position: absolute;
+    z-index: 99;
+    pointer-events: none;
+}
+
+
+/* Estilo del cursor */
+
+.cursor {
+    box-shadow: inset 0px 0px 0px 1px #000;
+}
+
+
+/* Evitamos que las capas en el canvas dibujen el tilset asignado */
+
+.layer {
+    background-image: none !important;
+}
+
+
+/* Colocamos el Editor por debajo del Header
+.side-nav {
+    top: 64px
+}
+*/
+
+
+/* Items de la lista de capas */
+
+
+/*
+ul#layerlist li {
+    color: rgba(0, 0, 0, 0.87);
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    height: 48px;
+    line-height: 48px;
+    padding: 0 32px;
+}
+
+ul#layerlist li:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+*/
+
 
 /* Estilo de la capa actual */
-ul#tilelist li.celda > image{
-	cursor: pointer;
+
+.collection .collection-item.active {
+    background-color: #2196F3;
+    color: #eafaf9;
 }
 
-/* Estilo del icono de activada/desactivada */
-ul#tilelist li > span {
-	padding:22px 120px 0px 0px;
-	float:right;
+
+/*
+ul#layerlist li.current {
+    background-color: #4527a0;
+    border-top: 1px solid #d1c4e9;
+}
+*/
+
+.buttons {
+    text-align: center
 }
 
+@media only screen and (max-width: 992px) {
+    header,
+    main,
+    footer {
+        padding-left: 0;
+    }
+}

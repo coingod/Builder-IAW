@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>City Builder!</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Lato|Open+Sans|Roboto:500i" rel="stylesheet">
+    <!-- Hoja de estilo principal de la aplicacion -->
+    <link rel="stylesheet" type="text/css" href="css/main_old.css">
+    <!-- Font Awesome para coleccion de iconos -->
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+    <!-- Librerias JQuery -->
+    <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.10.3.custom.min.css">
+    <link rel="stylesheet" type="text/css" href="css/jquery.jscrollpane.css">
+</head>
+
+<body>
+    <div id="editor">
+        <section id="tilesets">
+            <h2> Tileset </h2>
+
+            <div>
+                <div id="tileset">
+                    <div id="tileset_container">
+                        <ul id="tilelist" </ul>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="layers">
+            <h2> Layers </h2>
+
+            <div>
+                <ul id="layerlist"></ul>
+                <div class="buttons">
+                    <button id="layers_add"><span class="icon-plus-sign" ></span> Agregar capa</button>
+                    <button id="layers_del"><span class="icon-remove-sign" ></span> Eliminar capa</button>
+                </div>
+            </div>
+
+        </section>
+    </div>
+
+    <div id="canvas_wrapper">
+        <h2> Canvas </h2>
+        <!-- El Canvas es en donde el usuario coloca los elementos/tiles -->
+        <div id="canvas" oncontextmenu="return false;">
+            <!-- Dentro de tiles habra una entrada por cada capa, cada capa almacena los tiles que el usuario le asigno -->
+            <div id="tiles"></div>
+            <!-- Representacion del cursor sobre el canvas -->
+            <div class="cursor"></div>
+        </div>
+    </div>
+
+    <!-- data-main attribute tells require.js to load js/main.js after require.js loads. -->
+    <script type="text/javascript" data-main="js/main" src="js/libs/require.js"></script>
+
+</body>
+
+</html>

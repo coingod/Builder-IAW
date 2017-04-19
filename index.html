@@ -1,61 +1,81 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>City Builder!</title>
-		
-		<link href="https://fonts.googleapis.com/css?family=Lato|Open+Sans|Roboto:500i" rel="stylesheet">
-		<!-- Hoja de estilo principal de la aplicacion -->
-		<link rel="stylesheet" type="text/css" href="css/main.css">
-		<!-- Font Awesome para coleccion de iconos -->
-		<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
-		<!-- Librerias JQuery -->
-		<link rel="stylesheet" type="text/css" href="css/jquery-ui-1.10.3.custom.min.css">
-		<link rel="stylesheet" type="text/css" href="css/jquery.jscrollpane.css">
-	</head>
-	
-	<body>
-		<div id="editor">
-			<section id="tilesets">
-				<h2> Tileset </h2>
-				
-				<div>
-					<div id="tileset">
-						<div id="tileset_container">
-							<ul id="tilelist"</ul>
-						</div>
-					</div>
-					
-				</div>
-			</section>
-			
-			<section id="layers">
-				<h2> Layers </h2>
-				
-				<div>
-					<ul id="layerlist"></ul>
-					<div class="buttons">
-						<button id="layers_add" ><span class="icon-plus-sign" ></span> Agregar capa</button>
-						<button id="layers_del" ><span class="icon-remove-sign" ></span> Eliminar capa</button>
-					</div>
-				</div>
-				
-			</section>
-		</div>
-		
-		<div id="canvas_wrapper">
-			<h2> Canvas </h2>
-			<!-- El Canvas es en donde el usuario coloca los elementos/tiles -->
-			<div id="canvas" oncontextmenu="return false;">
-				<!-- Dentro de tiles habra una entrada por cada capa, cada capa almacena los tiles que el usuario le asigno -->
-				<div id="tiles"></div>
-				<!-- Representacion del cursor sobre el canvas -->
-				<div class="cursor"></div>
-			</div>
-		</div>
-		
-		<!-- data-main attribute tells require.js to load js/main.js after require.js loads. -->
-        <script type="text/javascript" data-main="js/main" src="js/libs/require.js"></script>
 
-	</body>
+<head>
+    <meta charset="utf-8">
+    <title>City Builder!</title>
+    <!--Import Google Icon Font-->
+    <!-- https://material.io/icons/ -->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="css/materialize.css" media="screen,projection">
+    <!--Import main.css-->
+    <link type="text/css" rel="stylesheet" href="css/main.css">
+    <!-- Librerias JQuery -->
+    <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.10.3.custom.min.css">
+    <link rel="stylesheet" type="text/css" href="css/jquery.jscrollpane.css">
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body>
+    <!-- Encabezado de la pagina -->
+    <header>
+        <!-- Estructura del Menu de Opciones -->
+        <ul id="dropdown_opciones" class="dropdown-content">
+            <li><a href="#!">Nuevo Mapa</a></li>
+            <li><a href="#!">Exportar Mapa</a></li>
+            <li><a href="#!">Importar Mapa</a></li>
+            <li class="divider"></li>
+            <li><a href="#!">Importar Tileset</a></li>
+        </ul>
+        <!-- Barra de titulo/navegacion -->
+        <nav>
+            <div class="nav-wrapper blue">
+                <a href="#!" class="brand-logo"><i class="material-icons">business</i>BUILDER</a>
+                <ul class="right hide-on-med-and-down">
+                    <!-- Trigger del Menu de Opciones-->
+                    <li><a class="dropdown-button" href="#!" data-activates="dropdown_opciones">Opciones<i class="material-icons right">more_vert</i></a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Panel lateral del Editor -->
+    <!-- <a class="btn button-collapse" href="#" data-activates="editor"><i class="material-icons">mode_edit</i></a> -->
+    <div id="editor" class="side-nav fixed">
+        <section id="tilesets">
+            <h3> Tileset </h3>
+            <div id="tileset">
+                <div id="tileset_container">
+                    <ul id="tilelist"></ul>
+                </div>
+            </div>
+        </section>
+        <section id="layers">
+            <h3> Layers </h3>
+            <div id="layerlist" class="collection"></div>
+            <div class="buttons">
+                <button id="layers_add" class="waves-effect waves-light btn blue"><i class="material-icons">add_circle_outline</i></button>
+                <button id="layers_del" class="waves-effect waves-light btn blue"><i class="material-icons">remove_circle_outline</i></button>
+            </div>
+        </section>
+    </div>
+
+    <div id="canvas_wrapper">
+        <h2> Canvas </h2>
+        <!-- El Canvas es en donde el usuario coloca los elementos/tiles -->
+        <div id="canvas" oncontextmenu="return false;">
+            <!-- Dentro de tiles habra una entrada por cada capa, cada capa almacena los tiles que el usuario le asigno -->
+            <div id="tiles"></div>
+            <!-- Representacion del cursor sobre el canvas -->
+            <div class="cursor"></div>
+        </div>
+    </div>
+
+    <!-- data-main attribute tells require.js to load js/main.js after require.js loads. -->
+    <script type="text/javascript" data-main="js/main" src="js/libs/require.js"></script>
+</body>
+
 </html>
