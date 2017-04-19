@@ -14,7 +14,7 @@ define([
 			tilesize: { width: 64, height: 64 }
 		});
 		
-		$("#tilelist").on("mousedown mouseup", "li", this.makeSelection);
+		$("#tilelist").on("mousedown", "li", this.makeSelection);
 
 		return this;	
 		
@@ -56,6 +56,7 @@ define([
 				// Procesado tileset
 				if (argumentos.alpha) { argumentos.base64 = Tileset.setAlpha(this, argumentos.alpha); }
 				if (argumentos.margin) { argumentos.base64 = Tileset.slice(this, argumentos); }
+				
 				argumentos.base64=buffer.canvas.toDataURL();
 				argumentos.id = id;
 				argumentos.name = name;
@@ -103,7 +104,7 @@ define([
 				coords=xAct+"."+yAct;
 				nroit=x+y*celdasX;
 				bufferADibujar.drawImage(img,xAct,yAct,tw,th,0,0,tw,th); 
-				tile=$("<li class='tile' data-tid='"+ nroit +"' data-coords='" + coords + "'><span> TileID:"+nroit+"</span></li>");
+				tile=$("<li class='celda' data-tid='"+ nroit +"' data-coords='" + coords + "'><span> TileID:"+nroit+"</span></li>");
 				tile.css("width", "90%");
 				tile.css("height", "84px");
 				tile.css("background-image", "url('"+bufferADibujar.canvas.toDataURL()+"')");
@@ -150,7 +151,8 @@ define([
 			width: tw,
 			height: th,
 			backgroundColor: "transparent",
-			backgroundPosition: (sx) + "px " + (sy) + "px"
+			opacity: "0.4",
+			backgroundPosition: (-sx) + "px " + (-sy) + "px"
 		}).attr("class", "cursor ts_"+id);		
 	};
 	

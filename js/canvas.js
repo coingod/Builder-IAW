@@ -42,7 +42,7 @@ define([
 			//Pasamos de coordenadas normalizadas a coordenadas reales
 			$("#canvas").find(".cursor").css({
 				top: y * th,
-				left: x * tw
+				left: x * tw,
 			});
 
 			//Si el usuario hace click
@@ -50,7 +50,13 @@ define([
 				//click izquierdo
 				if (event.which == 1) {
 					//Dibujamos el tile actual en el canvas
+					$("#canvas").find(".cursor").css({
+						opacity: "1",
+					});
 					Canvas.draw();
+					$("#canvas").find(".cursor").css({
+						opacity: "0.4",
+					});
 				}
 				//click derecho
 				else if (event.which == 3) {
@@ -86,7 +92,7 @@ define([
 
 		//Vinculamos a la capa actual con el CSS de la imagen del tileset
 		//Esto fuerza a una capa a tener un solo tileset activo, cambiar mas adelante!
-		$(currentLayer.layer).addClass("ts_spritesheet_png");//("ts_" + tileset.id);
+		$(currentLayer.layer).addClass("ts_1");//("ts_" + tileset.id);
 		//$(currentLayer.layer).attr("data-tileset", "spritesheet.png");//tileset.name);
 
 		//Obtenemos las dimensiones de los tiles
@@ -101,10 +107,6 @@ define([
 		var ofx = parseInt(offset[0], 10);
 		var	ofy = parseInt(offset[1], 10);
 		
-		console.log("Lucas estos valores son los que tengo en el canvas");
-		console.log("ofx: "+ofx);
-		console.log("ofy: "+ofy);
-		
 		//Preparo el atributo con las coordenadas normalizadas actuales
 		var coords = Canvas.cx + "." + Canvas.cy;
 		//Busco en la capa actual algun div con las coordenadas del cursor
@@ -118,13 +120,22 @@ define([
 			//Agregamos al CSS la posicion
 			tile.css({
 				position: "absolute",
-				left: cxp,
-				top: cyp
+				left: cxp+"px",
+				top: cyp+"px",
 			});
 			//Agregamos al CSS el offset del tile en el tileset
 			tile.css("background-position", ofx + "px " + ofy + "px");
 			//Agregamos el nuevo elemento a la capa
 			$(currentLayer.layer).append(tile);
+		}
+		else {
+			tile.css({
+				position: "absolute",
+				left: cxp+"px",
+				top: cyp+"px",
+			});	
+			//Agregamos al CSS el offset del tile en el tileset
+			tile.css("background-position", ofx + "px " + ofy + "px");			
 		}
 	};
 	

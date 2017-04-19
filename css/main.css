@@ -160,7 +160,7 @@ ul#tilelist li {
 }
 
 /* Estilo de la capa actual */
-ul#tilelist li.tile > image{
+ul#tilelist li.celda > image{
 	cursor: pointer;
 }
 
