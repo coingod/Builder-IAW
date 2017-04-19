@@ -1,97 +1,110 @@
 define([
-	"jquery-ui",
-	"libs/underscore"
-], function($, _) {
+    "jquery-ui"
+], function($) {
 
-	var Utils = {}, Editor;
+    var Utils = {},
+        Editor;
 
-	Utils.initialize = function(namespace) {
+    Utils.initialize = function(namespace) {
 
-		Editor = namespace;
+        Editor = namespace;
 
-		return this;
-	};
+        return this;
+    };
 
-	Utils.make_selection = function(e, container) {
-		var tileset = Editor.Tileset,
-			tw = tileset.tilesize.width,
-			th = tileset.tilesize.height,
+    Utils.make_selection = function(e, container) {
+        var tileset = Editor.Tileset,
+            tw = tileset.tilesize.width,
+            th = tileset.tilesize.height,
 
-			$container = $(container),
-			offset =  $container.offset(),
+            $container = $(container),
+            offset = $container.offset(),
 
-			// Posicion relativa al tileset
-			x = Math.floor(((e.pageX - offset.left) + $container.scrollTop()) / tw) * tw,
-			y = Math.floor(((e.pageY - offset.top) + $container.scrollLeft()) / th) * th,
+            // Posicion relativa al tileset
+            x = Math.floor(((e.pageX - offset.left) + $container.scrollTop()) / tw) * tw,
+            y = Math.floor(((e.pageY - offset.top) + $container.scrollLeft()) / th) * th,
 
-			$selection = $container.find(".selection");
+            $selection = $container.find(".selection");
 
-		
-		if (e.type == "mousedown") { // Crear div seleccion
 
-			if (!$selection.length) //no hay seleccion actualmente
-			{ $container.append("<div class='selection'></div>"); }
+        if (e.type == "mousedown") { // Crear div seleccion
 
-			$selection.css({
-				left: x,
-				top: y,
-				width: tw,
-				height: th
-			});
+            if (!$selection.length) //no hay seleccion actualmente
+            { $container.append("<div class='selection'></div>"); }
 
-			delete Editor.selection;
-			Editor.tmp_selection = [[x, y], new Array(2)];
-			
-		} else if (e.type == "mousemove") {
-			// Redibujamos el div selection en donde corresponda
-			if (Editor.mousedown) {
+            $selection.css({
+                left: x,
+                top: y,
+                width: tw,
+                height: th
+            });
 
-				var sx = Editor.tmp_selection[0][0],
-					sy = Editor.tmp_selection[0][1],
+            delete Editor.selection;
+            Editor.tmp_selection = [
+                [x, y], new Array(2)
+            ];
 
-					w = Math.abs((x-sx) + tw),
-					h = Math.abs((y-sy) + th);
+        }
 
-				// mouse hacia la derecha
-				if (sx <= x) { $selection.css({ left: sx, width: w }); }
-				// mouse hacia la izquierda
-				else { $selection.css({ left: x, width: w + tw*2 }); }
-				// mouse hacia abajo
-				if (sy <= y) { $selection.css({ top: sy, height: h }); }
-				// mouse hacia arriba
-				else { $selection.css({ top: y, height: h + th*2 }); }
+        //LUCAS: Te comente todo esto porque no lo usamos, hasta donde entiendo maneja seleccionar multiples tiles del tileset. 
+        //Esto usaba la libreira Underscore que queria eliminar del proyecto al no tener un uso real.
+        //No veo ningun impacto negativo en la aplicacion, pero lo dejo comentado por las dudas. Borralo si estas de acuerdo.
+        //Con amor, niñita.
 
-			// Hover 
-			} else {
-				if (!$selection.length)
-				{ $container.append("<div class='selection'></div>"); }
+        /*else if (e.type == "mousemove") {
+                   // Redibujamos el div selection en donde corresponda
+                   if (Editor.mousedown) {
 
-				$container.find(".selection").css({
-					left: x, top: y,
-					width: tw, height: th
-				});
-			}
+                       var sx = Editor.tmp_selection[0][0],
+                           sy = Editor.tmp_selection[0][1],
 
-		} else if (e.type == "mouseup" && Editor.tmp_selection) { 
-			//Estamos soltando el mouse y tenemos un tile seleccionado
-			var s = Editor.tmp_selection,
-				id = $("select[name=tileset_select] option:selected").index(),
-				sx, sy, ex, ey
+                           w = Math.abs((x - sx) + tw),
+                           h = Math.abs((y - sy) + th);
 
-			s[1][0] = x;
-			s[1][1] = y;
-			//NO TENGO GANAS DE REVISAR ESTE CODIGO AHORA PERO HACELO LUCAS DEL FUTURO
-			// Normalize selection, so that the start coordinates
-			// are smaller than the end coordinates
-			sx = s[0][0] < s[1][0] ? s[0][0] : s[1][0];
-			sy = s[0][1] < s[1][1] ? s[0][1] : s[1][1];
-			ex = s[0][0] > s[1][0] ? s[0][0] : s[1][0];
-			ey = s[0][1] > s[1][1] ? s[0][1] : s[1][1];
+                       // mouse hacia la derecha
+                       if (sx <= x) { $selection.css({ left: sx, width: w }); }
+                       // mouse hacia la izquierda
+                       else { $selection.css({ left: x, width: w + tw * 2 }); }
+                       // mouse hacia abajo
+                       if (sy <= y) { $selection.css({ top: sy, height: h }); }
+                       // mouse hacia arriba
+                       else { $selection.css({ top: y, height: h + th * 2 }); }
 
-			Editor.selection = [[sx/tw, sy/th], [ex/tw, ey/th]];
-		}
-	};
+                       // Hover 
+                   } else {
+                       if (!$selection.length) { $container.append("<div class='selection'></div>"); }
 
-	return Utils;
+                       $container.find(".selection").css({
+                           left: x,
+                           top: y,
+                           width: tw,
+                           height: th
+                       });
+                   }
+
+               } else if (e.type == "mouseup" && Editor.tmp_selection) {
+                   //Estamos soltando el mouse y tenemos un tile seleccionado
+                   var s = Editor.tmp_selection,
+                       id = $("select[name=tileset_select] option:selected").index(),
+                       sx, sy, ex, ey
+
+                   s[1][0] = x;
+                   s[1][1] = y;
+                   //NO TENGO GANAS DE REVISAR ESTE CODIGO AHORA PERO HACELO LUCAS DEL FUTURO
+                   // Normalize selection, so that the start coordinates
+                   // are smaller than the end coordinates
+                   sx = s[0][0] < s[1][0] ? s[0][0] : s[1][0];
+                   sy = s[0][1] < s[1][1] ? s[0][1] : s[1][1];
+                   ex = s[0][0] > s[1][0] ? s[0][0] : s[1][0];
+                   ey = s[0][1] > s[1][1] ? s[0][1] : s[1][1];
+
+                   Editor.selection = [
+                       [sx / tw, sy / th],
+                       [ex / tw, ey / th]
+                   ];
+               }*/
+    };
+
+    return Utils;
 
 });

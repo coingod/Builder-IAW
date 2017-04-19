@@ -12,19 +12,11 @@ nav {
 }
 
 
-/* ==================== */
-
-
 /* ====== CANVAS ====== */
-
-
-/* ==================== */
 
 #canvas {
     position: absolute;
     z-index: 0;
-    /*width: 800px;
-	height: 608px;*/
     display: block;
     background-color: #FFF;
     overflow: hidden;
