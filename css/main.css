@@ -20,7 +20,17 @@ nav {
 #tileset_container {
     position: relative;
     float: left;
+    /*width: 260px;*/
 }
+
+
+/* Fixea que la barra de desplazamientoe este corrida
+
+#tileset_container .jspContainer {
+    width: 260px;
+}
+
+*/
 
 #custom_select {
     width: 100%;
@@ -47,6 +57,47 @@ nav {
     margin-right: 5%;
     border: 5px solid #555;
     border-radius: 3px 3px 3px 3px;
+}
+
+
+/* Estilo de las vistas previas de los Tiles en el Editor */
+
+.collection .collection-item.avatar {
+    padding-left: 40%;
+}
+
+.collection .collection-item.avatar .circle {
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    overflow: hidden;
+    left: 15px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+
+/* Vista previa con bordes redondeados */
+
+.circle {
+    border-radius: 25%;
+}
+
+
+/* Descripcion asociada al tile */
+
+.collection .collection-item.avatar .title {
+    position: relative;
+    font-size: 16px;
+    /*padding: 16px 24px;
+    color: #ffab40;
+    margin-right: 24px;
+    transition: color .3s ease;*/
+    text-transform: uppercase;
+}
+
+.collection a.collection-item {
+    color: #000;
 }
 
 
@@ -101,38 +152,10 @@ nav {
 
 /* Items de la lista de capas */
 
-
-/*
-ul#layerlist li {
-    color: rgba(0, 0, 0, 0.87);
-    display: block;
-    font-size: 14px;
-    font-weight: 500;
-    height: 48px;
-    line-height: 48px;
-    padding: 0 32px;
-}
-
-ul#layerlist li:hover {
-    background-color: rgba(0, 0, 0, 0.05);
-}
-*/
-
-
-/* Estilo de la capa actual */
-
 .collection .collection-item.active {
     background-color: #2196F3;
     color: #eafaf9;
 }
-
-
-/*
-ul#layerlist li.current {
-    background-color: #4527a0;
-    border-top: 1px solid #d1c4e9;
-}
-*/
 
 .buttons {
     text-align: center

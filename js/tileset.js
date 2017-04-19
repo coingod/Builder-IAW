@@ -15,7 +15,7 @@ define([
             tilesize: { width: 64, height: 64 }
         });
 
-        $("#tilelist").on("mousedown", "li", this.makeSelection);
+        $("#tilelist").on("mousedown", "a", this.makeSelection);
 
         return this;
 
@@ -79,6 +79,10 @@ define([
             $("head").append(style);
 
             $("#tileset_container").jScrollPane();
+            //Fixea que la barra de desplazamiento este corrida
+            $("#tileset_container").css("width", "260px");
+            $("#tileset_container .jspContainer").css("width", "260px");
+
             Editor.Canvas.updateGrid();
 
         }, false);
@@ -95,7 +99,7 @@ define([
 
         var celdasY = Math.floor(img.height / th);
         var celdasX = Math.floor(img.width / tw);
-        var lista = $("#tilelist li");
+        var lista = $("#tilelist a");
         var tile, coords;
         var css;
         for (y = 0; y < celdasY; y++) {
@@ -105,12 +109,18 @@ define([
                 coords = xAct + "." + yAct;
                 nroit = x + y * celdasX;
                 bufferADibujar.drawImage(img, xAct, yAct, tw, th, 0, 0, tw, th);
+                /*
+                //Version posterior a Material Design
                 tile = $("<li class='celda' data-tid='" + nroit + "' data-coords='" + coords + "'><span> TileID:" + nroit + "</span></li>");
                 tile.css("width", "90%");
                 tile.css("height", "84px");
                 tile.css("background-image", "url('" + bufferADibujar.canvas.toDataURL() + "')");
                 tile.css("background-size", tw + "px " + th + "px");
                 tile.css("background-repeat", "no-repeat");
+                */
+                //console.log(bufferADibujar.canvas.toDataURL());
+                //tile = $("<li class='collection-item avatar' data-tid='" + nroit + "' data-coords='" + coords + "'><img src='" + bufferADibujar.canvas.toDataURL() + "' class='circle'><span class='title'> TileID:" + nroit + "</span></li>");
+                tile = $("<a href='#!' class='collection-item avatar' data-tid='" + nroit + "' data-coords='" + coords + "'><img src='" + bufferADibujar.canvas.toDataURL() + "' class='circle'><span class='title'> TileID:" + nroit + "</span></a>");
                 $("#tilelist").append(tile);
 
                 //Explicacion Parametros: 
@@ -131,15 +141,22 @@ define([
 
     Tileset.makeSelection = function(e) {
         //console.log(e.target);
+        //console.log(e.currentTarget);
+
         var tw = 64;
         var th = 64;
-        var tileSelected = e.target;
+        var tileSelected = e.currentTarget; //e.target;
         var tileCoords = $(tileSelected).attr("data-coords");
         var sx = tileCoords.split(".")[0];
         var ex = sx + tw;
         var sy = tileCoords.split(".")[1];
         var ey = sy + th;
         var id = 1;
+
+        //Desmarcamos el tile actual actual en el panel
+        $("#tilelist a").removeClass("active");
+        //Marcamos el tile como actual en el panel
+        $(tileSelected).addClass("active");
 
         if (!$("#canvas .cursor").length) { $("#canvas").append("<div class='cursor'></div>"); }
 
