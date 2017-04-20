@@ -100,6 +100,10 @@ nav {
     color: #000;
 }
 
+.collection a.collection-item i {
+    color: #333;
+}
+
 
 /* ====== CANVAS ====== */
 
