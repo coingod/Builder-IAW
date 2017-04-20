@@ -12,7 +12,6 @@ define([
 
     Canvas.initialize = function(editor) {
         Editor = editor;
-        //console.log(Editor.Tileset.info.tw);
 
         //Obtenemos el Tileset que esta activo
         var tileset = Editor.Tileset;
@@ -86,7 +85,7 @@ define([
 
         //Vinculamos a la capa actual con el CSS de la imagen del tileset
         //Esto fuerza a una capa a tener un solo tileset activo, cambiar mas adelante!
-        $(currentLayer.layer).addClass("ts_1"); //("ts_" + tileset.id);
+        $(currentLayer.layer).addClass("ts_"+Editor.Tileset.info.id); //("ts_" + tileset.id);
         //$(currentLayer.layer).attr("data-tileset", "spritesheet.png");//tileset.name);
 
         //Calculamos la posicion del cursor
@@ -97,13 +96,17 @@ define([
         var offset = $("#canvas").find(".cursor").css("background-position").split(" ");
         var ofx = parseInt(offset[0], 10);
         var ofy = parseInt(offset[1], 10);
-
+		
         //Preparo el atributo con las coordenadas normalizadas actuales
         var coords = Canvas.cx + "." + Canvas.cy;
         //Busco en la capa actual algun div con las coordenadas del cursor
         var div = $(currentLayer.layer).find("div[data-coords='" + coords + "']");
         //Si encontre un resultado, entonces ya tengo un tile almacenado
         var tile = div;
+		
+		//Obtenemos la imagen de la categoria que se esta dibujando
+		var img=Editor.Tileset.info.categories[Editor.Tileset.info.currentCategoryIndex].path;
+		
         //Si no hay resultado quiere decir que aun no hay nada en esta posicion
         if (div.length == 0) {
             //Debemos crear un div con el atributo data-coords
@@ -113,9 +116,10 @@ define([
                 position: "absolute",
                 left: cxp + "px",
                 top: cyp + "px",
-            });
+			});
             //Agregamos al CSS el offset del tile en el tileset
             tile.css("background-position", ofx + "px " + ofy + "px");
+			tile.css("background-image", "url("+img+")");
             //Agregamos el nuevo elemento a la capa
             $(currentLayer.layer).append(tile);
         } else {
@@ -126,6 +130,7 @@ define([
             });
             //Agregamos al CSS el offset del tile en el tileset
             tile.css("background-position", ofx + "px " + ofy + "px");
+			tile.css("background-image", "url("+img+")");
         }
     };
 
