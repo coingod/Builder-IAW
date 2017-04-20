@@ -7,8 +7,8 @@ define([
     var lastLayerID = 0;
 
     //Iconos para el toggle de visibilidad de las capas
-    var icon_visible = "fa fa-eye fa-lg";
-    var icon_not_visible = "fa fa-eye-slash fa-lg";
+    var icon_visible = "visibility"; //fa fa-eye fa-lg";
+    var icon_not_visible = "visibility_off"; //"fa fa-eye-slash fa-lg";
 
     Layers.initialize = function(editor) {
 
@@ -17,7 +17,7 @@ define([
         //Registramos el oyente de capa activa
         $("#layerlist").on("mousedown", "a", function(e) {
             //Si hicimos click en el icono de visibilidad, retornamos
-            if ($(e.target).hasClass(icon_visible) || $(e.target).hasClass(icon_not_visible)) return;
+            if ($(e.target).text() == icon_visible || $(e.target).text() == icon_not_visible) return;
             //Desmarcamos la capa actual
             $("#layerlist a").removeClass("active");
             //Marcamos la capa como la actual
@@ -25,7 +25,7 @@ define([
         });
 
         //Registramos los oyentes para agregar/eliminar/toggle capas
-        $("#layerlist").on("click", "a span", this.toggle);
+        $("#layerlist").on("click", "a i", this.toggle);
         $("#layers_add").on("click", this.addLayer);
         $("#layers_del").on("click", this.deleteLayer);
 
@@ -42,14 +42,12 @@ define([
     Layers.toggle = function(event) {
         var icon = event.target;
         //Si es visible
-        if ($(icon).hasClass(icon_visible)) {
+        if ($(icon).text() == icon_visible) {
             //Desactivo la capa
-            $(icon).removeClass(icon_visible);
-            $(icon).addClass(icon_not_visible);
+            $(icon).text(icon_not_visible);
         } else {
             //Activo la capa
-            $(icon).removeClass(icon_not_visible);
-            $(icon).addClass(icon_visible);
+            $(icon).text(icon_visible);
         }
         //Obtenemos la ID de la capa
         var id = $(icon).parent().attr("data-id");
@@ -68,7 +66,7 @@ define([
         if (!name) name = "Layer " + currentLayer;
         //Creamos el item con la ID correspondiente
         //var layer = $("<li class='collection-item active' data-id=" + currentLayer + " > " + name + "<span class='" + icon_visible + "'</span> </li>");
-        var layer = $("<a href='#!' class='collection-item active' data-id=" + currentLayer + " > " + name + "<span class='" + icon_visible + "'</span> </a>");
+        var layer = $("<a href='#!' class='collection-item active' data-id=" + currentLayer + " > " + name + "<i class='secondary-content material-icons'>visibility</i> </a>");
         //Agregamos el item a la interfaz
         $("#layerlist").append(layer);
 

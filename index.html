@@ -51,12 +51,6 @@
             <div id="tileset">
                 <div id="tileset_container">
                     <ul id="tilelist" class="collection">
-                        <!-- TEST
-                        <a href="#!" class="collection-item avatar"><img src="http://materializecss.com/images/yuna.jpg" alt="" class="circle"><span class="title">Title</span></a>
-                        <a href="#!" class="collection-item avatar active"><img src="http://materializecss.com/images/yuna.jpg" alt="" class="circle"><span class="title">Title</span></a>
-                        <a href="#!" class="collection-item avatar"><img src="http://materializecss.com/images/yuna.jpg" alt="" class="circle"><span class="title">Title</span></a>
-                        <a href="#!" class="collection-item avatar"><img src="http://materializecss.com/images/yuna.jpg" alt="" class="circle"><span class="title">Title</span></a>
-                        -->
                     </ul>
                 </div>
             </div>
@@ -71,6 +65,7 @@
         </section>
     </div>
 
+    <!-- Panel del Canvas/Mapa -->
     <div id="canvas_wrapper">
         <h2> Canvas </h2>
         <!-- El Canvas es en donde el usuario coloca los elementos/tiles -->
@@ -80,6 +75,24 @@
             <!-- Representacion del cursor sobre el canvas -->
             <div class="cursor"></div>
         </div>
+    </div>
+
+    <!-- Boton de herramientas -->
+    <div class="fixed-action-btn vertical click-to-toggle">
+        <a class="btn-floating btn-large red">
+            <i class="material-icons">build</i>
+        </a>
+        <ul>
+            <!-- Modo para dibujar sobre el canvas -->
+            <li><a class="btn-floating tooltipped red" data-position="left" data-delay="50" data-tooltip="Editar"><i class="material-icons">mode_edit</i></a></li>
+            <!-- Modo para seleccionar elemento del canvas y asignarlo al cursor -->
+            <li><a class="btn-floating tooltipped blue" data-position="left" data-delay="50" data-tooltip="Pick"><i class="material-icons">colorize</i></a></li>
+            <!-- Modo para acercar/alejar el canvas -->
+            <li><a class="btn-floating tooltipped yellow darken-1" data-position="left" data-delay="50" data-tooltip="Zoom"><i class="material-icons">zoom_in</i></a></li>
+            <!-- Modo para mover el canvas -->
+            <li><a class="btn-floating tooltipped green" data-position="left" data-delay="50" data-tooltip="Mover Canvas"><i class="material-icons">pan_tool</i></a></li>
+
+        </ul>
     </div>
 
     <!-- data-main attribute tells require.js to load js/main.js after require.js loads. -->
