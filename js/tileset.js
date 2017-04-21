@@ -1,73 +1,81 @@
 define([
     "jquery-ui"
 ], function($) {
-	
+
     var Tileset = {},
         Editor,
-		currentCategoryIndex=0,
-		i=0;
-	
-	//Iconos para el toggle de visibilidad de las capas
-    var icon_visible = "fa fa-eye fa-lg";
-    var icon_not_visible = "fa fa-eye-slash fa-lg";
+        currentCategoryIndex = 0,
+        i = 0;
 
     Tileset.initialize = function(namespace) {
-		Editor = namespace;
-		
-		//JSON info
-		Tileset.info={
-			"tw":64,
-			"th":64,
-			"id":1,
-			"categories":[
-							{"name":"Rutas", "path":"img/tilesets/spritesheet.png", "icon":"img/tilesets/icons/route.png"},
-							{"name":"Edificios", "path":"img/tilesets/TileSet.png", "icon":"img/tilesets/icons/building.png"}
-						],
-			"currentCategoryIndex":0
-		};
-		
-		for(i=0; i<Tileset.info.categories.length; i++){
-			var category = $("<a href='#!' class='tabs-fixed-width' data-id=" + i + " > " + Tileset.info.categories[i].name +"</a>");
-			$("#categorieslist").append(category);
-		}
-		
-		Editor.Tileset = Tileset;
-		$("#tileset_container").css({
+        Editor = namespace;
+
+        //JSON info
+        Tileset.info = {
+            "tw": 64,
+            "th": 64,
+            "id": 1,
+            "categories": [
+                { "name": "Rutas", "path": "img/tilesets/spritesheet.png", "icon": "img/tilesets/icons/route.png" },
+                { "name": "Edificios", "path": "img/tilesets/TileSet.png", "icon": "img/tilesets/icons/building.png" }
+            ],
+            "currentCategoryIndex": 0
+        };
+
+        //Iteramos sobre la informacion del JSON creando una categoria para cada tileset
+        for (i = 0; i < Tileset.info.categories.length; i++) {
+            //Generamos la pestaña de la categoria para el panel del editor
+            var category = $("<li class='tab col s3'><a href='#tilelist_" + i + "' data-id=" + i + " > " + Tileset.info.categories[i].name + "</a></li>");
+            $("#categorieslist").append(category);
+
+            //Agregamos un panel para contener la lista de tiles de la categoria
+            $("#tileset_container").append("<div id='tilelist_" + i + "' class='tilelist collection col s12'></div>");
+            Tileset.add(Tileset.info.categories[i], i, Tileset.info.tw, Tileset.info.th);
+        }
+
+        Editor.Tileset = Tileset;
+        $("#tileset_container").css({
             width: $("#tileset").width(),
             height: $("#tileset").height(),
         });
 
-		
-		//Seteo de oyentes
-		$("#categorieslist").on("click", "a", this.selectCategory); //Cambio de categoria 
-        $("#tilelist").on("mousedown", "a", this.makeSelection); //Seleccion de tile
-        $("#tilelist").on("mousedown", "a", this.rotarTile); //Seleccion de tile
+        //Agregamos la barra de desplazamiento vertical al contenedor de tilesets
+        $("#tileset_container").jScrollPane();
+        //Fixea que la barra de desplazamiento este corrida
+        //$("#tileset_container").css("width", "260px");
+        //$("#tileset_container .jspContainer").css("width", "260px");
 
-		return this;
+        //Seteo de oyentes
+        //$("#categorieslist").on("click", "a", this.selectCategory); //Cambio de categoria 
+        $(".tilelist").on("mousedown", "a", this.makeSelection); //Seleccion de tile
+        //$(".tilelist").on("mousedown", "a", this.rotarTile); //Seleccion de tile
+
+        return this;
 
     };
-	
-	Tileset.selectCategory=function(e){
-		var cat = e.target;
-		Tileset.info.currentCategoryIndex=$(cat).attr("data-id");
-		$('#tilelist').empty(); //Dejamos vacia la lista de tiles ya que la vamos a llenar de nuevo
-		Tileset.add(Tileset.info.categories[$(cat).attr("data-id")], $(cat).attr("data-id"), Tileset.info.tw, Tileset.info.th);
-		
-		$("#tileset_container").jScrollPane();
-		//Fixea que la barra de desplazamiento este corrida
-		$("#tileset_container").css("width", "260px");
-		$("#tileset_container .jspContainer").css("width", "260px");
-        this.resetSelection();
-		
-	}
 
+    /*
+    Tileset.selectCategory = function(e) {
+        var cat = e.target;
+        Tileset.info.currentCategoryIndex = $(cat).attr("data-id");
+        $('#tilelist').empty(); //Dejamos vacia la lista de tiles ya que la vamos a llenar de nuevo
+        Tileset.add(Tileset.info.categories[$(cat).attr("data-id")], $(cat).attr("data-id"), Tileset.info.tw, Tileset.info.th);
+
+        $("#tileset_container").jScrollPane();
+        //Fixea que la barra de desplazamiento este corrida
+        $("#tileset_container").css("width", "260px");
+        $("#tileset_container .jspContainer").css("width", "260px");
+        this.resetSelection();
+
+    }
+    */
 
     Tileset.add = function(category, index, tw, th) {
         var img = new Image(),
             name = category.name,
             style = document.createElement("style"), // Se deja este style en el head para que lo obtenga el canvas a la hora de dibujar
-            id = Tileset.info.id;
-		
+            id = index; //Tileset.info.id;
+
         img.src = category.path; //Imagen de la que vamos a cargar los tiles
         var that = this; //Var aux para poder acceder desde el listener al metodo set
 
@@ -76,33 +84,33 @@ define([
             buffer.canvas.width = category.width = this.width;
             buffer.canvas.height = category.height = this.height;
             buffer.drawImage(this, 0, 0);
-			
+
             // Procesado de la imagen de la categoria
             if (category.alpha) { category.base64 = Tileset.setAlpha(this, category.alpha); }
             if (category.margin) { category.base64 = Tileset.slice(this, category); }
             category.base64 = buffer.canvas.toDataURL();
             category.id = id;
-			
-			//Dibujamos la lista de tiles de la categoria
-            Tileset.draw(this, category);
-			
-			$(style).attr("id", "tileset_" + id);
-			css = ".ts_" + id + ", .ts_" + id + " > div {\n";
-			css += "\twidth: " + tw + "px;\n";
-			css += "\theight: " + th+ "px;\n";
-			css += "\tbackground-image: url('" + category.base64 + "');\n";
-			css += "}";
-			$(style).append(css);
-			
-			//console.log(css);
-			$("head").append(style);
+
+            //Dibujamos la lista de tiles de la categoria
+            Tileset.draw(this, category, index);
+
+            $(style).attr("id", "tileset_" + id);
+            css = ".ts_" + id + ", .ts_" + id + " > div {\n";
+            css += "\twidth: " + tw + "px;\n";
+            css += "\theight: " + th + "px;\n";
+            css += "\tbackground-image: url('" + category.base64 + "');\n";
+            css += "}";
+            $(style).append(css);
+
+            //console.log(css);
+            $("head").append(style);
 
         }, false);
-		
-		
+
+
     };
 
-    Tileset.draw = function(img, opts) {
+    Tileset.draw = function(img, opts, index) {
         var bufferADibujar = document.createElement("canvas").getContext("2d"),
             tw = Tileset.info.tw,
             th = Tileset.info.th,
@@ -113,10 +121,10 @@ define([
 
         var celdasY = Math.floor(img.height / th);
         var celdasX = Math.floor(img.width / tw);
-        var lista = $("#tilelist a");
+        //var lista = $("#tilelist a");
         var tile, coords, rotador;
         var css;
-		
+
         for (y = 0; y < celdasY; y++) {
             for (x = 0; x < celdasX; x++) {
                 xAct = x * tw;
@@ -124,21 +132,23 @@ define([
                 coords = xAct + "." + yAct;
                 nroit = x + y * celdasX;
                 bufferADibujar.drawImage(img, xAct, yAct, tw, th, 0, 0, tw, th);
-                tile = $("<a href='#!' class='collection-item avatar' data-tid='" + nroit + "' data-coords='" + coords + "' data-rotate=0><img src='" + bufferADibujar.canvas.toDataURL() + "' class='circle'><span class='title'> TileID:" + nroit + "</span></a>");
-                $("#tilelist").append(tile);
-			}
+                //tile = $("<a href='#!' class='collection-item avatar' data-tid='" + nroit + "' data-coords='" + coords + "' data-rotate=0><img src='" + bufferADibujar.canvas.toDataURL() + "' class='circle'><span class='title'> TileID:" + nroit + "</span></a>");
+                tile = $("<a href='#!' class='collection-item avatar' data-ts='" + index + "' data-coords='" + coords + "' data-rotate=0><img src='" + bufferADibujar.canvas.toDataURL() + "' class='circle'><span class='title'> TileID:" + nroit + "</span></a>");
+                $("#tilelist_" + index).append(tile);
+            }
         }
     };
-	
-	Tileset.rotarTile = function(e){
-		//El e se da en un click derecho en la lista. 
-		if(e.which==3){ 
-			var tileSelected = e.currentTarget;
-			var rotacionActual = parseInt($(tileSelected).attr("data-rotate"));
-			var tileInList = $("#tilelist a").filter("[data-tid='"+$(tileSelected).attr("data-tid")+"']");
-			$(tileInList).attr("data-rotate",parseInt(rotacionActual+90));
-		}
-	}
+    /*
+    Tileset.rotarTile = function(e) {
+        //El e se da en un click derecho en la lista. 
+        if (e.which == 3) {
+            var tileSelected = e.currentTarget;
+            var rotacionActual = parseInt($(tileSelected).attr("data-rotate"));
+            var tileInList = $("#tilelist a").filter("[data-tid='" + $(tileSelected).attr("data-tid") + "']");
+            $(tileInList).attr("data-rotate", parseInt(rotacionActual + 90));
+        }
+    }
+    */
 
     Tileset.resetSelection = function() {
         $("#canvas .cursor").remove();
@@ -147,9 +157,6 @@ define([
     };
 
     Tileset.makeSelection = function(e) {
-        //console.log(e.target);
-        //console.log(e.currentTarget);
-
         var tw = Tileset.info.tw;
         var th = Tileset.info.th;
         var tileSelected = e.currentTarget; //e.target;
@@ -158,24 +165,25 @@ define([
         var ex = sx + tw;
         var sy = tileCoords.split(".")[1];
         var ey = sy + th;
-        var id = 1;
-		var rotacion=$(tileSelected).attr("data-rotate")+"deg";
+        var id = $(tileSelected).attr("data-ts"); //1;
+        var rotacion = $(tileSelected).attr("data-rotate") + "deg";
         //Desmarcamos el tile actual actual en el panel
-        $("#tilelist a").removeClass("active");
+        $(".tilelist a").removeClass("active");
         //Marcamos el tile como actual en el panel
         $(tileSelected).addClass("active");
 
         if (!$("#canvas .cursor").length) { $("#canvas").append("<div class='cursor'></div>"); }
-		
-		console.log($(tileSelected).attr("data-rotate"));
-		
+
+        //console.log($(tileSelected).attr("data-rotate"));
+
         $("#canvas .cursor").css({
             width: tw,
             height: th,
             backgroundColor: "transparent",
             opacity: "0.4",
-            backgroundPosition: (-sx) + "px " + (-sy) + "px",			
-		}).attr("class", "cursor ts_" + id);
+            backgroundPosition: (-sx) + "px " + (-sy) + "px",
+        }).attr("class", "cursor ts_" + id);
+        $("#canvas .cursor").attr("data-ts", id);
     };
 
     // Filtra el alpha especificado. Alpha es un color representado de la forma [R,G,B], viene a ser el fondo de cada imagen en el tileset

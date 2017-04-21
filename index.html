@@ -44,19 +44,33 @@
 
     <!-- Panel lateral del Editor -->
     <!-- <a class="btn button-collapse" href="#" data-activates="editor"><i class="material-icons">mode_edit</i></a> -->
-    <div id="editor" class="side-nav fixed">
+    <div id="editor" oncontextmenu="return false;" class="side-nav fixed">
         <section id="tilesets">
-            <h2> Tileset Categories</h2>
-			<ul id="categorieslist" class="tabs-fixed-width"></ul>
-            <div id="tileset">
-                <div id="tileset_container">
-                    <ul id="tilelist" class="collection">
+            <nav>
+                <div class="nav-wrapper blue">
+                    <a href="#!" class="brand-logo">Categorias</a>
+                </div>
+            </nav>
+            <div class="row">
+                <div class="col s12">
+                    <ul id="categorieslist" class="tabs tabs-fixed-width z-depth-1">
+                        <!-- En tiempo de ejecucion se genera un item por tileset -->
                     </ul>
+                </div>
+                <div id="tileset">
+                    <div id="tileset_container">
+                        <!-- En tiempo de ejecucion se genera una coleccion de tiles para cada tileset -->
+                    </div>
                 </div>
             </div>
         </section>
+
         <section id="layers">
-            <h3> Layers </h3>
+            <nav>
+                <div class="nav-wrapper blue">
+                    <a href="#!" class="brand-logo">Capas</a>
+                </div>
+            </nav>
             <div id="layerlist" class="collection"></div>
             <div class="buttons">
                 <button id="layers_add" class="waves-effect waves-light btn blue"><i class="material-icons">add_circle_outline</i></button>
@@ -66,8 +80,7 @@
     </div>
 
     <!-- Panel del Canvas/Mapa -->
-    <div id="canvas_wrapper">
-        <h2> Canvas </h2>
+    <main id="canvas_wrapper" class="container">
         <!-- El Canvas es en donde el usuario coloca los elementos/tiles -->
         <div id="canvas" oncontextmenu="return false;">
             <!-- Dentro de tiles habra una entrada por cada capa, cada capa almacena los tiles que el usuario le asigno -->
@@ -75,7 +88,7 @@
             <!-- Representacion del cursor sobre el canvas -->
             <div class="cursor"></div>
         </div>
-    </div>
+    </main>
 
     <!-- Boton de herramientas -->
     <div class="fixed-action-btn vertical click-to-toggle">
@@ -91,7 +104,6 @@
             <li><a class="btn-floating tooltipped yellow darken-1" data-position="left" data-delay="50" data-tooltip="Zoom"><i class="material-icons">zoom_in</i></a></li>
             <!-- Modo para mover el canvas -->
             <li><a class="btn-floating tooltipped green" data-position="left" data-delay="50" data-tooltip="Mover Canvas"><i class="material-icons">pan_tool</i></a></li>
-
         </ul>
     </div>
 
