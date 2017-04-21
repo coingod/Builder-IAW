@@ -7,13 +7,13 @@ define([
 ], function($, Canvas, Tileset, currentState, Layers) {
     var Editor = {};
 
-    Editor.tool = "draw"; //Que es lo que estoy haciendo, dibujando, rellenando, eliminando
+    Editor.tool = "edit_mode"; //Que es lo que estoy haciendo, dibujando, rellenando, eliminando
     Editor.mousedown = false; //Mouse presionado
 
     Editor.Tileset = Tileset.initialize(Editor);
     Editor.Canvas = Canvas.initialize(Editor);
     Editor.Layers = Layers.initialize(Editor);
-	Editor.currentState = currentState.initialize(Editor);
+    Editor.currentState = currentState.initialize(Editor);
     Editor.initialize = function() {
 
         //Estado del mouse
@@ -22,13 +22,28 @@ define([
         });
         // e.which indica el click que fue realizado: 1=izquierdo
 
-        /*
-        $('.button-collapse').sideNav({
-            menuWidth: 300, // Default is 300
-            closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
-            draggable: true // Choose whether you can drag to open on touch screens
+        //Oyentes de los botones de herramientas
+        $("#edit_mode").on("click", function() {
+            $("#tools > li > a").removeClass("pulse");
+            $("#edit_mode > a").addClass("pulse");
+            Editor.tool = "edit_mode";
+            $("#canvas").draggable("disable");
+            $("#canvas .cursor").toggle();
         });
-        */
+        $("#pan_mode").on("click", function() {
+            $("#tools > li > a").removeClass("pulse");
+            $("#pan_mode > a").addClass("pulse");
+            Editor.tool = "pan_mode";
+            $("#canvas").draggable("enable");
+            $("#canvas .cursor").toggle();
+        });
+
+        //Seteamos Modo de edicion por defecto
+        $("#edit_mode").click();
+        $("#canvas .cursor").toggle();
+
+        //Desplegamos las herramientas al iniciar
+        $('.fixed-action-btn').openFAB();
 
         // Disable selection
         $("#tileset, #canvas_wrapper").disableSelection();

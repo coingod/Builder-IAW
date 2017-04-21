@@ -7,30 +7,27 @@ footer {
 }
 
 
-/*
-nav {
-    background-color: #262626;
-    box-shadow: 0px 0px 100px rgba(0, 0, 0, 0.5);
-}
-*/
-
-
 /* ====== TILESETS ====== */
+
+.tabs .tab a {
+    color: #2196F3;
+}
+
+.tabs .tab a:hover,
+.tabs .tab a.active {
+    color: #2196F3;
+}
+
+.tabs .indicator {
+    background-color: #2196F3;
+}
 
 #tileset_container {
     position: relative;
     float: left;
-    /*width: 260px;*/
+    width: 268px;
+    height: 500px;
 }
-
-
-/* Fixea que la barra de desplazamientoe este corrida
-
-#tileset_container .jspContainer {
-    width: 260px;
-}
-
-*/
 
 #custom_select {
     width: 100%;
@@ -52,12 +49,8 @@ nav {
 
 #tileset {
     height: 500px;
-    /*background-color: #b39ddb;*/
     margin-left: 5%;
     margin-right: 5%;
-    /*border: 5px solid #555;
-    border-radius: 3px 3px 3px 3px;
-    */
 }
 
 
@@ -90,19 +83,15 @@ nav {
 .collection .collection-item.avatar .title {
     position: relative;
     font-size: 16px;
-    /*padding: 16px 24px;
-    color: #ffab40;
-    margin-right: 24px;
-    transition: color .3s ease;*/
     text-transform: uppercase;
 }
 
 .collection a.collection-item {
-    color: #000;
+    color: #2196F3;
 }
 
 .collection a.collection-item i {
-    color: #333;
+    color: #2196F3;
 }
 
 
@@ -156,7 +145,16 @@ nav {
 */
 
 
+/* ====== LAYERS ====== */
+
+
 /* Items de la lista de capas */
+
+#layerlist {
+    height: 150px;
+    margin-left: 5%;
+    margin-right: 5%
+}
 
 .collection .collection-item.active {
     background-color: #2196F3;

@@ -12,11 +12,7 @@ require.config({
             exports: "$",
             deps: ["jquery", "jquery.mousewheel", "jquery.jscrollpane"]
         },
-        /*
-        "underscore": {
-            exports: "_"
-        },
-        */
+
         "materialize": {
             //exports: "material",
             deps: ["jquery-ui"]
@@ -32,9 +28,9 @@ require.config({
         "jquery-ui": "libs/jquery-ui",
         "jquery.mousewheel": "plugins/jquery.mousewheel",
         "jquery.jscrollpane": "plugins/jquery.jscrollpane",
+        "jquery.draggable": "plugins/jquery.draggable",
 
         "materialize": "libs/materialize",
-        //"underscore": "libs/underscore",
         "text": "plugins/text",
         "templates": "../templates"
     }

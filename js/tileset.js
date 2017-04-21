@@ -5,7 +5,7 @@ define([
     var Tileset = {},
         Editor,
         scrollPaneApi;
-		
+
     Tileset.initialize = function(namespace) {
         Editor = namespace;
 
@@ -30,43 +30,24 @@ define([
             Tileset.add(Tileset.info.categories[i], i, Tileset.info.tw, Tileset.info.th);
         }
 
-        Editor.Tileset = Tileset;
-        $("#tileset_container").css({
-            width: $("#tileset").width(),
-            height: $("#tileset").height()
-        });
-
         //Agregamos la barra de desplazamiento vertical al contenedor de tilesets
         scrollPaneApi = $("#tileset_container").jScrollPane().data('jsp');
-      
-		$("#tileset_container").on("mouseover", function() {
-            scrollPaneApi.reinitialise(); //Reinicia cuando se cambia de categoria nada mas. 
-        });
 
         //Seteo de oyentes
-        //$("#categorieslist").on("click", "a", this.selectCategory); //Cambio de categoria 
         $(".tilelist").on("mousedown", "a", this.makeSelection); //Seleccion de tile
         //$(".tilelist").on("mousedown", "a", this.rotarTile); //Seleccion de tile
+        //Al cambiar de categoria se ajusta el scroll
+        $("#categorieslist").on("mouseup", function() {
+            //Debemos esperar unos ms antes de hacerlo para que el cambio de categoria sea registrado
+            setTimeout(function() { scrollPaneApi.reinitialise(); }, 100);
+        });
+
+        //Esperamos unos ms y reinicializamos el scroll para que efectivamente se muestre
+        setTimeout(function() { scrollPaneApi.reinitialise(); }, 150);
 
         return this;
 
     };
-
-    /*
-    Tileset.selectCategory = function(e) {
-        var cat = e.target;
-        Tileset.info.currentCategoryIndex = $(cat).attr("data-id");
-        $('#tilelist').empty(); //Dejamos vacia la lista de tiles ya que la vamos a llenar de nuevo
-        Tileset.add(Tileset.info.categories[$(cat).attr("data-id")], $(cat).attr("data-id"), Tileset.info.tw, Tileset.info.th);
-
-        $("#tileset_container").jScrollPane();
-        //Fixea que la barra de desplazamiento este corrida
-        $("#tileset_container").css("width", "260px");
-        $("#tileset_container .jspContainer").css("width", "260px");
-        this.resetSelection();
-
-    }
-    */
 
     Tileset.add = function(category, index, tw, th) {
         var img = new Image(),
@@ -130,10 +111,10 @@ define([
                 coords = xAct + "." + yAct;
                 nroit = x + y * celdasX;
                 bufferADibujar.drawImage(img, xAct, yAct, tw, th, 0, 0, tw, th);
-				//tile = $("<a href='#!' class='collection-item avatar' data-tid='" + nroit + "' data-coords='" + coords + "' data-rotate=0><img src='" + bufferADibujar.canvas.toDataURL() + "' class='circle'><span class='title'> TileID:" + nroit + "</span></a>");
+                //tile = $("<a href='#!' class='collection-item avatar' data-tid='" + nroit + "' data-coords='" + coords + "' data-rotate=0><img src='" + bufferADibujar.canvas.toDataURL() + "' class='circle'><span class='title'> TileID:" + nroit + "</span></a>");
                 tile = $("<a href='#!' class='collection-item avatar' data-ts='" + index + "' data-coords='" + coords + "' data-rotate=0><img src='" + bufferADibujar.canvas.toDataURL() + "' class='circle'><span class='title'> TileID:" + nroit + "</span></a>");
                 $("#tilelist_" + index).append(tile);
-				bufferADibujar.clearRect(0, 0, tw, th); //Limpio el buffer para que al dibujar elementos transparentes no quede basura del tile anterior
+                bufferADibujar.clearRect(0, 0, tw, th); //Limpio el buffer para que al dibujar elementos transparentes no quede basura del tile anterior
             }
         }
     };

@@ -1,5 +1,6 @@
 define([
-    "jquery-ui"
+    "jquery-ui",
+    "jquery.draggable"
 ], function($) {
 
     var Canvas = {},
@@ -75,14 +76,24 @@ define([
         //Nos aseguramos de que el canvas se acomode a la ventana
         //$(window).on("resize", Canvas.updatePosition());
 
+        //Configuramos el Canvas para que sea posible moverlo
+        $("#canvas").draggable({
+            disabled: true,
+            cursor: "move",
+        });
+
         return this;
     };
 
     //Dibujamos el elemento selecionado del tileset en la posicion del cursor de la capa actual
     Canvas.draw = function() {
-		//DEBUGUEANDO COMO UN CAMPEON
-		Editor.currentState.exportar();
-		
+
+        //Si no estamos en modo edicion, no hacemos nada
+        if (Editor.tool != "edit_mode") return;
+
+        //DEBUGUEANDO COMO UN CAMPEON
+        Editor.currentState.exportar();
+
         //Obtenemos la capa actualmente activa
         var currentLayer = Editor.Layers.currentLayer();
 

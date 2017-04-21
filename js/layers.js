@@ -5,10 +5,12 @@ define([
     var Layers = {},
         Editor;
     var lastLayerID = 0;
+    var scrollPaneApi;
 
     //Iconos para el toggle de visibilidad de las capas
     var icon_visible = "visibility"; //fa fa-eye fa-lg";
     var icon_not_visible = "visibility_off"; //"fa fa-eye-slash fa-lg";
+
 
     Layers.initialize = function(editor) {
 
@@ -29,12 +31,12 @@ define([
         $("#layers_add").on("click", this.addLayer);
         $("#layers_del").on("click", this.deleteLayer);
 
+        //Agregamos la barra de desplazamiento vertical al contenedor de tilesets
+        scrollPaneApi = $("#layerlist").jScrollPane().data('jsp');
+
         //Agregamos 2 capas por defecto
         this.addLayer(null, "Background");
         this.addLayer(null, null);
-
-        //Agregamos el scroll pane
-        //("#layerlist").jScrollPane();
 
         return this;
     };
@@ -68,7 +70,10 @@ define([
         //var layer = $("<li class='collection-item active' data-id=" + currentLayer + " > " + name + "<span class='" + icon_visible + "'</span> </li>");
         var layer = $("<a href='#!' class='collection-item active' data-id=" + currentLayer + " > " + name + "<i class='secondary-content material-icons'>visibility</i> </a>");
         //Agregamos el item a la interfaz
-        $("#layerlist").append(layer);
+        //$("#layerlist").append(layer);
+        scrollPaneApi.getContentPane().append(layer);
+        //Ajustamos el scroll
+        scrollPaneApi.reinitialise();
 
         //Creamos el div de esta Capa para el Canvas
         //En donde se almacenaran todos los tiles asociados
@@ -95,6 +100,8 @@ define([
         $("#layerlist a").filter(".active").remove();
         //Marcamos la ultima capa como la actual
         $("#layerlist a").last().addClass("active");
+        //Ajustamos el scroll
+        scrollPaneApi.reinitialise();
     };
 
     //Retorna un par {Capa, ID} con el DOM de la capa actual y su id
