@@ -1,9 +1,48 @@
-/* Corremos a la derecha para dar lugar al panel del Editor */
+nav {
+    background-color: #2196F3;
+    height: 56px;
+    line-height: 56px;
+}
 
-header,
-main,
-footer {
-    padding-left: 300px;
+nav.nav-extended .nav-wrapper {
+    min-height: 56px;
+    height: auto;
+}
+
+nav i.material-icons {
+    display: block;
+    font-size: 24px;
+    height: 56px;
+    line-height: 56px;
+}
+
+.dropdown-content li>a,
+.dropdown-content li>span {
+    font-size: 16px;
+    color: #2196F3;
+    display: block;
+    line-height: 22px;
+    padding: 14px 16px;
+}
+
+#editor {
+    position: absolute;
+    top: 56px;
+    background-color: #fff;
+    z-index: 2;
+}
+
+.row .col {
+    padding: 0;
+}
+
+header {
+    position: relative;
+    z-index: 1;
+}
+
+.brand-logo i {
+    margin-left: 20px;
 }
 
 
@@ -23,10 +62,9 @@ footer {
 }
 
 #tileset_container {
-    position: relative;
-    float: left;
-    width: 268px;
-    height: 500px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #custom_select {
@@ -45,12 +83,6 @@ footer {
 
 #custom_select:hover {
     background-image: url("../img/icons/select_arrow_hover.png");
-}
-
-#tileset {
-    height: 500px;
-    margin-left: 5%;
-    margin-right: 5%;
 }
 
 
@@ -97,14 +129,19 @@ footer {
 
 /* ====== CANVAS ====== */
 
+
+/* z-index negativo para que no tape a la interfaz */
+
 #canvas {
     position: absolute;
     z-index: 0;
     display: block;
     background-color: #FFF;
-    overflow: hidden;
+    /*overflow: hidden;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
-    top: 15%;
+    top: 15%;*/
+    margin-left: auto;
+    margin-right: auto
 }
 
 
@@ -138,20 +175,13 @@ footer {
 }
 
 
-/* Colocamos el Editor por debajo del Header
-.side-nav {
-    top: 64px
-}
-*/
-
-
 /* ====== LAYERS ====== */
 
 
 /* Items de la lista de capas */
 
 #layerlist {
-    height: 150px;
+    /*height: 150px;*/
     margin-left: 5%;
     margin-right: 5%
 }

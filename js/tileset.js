@@ -30,9 +30,19 @@ define([
             Tileset.add(Tileset.info.categories[i], i, Tileset.info.tw, Tileset.info.th);
         }
 
+        //Configuramos el alto de la lista de tiles en funcion del alto de la pagina
+        $("#tileset_container").css({
+            height: $(window).height() / 2
+        });
+
         //Agregamos la barra de desplazamiento vertical al contenedor de tilesets
         scrollPaneApi = $("#tileset_container").jScrollPane().data('jsp');
-
+        /*
+        //Hacemos "responsive" al scroll
+        $(window).on('resize', function() {
+            scrollPaneApi.getContentPane().reinitialise();
+        });
+        */
         //Seteo de oyentes
         $(".tilelist").on("mousedown", "a", this.makeSelection); //Seleccion de tile
         //$(".tilelist").on("mousedown", "a", this.rotarTile); //Seleccion de tile

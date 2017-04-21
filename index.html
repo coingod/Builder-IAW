@@ -20,74 +20,77 @@
 </head>
 
 <body>
-    <!-- Encabezado de la pagina -->
-    <header>
-        <!-- Estructura del Menu de Opciones -->
-        <ul id="dropdown_opciones" class="dropdown-content">
-            <li><a href="#!">Nuevo Mapa</a></li>
-            <li><a href="#!">Exportar Mapa</a></li>
-            <li><a href="#!">Importar Mapa</a></li>
-            <li class="divider"></li>
-            <li><a href="#!">Importar Tileset</a></li>
-        </ul>
-        <!-- Barra de titulo/navegacion -->
-        <nav>
-            <div class="nav-wrapper blue">
-                <a href="#!" class="brand-logo"><i class="material-icons">business</i>BUILDER</a>
-                <ul class="right hide-on-med-and-down">
-                    <!-- Trigger del Menu de Opciones-->
-                    <li><a class="dropdown-button" href="#!" data-activates="dropdown_opciones">Opciones<i class="material-icons right">more_vert</i></a></li>
-                </ul>
-            </div>
-        </nav>
-    </header>
+    <main class="row" oncontextmenu="return false;">
 
-    <!-- Panel lateral del Editor -->
-    <!-- <a class="btn button-collapse" href="#" data-activates="editor"><i class="material-icons">mode_edit</i></a> -->
-    <div id="editor" oncontextmenu="return false;" class="side-nav fixed">
-        <section id="tilesets">
+        <!-- Cabecera de la pagina -->
+        <header class="col s12 z-depth-5">
+            <!-- Estructura del Menu de Opciones -->
+            <ul id="dropdown_opciones" class="dropdown-content">
+                <li><a href="#!">Nuevo Mapa</a></li>
+                <li><a href="#!">Exportar Mapa</a></li>
+                <li><a href="#!">Importar Mapa</a></li>
+                <li class="divider"></li>
+                <li><a href="#!">Importar Tileset</a></li>
+            </ul>
+            <!-- Barra de titulo/navegacion -->
             <nav>
-                <div class="nav-wrapper blue">
-                    <a href="#!" class="brand-logo">Categorias</a>
-                </div>
-            </nav>
-            <div class="row">
-                <div class="col s12">
-                    <ul id="categorieslist" class="tabs tabs-fixed-width z-depth-1">
-                        <!-- En tiempo de ejecucion se genera un item por tileset -->
+                <div class="nav-wrapper">
+                    <a href="#!" class="brand-logo"><i class="material-icons">account_balance</i>BUILDER</a>
+                    <ul class="right hide-on-med-and-down">
+                        <!-- Trigger del Menu de Opciones-->
+                        <li><a class="dropdown-button" href="#!" data-activates="dropdown_opciones">Opciones<i class="material-icons right">more_vert</i></a></li>
                     </ul>
                 </div>
-                <div id="tileset">
+            </nav>
+        </header>
+
+        <!-- Panel Editor lateral -->
+        <div id="editor" class="col s3 z-depth-5">
+
+            <section id="tilesets">
+                <nav>
+                    <div class="nav-wrapper">
+                        <a href="#!" class="brand-logo">Categorias</a>
+                    </div>
+                </nav>
+                <div class="row">
+                    <div class="col s12">
+                        <ul id="categorieslist" class="tabs tabs-fixed-width z-depth-1">
+                            <!-- En tiempo de ejecucion se genera un item por tileset -->
+                        </ul>
+                    </div>
                     <div id="tileset_container">
                         <!-- En tiempo de ejecucion se genera una coleccion de tiles para cada tileset -->
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <section id="layers">
-            <nav>
-                <div class="nav-wrapper blue">
-                    <a href="#!" class="brand-logo">Capas</a>
+            <section id="layers">
+                <nav>
+                    <div class="nav-wrapper">
+                        <a href="#!" class="brand-logo">Capas</a>
+                    </div>
+                </nav>
+                <div id="layerlist" class="collection"></div>
+                <div class="buttons">
+                    <button id="layers_add" class="waves-effect waves-light btn blue"><i class="material-icons">add_circle_outline</i></button>
+                    <button id="layers_del" class="waves-effect waves-light btn blue"><i class="material-icons">remove_circle_outline</i></button>
                 </div>
-            </nav>
-            <div id="layerlist" class="collection"></div>
-            <div class="buttons">
-                <button id="layers_add" class="waves-effect waves-light btn blue"><i class="material-icons">add_circle_outline</i></button>
-                <button id="layers_del" class="waves-effect waves-light btn blue"><i class="material-icons">remove_circle_outline</i></button>
-            </div>
-        </section>
-    </div>
+            </section>
 
-    <!-- Panel del Canvas/Mapa -->
-    <main id="canvas_wrapper" class="container">
-        <!-- El Canvas es en donde el usuario coloca los elementos/tiles -->
-        <div id="canvas" oncontextmenu="return false;">
-            <!-- Dentro de tiles habra una entrada por cada capa, cada capa almacena los tiles que el usuario le asigno -->
-            <div id="tiles"></div>
-            <!-- Representacion del cursor sobre el canvas -->
-            <div class="cursor"></div>
         </div>
+
+        <!-- Panel del Canvas/Mapa -->
+        <div id="canvas_wrapper" class="col s9">
+            <!-- El Canvas es en donde el usuario coloca los elementos/tiles -->
+            <div id="canvas" class="z-depth-3">
+                <!-- Dentro de tiles habra una entrada por cada capa, cada capa almacena los tiles que el usuario le asigno -->
+                <div id="tiles"></div>
+                <!-- Representacion del cursor sobre el canvas -->
+                <div class="cursor"></div>
+            </div>
+        </div>
+
     </main>
 
     <!-- Boton de herramientas -->

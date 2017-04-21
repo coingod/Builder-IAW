@@ -45,6 +45,11 @@ define([
         //Desplegamos las herramientas al iniciar
         $('.fixed-action-btn').openFAB();
 
+        //Ajustamos el alto del panel editor
+        $("#editor").css({
+            height: $(document).height() - $("header").height()
+        });
+
         // Disable selection
         $("#tileset, #canvas_wrapper").disableSelection();
     };

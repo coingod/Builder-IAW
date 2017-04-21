@@ -72,6 +72,7 @@ define([
 
         //Dibujamos la grilla del mapa
         Canvas.updateGrid();
+        Canvas.updatePosition();
 
         //Nos aseguramos de que el canvas se acomode a la ventana
         //$(window).on("resize", Canvas.updatePosition());
@@ -188,15 +189,13 @@ define([
             height: th
         });
     };
-    /*
+
     //Calcula la posicion del canvas para que este se encuentre centrado
     Canvas.updatePosition = function() {
-        var top = $(window).height() / 2 - $("#canvas").height() / 2;
-        //var left = $("#canvas_wrapper").width() / 2 + $("#editor").width() - $("#canvas").width() / 2;
-        var left = $("#canvas_wrapper").width() / 2 - $("#canvas").width() / 2;
+        var top = $(window).height() / 2 + $("header").height() / 2 - $("#canvas").height() / 2;
+        var left = $("#canvas_wrapper").width() / 2 + $("#editor").width() - $("#canvas").width() / 2;
         $("#canvas").css({ top: top, left: left });
     };
-    */
 
     return Canvas;
 });

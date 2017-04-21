@@ -31,9 +31,19 @@ define([
         $("#layers_add").on("click", this.addLayer);
         $("#layers_del").on("click", this.deleteLayer);
 
+        //Configuramos el alto de la lista de capas en funcion del alto de la pagina
+        $("#layerlist").css({
+            height: $(window).height() / 6
+        });
+
         //Agregamos la barra de desplazamiento vertical al contenedor de tilesets
         scrollPaneApi = $("#layerlist").jScrollPane().data('jsp');
-
+        /*
+        //Hacemos "responsive" al scroll
+        $(window).on('resize', function() {
+            scrollPaneApi.getContentPane().reinitialise();
+        });
+        */
         //Agregamos 2 capas por defecto
         this.addLayer(null, "Background");
         this.addLayer(null, null);
