@@ -4,6 +4,7 @@ define([
 
     var Tileset = {},
         Editor,
+        scrollPaneApi,
         currentCategoryIndex = 0,
         i = 0;
 
@@ -36,14 +37,17 @@ define([
         Editor.Tileset = Tileset;
         $("#tileset_container").css({
             width: $("#tileset").width(),
-            height: $("#tileset").height(),
+            height: $("#tileset").height()
         });
 
         //Agregamos la barra de desplazamiento vertical al contenedor de tilesets
-        $("#tileset_container").jScrollPane();
-        //Fixea que la barra de desplazamiento este corrida
-        //$("#tileset_container").css("width", "260px");
-        //$("#tileset_container .jspContainer").css("width", "260px");
+        scrollPaneApi = $("#tileset_container").jScrollPane().data('jsp');
+        //Fixeo re manija para que aparezca la barra de dezplazamiento
+        //Igual no esta mal reinicializarla ya que cuando cambiamos de pestaña, 
+        //cambia el alto del contenedor y hay que ajustar el scroll
+        $("#tilesets").on("mouseover", function() {
+            scrollPaneApi.reinitialise();
+        });
 
         //Seteo de oyentes
         //$("#categorieslist").on("click", "a", this.selectCategory); //Cambio de categoria 
