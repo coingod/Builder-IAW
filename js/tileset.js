@@ -4,10 +4,8 @@ define([
 
     var Tileset = {},
         Editor,
-        scrollPaneApi,
-        currentCategoryIndex = 0,
-        i = 0;
-
+        scrollPaneApi;
+		
     Tileset.initialize = function(namespace) {
         Editor = namespace;
 
@@ -15,12 +13,10 @@ define([
         Tileset.info = {
             "tw": 64,
             "th": 64,
-            "id": 1,
             "categories": [
                 { "name": "Rutas", "path": "img/tilesets/spritesheet.png", "icon": "img/tilesets/icons/route.png" },
                 { "name": "Edificios", "path": "img/tilesets/TileSet.png", "icon": "img/tilesets/icons/building.png" }
             ],
-            "currentCategoryIndex": 0
         };
 
         //Iteramos sobre la informacion del JSON creando una categoria para cada tileset
@@ -42,11 +38,9 @@ define([
 
         //Agregamos la barra de desplazamiento vertical al contenedor de tilesets
         scrollPaneApi = $("#tileset_container").jScrollPane().data('jsp');
-        //Fixeo re manija para que aparezca la barra de dezplazamiento
-        //Igual no esta mal reinicializarla ya que cuando cambiamos de pestaña, 
-        //cambia el alto del contenedor y hay que ajustar el scroll
-        $("#tilesets").on("mouseover", function() {
-            scrollPaneApi.reinitialise();
+      
+		$("#tileset_container").on("mouseover", function() {
+            scrollPaneApi.reinitialise(); //Reinicia cuando se cambia de categoria nada mas. 
         });
 
         //Seteo de oyentes
@@ -136,28 +130,16 @@ define([
                 coords = xAct + "." + yAct;
                 nroit = x + y * celdasX;
                 bufferADibujar.drawImage(img, xAct, yAct, tw, th, 0, 0, tw, th);
-                //tile = $("<a href='#!' class='collection-item avatar' data-tid='" + nroit + "' data-coords='" + coords + "' data-rotate=0><img src='" + bufferADibujar.canvas.toDataURL() + "' class='circle'><span class='title'> TileID:" + nroit + "</span></a>");
+				//tile = $("<a href='#!' class='collection-item avatar' data-tid='" + nroit + "' data-coords='" + coords + "' data-rotate=0><img src='" + bufferADibujar.canvas.toDataURL() + "' class='circle'><span class='title'> TileID:" + nroit + "</span></a>");
                 tile = $("<a href='#!' class='collection-item avatar' data-ts='" + index + "' data-coords='" + coords + "' data-rotate=0><img src='" + bufferADibujar.canvas.toDataURL() + "' class='circle'><span class='title'> TileID:" + nroit + "</span></a>");
                 $("#tilelist_" + index).append(tile);
+				bufferADibujar.clearRect(0, 0, tw, th); //Limpio el buffer para que al dibujar elementos transparentes no quede basura del tile anterior
             }
         }
     };
-    /*
-    Tileset.rotarTile = function(e) {
-        //El e se da en un click derecho en la lista. 
-        if (e.which == 3) {
-            var tileSelected = e.currentTarget;
-            var rotacionActual = parseInt($(tileSelected).attr("data-rotate"));
-            var tileInList = $("#tilelist a").filter("[data-tid='" + $(tileSelected).attr("data-tid") + "']");
-            $(tileInList).attr("data-rotate", parseInt(rotacionActual + 90));
-        }
-    }
-    */
 
     Tileset.resetSelection = function() {
         $("#canvas .cursor").remove();
-        $("#tileset .selection").remove();
-        delete Editor.selection;
     };
 
     Tileset.makeSelection = function(e) {

@@ -2,22 +2,18 @@ define([
     "jquery-ui",
     "canvas",
     "tileset",
-    "utils",
+    "currentState",
     "layers"
-], function($, Canvas, Tileset, Utils, Layers) {
+], function($, Canvas, Tileset, currentState, Layers) {
     var Editor = {};
 
     Editor.tool = "draw"; //Que es lo que estoy haciendo, dibujando, rellenando, eliminando
     Editor.mousedown = false; //Mouse presionado
-    Editor.selection = null;
-
-    //console.log(Editor.selection);
 
     Editor.Tileset = Tileset.initialize(Editor);
     Editor.Canvas = Canvas.initialize(Editor);
     Editor.Layers = Layers.initialize(Editor);
-    //Editor.Utils=Utils.initialize(Editor);
-
+	Editor.currentState = currentState.initialize(Editor);
     Editor.initialize = function() {
 
         //Estado del mouse

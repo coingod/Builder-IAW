@@ -80,6 +80,9 @@ define([
 
     //Dibujamos el elemento selecionado del tileset en la posicion del cursor de la capa actual
     Canvas.draw = function() {
+		//DEBUGUEANDO COMO UN CAMPEON
+		Editor.currentState.exportar();
+		
         //Obtenemos la capa actualmente activa
         var currentLayer = Editor.Layers.currentLayer();
 
@@ -106,8 +109,6 @@ define([
         //Si encontre un resultado, entonces ya tengo un tile almacenado
         var tile = div;
 
-        //Obtenemos la imagen de la categoria que se esta dibujando
-        var img = Editor.Tileset.info.categories[Editor.Tileset.info.currentCategoryIndex].path;
 
         //Si no hay resultado quiere decir que aun no hay nada en esta posicion
         if (div.length == 0) {
