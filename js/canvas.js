@@ -92,9 +92,6 @@ define([
         //Si no estamos en modo edicion, no hacemos nada
         if (Editor.tool != "edit_mode") return;
 
-        //DEBUGUEANDO COMO UN CAMPEON
-        Editor.currentState.exportar();
-
         //Obtenemos la capa actualmente activa
         var currentLayer = Editor.Layers.currentLayer();
 
@@ -153,6 +150,10 @@ define([
             tile.css("background-position", ofx + "px " + ofy + "px");
             //tile.css("background-image", "url(" + img + ")");
         }
+		
+		
+        //DEBUGUEANDO COMO UN CAMPEON
+        //Editor.currentState.exportar();
     };
 
     //Removemos el elemento en la posicion del cursor de la capa actual
