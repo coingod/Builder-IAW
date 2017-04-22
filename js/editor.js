@@ -22,6 +22,9 @@ define([
         });
         // e.which indica el click que fue realizado: 1=izquierdo
 
+        //Configuramos la estructura de los cuadros de dialogo
+        $("#dialog").modal();
+
         //Oyentes de los botones de herramientas
         $("#edit_mode").on("click", function() {
             $("#tools > li > a").removeClass("pulse");
@@ -42,9 +45,6 @@ define([
         $("#edit_mode").click();
         $("#canvas .cursor").toggle();
 
-        //Desplegamos las herramientas al iniciar
-        $('.fixed-action-btn').openFAB();
-
         //Ajustamos el alto del panel editor
         $("#editor").css({
             height: $(document).height() - $("header").height()
@@ -52,6 +52,12 @@ define([
 
         // Disable selection
         $("#tileset, #canvas_wrapper").disableSelection();
+
+        // Esperamos un tiempo y ocultamos la pantalla de carga
+        $("#loading_screen").delay(1000).fadeOut();
+
+        //Desplegamos las herramientas al iniciar
+        $('.fixed-action-btn').delay(2000).openFAB();
     };
 
     return Editor;

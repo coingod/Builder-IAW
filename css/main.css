@@ -46,6 +46,47 @@ header {
 }
 
 
+/* ====== PANTALLA DE CARGA ====== */
+
+#loading_screen {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 9999;
+    background-color: #FFF;
+    display: table;
+}
+
+#loading_screen>div {
+    position: relative;
+    display: table-cell;
+    vertical-align: middle;
+    color: #FFF;
+}
+
+#loading_screen>div>div {
+    width: 50%;
+    margin: auto;
+    padding: 20px;
+    overflow: hidden;
+    border-radius: 20px;
+    background-color: #2196F3;
+}
+
+#loading_screen i {
+    color: #FFF;
+    font-size: 50px;
+}
+
+.progress {
+    background-color: #fff;
+}
+
+.progress .indeterminate {
+    background-color: #6ec6ff;
+}
+
+
 /* ====== TILESETS ====== */
 
 .tabs .tab a {
