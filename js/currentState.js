@@ -30,7 +30,9 @@ define([
 				jsonCapas[i]={}; 
 				listaAct=$(listaCapas).get(i);
 				jsonCapas[i].nombre=currentState.getLayerName($(listaAct).text());
+				jsonCapas[i].visible=currentState.getVisibility($(listaAct).text());
 				jsonCapas[i].listaTiles=new Array();
+				
 				//Obtenemos cada uno de los tiles de esta capa
 				listaTiles=$("#tiles > div").get(i);
 				for(j=0; j<listaTiles.childElementCount; j++){
@@ -46,10 +48,16 @@ define([
 			currentState.json.layersInfo=jsonCapas;			
 		}
 		
+		currentState.getVisibility=function(string){
+			var toReturn;
+			var arr=string.split(" ");
+			toReturn=arr[arr.length-2]; //en -1 hay un espacio.
+			return toReturn;
+		}
 		currentState.getLayerName=function(string){
 			var arr=string.split(" ");
 			var i, toReturn="";
-			for(i=0; i<(arr.length-2); i++)
+			for(i=0; i<(arr.length-2); i++) //en -1 hay un espacio.
 				toReturn+=arr[i]+" ";
 			return toReturn;
 		}
