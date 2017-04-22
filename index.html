@@ -23,9 +23,9 @@
 
     <div id="loading_screen">
         <div>
-            <div>
+            <div class="z-depth-5">
                 <div>
-                    <h1 class="center"><i class="material-icons">account_balance</i>BUILDER: Editor de Mapas</h1>
+                    <h1 class="center"><i class="material-icons">account_balance</i>BUILDER</h1>
                     <div class="progress">
                         <div class="indeterminate"></div>
                     </div>
@@ -41,11 +41,14 @@
         <header class="col s12 z-depth-5">
             <!-- Estructura del Menu de Opciones -->
             <ul id="dropdown_opciones" class="dropdown-content">
-                <li><a href="#!">Nuevo Mapa</a></li>
-                <li><a href="#!">Exportar Mapa</a></li>
-                <li><a href="#!">Importar Mapa</a></li>
+                <li><a href="#!"><b>Mapa</b></a></li>
+                <li><a href="#!">Nuevo</a></li>
+                <li><a href="#!">Importar</a></li>
+                <li><a id="export_map" href="#!">Exportar</a></li>
                 <li class="divider"></li>
-                <li><a href="#!">Importar Tileset</a></li>
+                <li><a href="#!"><b>Interfaz</b></a></li>
+                <li><a href="#!">Nac&amp;Pop</a></li>
+                <li><a href="#!">Dark</a></li>
             </ul>
             <!-- Barra de titulo/navegacion -->
             <nav>
@@ -84,13 +87,16 @@
                 <nav>
                     <div class="nav-wrapper">
                         <a href="#!" class="brand-logo">Capas</a>
+                        <a id="layers_add" class="btn-floating btn-large halfway-fab waves-effect waves-light z-depth-1 light-blue"> <i class="material-icons">add</i> </a>
                     </div>
                 </nav>
                 <div id="layerlist" class="collection"></div>
+                <!--
                 <div class="buttons">
                     <button id="layers_add" class="waves-effect waves-light btn blue"><i class="material-icons">add_circle_outline</i></button>
                     <button id="layers_del" class="waves-effect waves-light btn blue"><i class="material-icons">remove_circle_outline</i></button>
                 </div>
+                -->
             </section>
 
         </div>
@@ -115,16 +121,48 @@
         </a>
         <ul id="tools">
             <!-- Modo para dibujar sobre el canvas -->
-            <li id="edit_mode"><a class="btn-floating tooltipped red" data-position="left" data-delay="50" data-tooltip="Editar"><i class="material-icons">mode_edit</i></a></li>
+            <li id="edit_mode"><a class="btn-floating tooltipped blue" data-position="left" data-delay="50" data-tooltip="Editar"><i class="material-icons">mode_edit</i></a></li>
             <!-- Modo para seleccionar elemento del canvas y asignarlo al cursor -->
-            <li id="pick_mode"><a class="btn-floating tooltipped blue" data-position="left" data-delay="50" data-tooltip="Pick"><i class="material-icons">colorize</i></a></li>
+            <!-- <li id="pick_mode"><a class="btn-floating tooltipped red" data-position="left" data-delay="50" data-tooltip="Pick"><i class="material-icons">colorize</i></a></li> -->
             <!-- Modo para acercar/alejar el canvas -->
-            <li id="zoom_mode"><a class="btn-floating tooltipped yellow darken-1" data-position="left" data-delay="50" data-tooltip="Zoom"><i class="material-icons">zoom_in</i></a></li>
+            <!-- <li id="zoom_mode"><a class="btn-floating tooltipped yellow darken-1" data-position="left" data-delay="50" data-tooltip="Zoom"><i class="material-icons">zoom_in</i></a></li> -->
             <!-- Modo para mover el canvas -->
             <li id="pan_mode"><a class="btn-floating tooltipped green" data-position="left" data-delay="50" data-tooltip="Mover Canvas"><i class="material-icons">pan_tool</i></a></li>
         </ul>
     </div>
 
+    <!-- Cuadros de dialogo usados por la aplicacion -->
+    <div id="dialog_list">
+        <!-- Dialogo generico de informacion -->
+        <div id="dialog_info" class="modal">
+            <div class="modal-content">
+                <h4>Exportar</h4>
+                <p>El mapa ha sido exportado satisfactoriamente.</p>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-action modal-close waves-effect waves-blue btn-flat">Confirmar</a>
+            </div>
+        </div>
+        <!-- Agregar Capa -->
+        <div id="dialog_new_layer" class="modal">
+            <div class="modal-content">
+                <h4>Nueva Capa</h4>
+                <form class="col s12">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input id="layer_name" type="text" class="validate">
+                            <label for="layer_name">Nombre de la capa</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-action modal-close waves-effect waves-blue btn-flat">Confirmar</a>
+            </div>
+        </div>
+
+    </div>
     <!-- data-main attribute tells require.js to load js/main.js after require.js loads. -->
     <script type="text/javascript" data-main="js/main" src="js/libs/require.js"></script>
 </body>

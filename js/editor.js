@@ -14,6 +14,7 @@ define([
     Editor.Canvas = Canvas.initialize(Editor);
     Editor.Layers = Layers.initialize(Editor);
     Editor.currentState = currentState.initialize(Editor);
+
     Editor.initialize = function() {
 
         //Estado del mouse
@@ -22,8 +23,10 @@ define([
         });
         // e.which indica el click que fue realizado: 1=izquierdo
 
-        //Configuramos la estructura de los cuadros de dialogo
-        $("#dialog").modal();
+        //Configuramos la estructura de todos los cuadros de dialogo
+        //$(".modal").modal();
+        Editor.Layers.setUpDialog();
+        $("#dialog_info").modal();
 
         //Oyentes de los botones de herramientas
         $("#edit_mode").on("click", function() {
@@ -41,6 +44,13 @@ define([
             $("#canvas .cursor").toggle();
         });
 
+        //Oyentes para el menu de opciones
+        $("#export_map").on("click", function() {
+            Editor.currentState.exportar();
+            $("#dialog_info").modal("open");
+            console.log(Editor.currentState.json);
+        });
+
         //Seteamos Modo de edicion por defecto
         $("#edit_mode").click();
         $("#canvas .cursor").toggle();
@@ -54,10 +64,12 @@ define([
         $("#tileset, #canvas_wrapper").disableSelection();
 
         // Esperamos un tiempo y ocultamos la pantalla de carga
-        $("#loading_screen").delay(1000).fadeOut();
+        $("#loading_screen").delay(1000).fadeOut('slow', function() {
+            //Desplegamos las herramientas al terminar de cargar
+            $('.fixed-action-btn').openFAB();
+            //$("#dialog_new_layer").modal("open");
+        });
 
-        //Desplegamos las herramientas al iniciar
-        $('.fixed-action-btn').delay(2000).openFAB();
     };
 
     return Editor;
