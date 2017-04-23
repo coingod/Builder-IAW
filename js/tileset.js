@@ -68,24 +68,22 @@ define([
 
         img.addEventListener("load", function() {
             var buffer = document.createElement("canvas").getContext("2d");
-            buffer.canvas.width = category.width = this.width;
-            buffer.canvas.height = category.height = this.height;
+            buffer.canvas.width= this.width;
+            buffer.canvas.height = this.height;
             buffer.drawImage(this, 0, 0);
 
             // Procesado de la imagen de la categoria
-            if (category.alpha) { category.base64 = Tileset.setAlpha(this, category.alpha); }
-            if (category.margin) { category.base64 = Tileset.slice(this, category); }
-            category.base64 = buffer.canvas.toDataURL();
-            category.id = id;
-
+            //if (category.alpha) { category.base64 = Tileset.setAlpha(this, category.alpha); }
+            //if (category.margin) { category.base64 = Tileset.slice(this, category); }
+           
             //Dibujamos la lista de tiles de la categoria
-            Tileset.draw(this, category, index);
+            Tileset.draw(this,  index);
 
             $(style).attr("id", "tileset_" + id);
             css = ".ts_" + id + ", .ts_" + id + " > div {\n";
             css += "\twidth: " + tw + "px;\n";
             css += "\theight: " + th + "px;\n";
-            css += "\tbackground-image: url('" + category.base64 + "');\n";
+            css += "\tbackground-image: url('" + buffer.canvas.toDataURL() + "');\n";
             css += "}";
             $(style).append(css);
 
@@ -97,7 +95,7 @@ define([
 
     };
 
-    Tileset.draw = function(img, opts, index) {
+    Tileset.draw = function(img, index) {
         var bufferADibujar = document.createElement("canvas").getContext("2d"),
             tw = Tileset.info.tw,
             th = Tileset.info.th,

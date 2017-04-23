@@ -3,17 +3,22 @@ define([
 ], function($) {
 
     var currentState = {},
-        Editor, tilesetInfo, layers, canvas;
+        Editor, tilesetInfo, layers, canvas, botonExportar;
 
     currentState.initialize = function(editor) {
         Editor = editor;
         tilesetInfo = Editor.Tileset.info; //Obtenemos la info del tileset actual
         layers = Editor.Layers;
 
-        //Inicializamos getter de archivo
+		botonExportar = document.createElement('a');
+		botonExportar.textContent = "Exportar";		
+		document.getElementById("export_map").appendChild(botonExportar);
+        
+		//Inicializamos getter de archivo
         document.getElementById("file-input").addEventListener('change', currentState.readFile, false);
 
-        this.exportar();
+		document.getElementById("export_map").addEventListener('mouseenter', currentState.loadCurrentState, false);
+	
         return currentState;
     };
 
@@ -27,19 +32,27 @@ define([
                 } // Callback for Modal close
         });
     };
-
-    currentState.exportar = function() {
-        //Tenemos que armar un objeto JavaScript (es decir, un json) 
-        //con la info necesaria para que este luego sea importado 
-        //y se levante el estado actual
-        var listaTiles, listaAct, tileAct, infoTile, idTile, idCat, cxTile, cyTile;
-        currentState.json = {}; //Esto es lo que vamos a utilizar como objeto 
+	
+	currentState.loadCurrentState=function(){
+		currentState.json = {}; //Esto es lo que vamos a utilizar como objeto 
         currentState.json.tilesetInfo = Editor.Tileset.info;
+        currentState.loadLayerInfo();
+		
+		var jsonse = JSON.stringify(currentState.json);
+        var blob = new Blob([jsonse], { type: "application/json" });
+        var url = URL.createObjectURL(blob);
 
-
+		botonExportar.href=url;
+        botonExportar.download = "backup.json";
+	};
+	
+	currentState.loadLayerInfo=function(){
+		var listaTiles, listaAct, tileAct, infoTile, idTile, idCat, cxTile, cyTile;
         var listaCapas = $("#layerlist a");
         var jsonCapas = new Array();
         var i, j;
+		
+		console.log("Holaaa!");
 
         for (i = 0; i < listaCapas.length; i++) {
             jsonCapas[i] = {};
@@ -58,28 +71,15 @@ define([
                 cxTile = $(tileAct).css("left");
                 cyTile = $(tileAct).css("top");
                 jsonCapas[i].listaTiles[j] = [idTile, idCategoria, cxTile, cyTile];
-            }
+				console.log(jsonCapas[i].listaTiles[j]);
+			}
         }
         currentState.json.layersInfo = jsonCapas;
 
-
-        //Creacion de json y boton para descargar. 
-        var jsonse = JSON.stringify(currentState.json);
-        var blob = new Blob([jsonse], { type: "application/json" });
-        var url = URL.createObjectURL(blob);
-
-        var a = document.createElement('a');
-        a.href = url;
-        a.download = "backup.json";
-        a.textContent = "Exportar";
-        //Cambie para que cree el boton correcto en el menu de opciones
-        document.getElementById("export_map").appendChild(a);
-
-    };
+	};
 
     currentState.importar = function(jsonString) {
         currentState.json = JSON.parse(jsonString);
-        console.log(currentState.json);
     };
 
     currentState.readFile = function(e) {
@@ -105,14 +105,14 @@ define([
     currentState.getVisibility = function(string) {
         var toReturn;
         var arr = string.split(" ");
-        toReturn = arr[arr.length - 2]; //en -1 hay un espacio.
+        toReturn = arr[arr.length -1]; 
         return toReturn;
     };
 
     currentState.getLayerName = function(string) {
         var arr = string.split(" ");
         var i, toReturn = "";
-        for (i = 0; i < (arr.length - 2); i++) //en -1 hay un espacio.
+        for (i = 0; i < (arr.length-3); i++) //en -1 hay un espacio.
             toReturn += arr[i] + " ";
         return toReturn;
     };
