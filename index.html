@@ -136,13 +136,14 @@
     <!-- Cuadros de dialogo usados por la aplicacion -->
     <div id="dialog_list">
         <!-- Dialogo generico de informacion -->
-        <div id="dialog_info" class="modal">
+        <div id="layer_delete" class="modal">
             <div class="modal-content">
-                <h4>Exportar Mapa</h4>
-                <p>El mapa ha sido exportado satisfactoriamente.</p>
+                <h4>Borrar capa</h4>
+                <p>Está a punto de eliminar una capa, esta accion <b>no se puede deshacer</b>, ¿Desea eliminar esta capa?</p>
             </div>
             <div class="modal-footer">
-                <a href="#!" class="modal-action modal-close waves-effect waves-blue btn-flat">Confirmar</a>
+                <a id="si" href="#!" class="modal-action modal-close waves-effect waves-blue btn-flat">Si</a>
+				<a href="#!" class="modal-action modal-close waves-effect waves-blue btn-flat">No</a>
             </div>
         </div>
         <!-- Importar JSON -->

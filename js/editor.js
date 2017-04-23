@@ -63,7 +63,7 @@ define([
             //console.log("Dark theme");
 			$('link[href="css/light.css"]').attr('href', 'css/dark.css');
 			localStorage.oldSkin='link[href="css/light.css"]';
-			localStorage.skin='css/dark.css';
+			localStorage.skin='css/dark.css';	
         });
 
         //Seteamos Modo de edicion por defecto

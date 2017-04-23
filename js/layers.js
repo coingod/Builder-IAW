@@ -5,7 +5,7 @@ define([
     var Layers = {},
         Editor;
     var lastLayerID = 0;
-    var scrollPaneApi;
+    var scrollPaneApi, layerABorrar;
 
     //Iconos
     var icon_visible = "visibility"; //fa fa-eye fa-lg";
@@ -32,12 +32,17 @@ define([
             if ($(event.target).hasClass(icon_visible)) {
                 Layers.toggle(event);
             } else if ($(event.target).text() == icon_remove) {
-                //Obtenemos la capa que registro el evento
-                var layer = $(event.target).parent();
-                //La eliminamos
-                Layers.deleteLayer(layer);
+				//Obtenemos la capa que registro el evento
+				console.log("HOLAA!");
+				layerABorrar= $(event.target).parent();
+                $("#layer_delete").modal("open");
             }
         });
+		
+		$("#si").on("click", function(event){
+			 Layers.deleteLayer(layerABorrar);
+		});
+		
         $("#layers_add").on("click", function() {
             $("#dialog_new_layer").modal("open");
         });
@@ -69,6 +74,9 @@ define([
                     Layers.addLayer(name, true);
                 } // Callback for Modal close
         });
+		$("#layer_delete").modal({
+            dismissible: false, // Modal can be dismissed by clicking outside of the modal
+           });
     };
 
     Layers.toggle = function(event) {
