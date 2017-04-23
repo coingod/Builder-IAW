@@ -51,12 +51,7 @@ define([
 
         //Agregamos la barra de desplazamiento vertical al contenedor de tilesets
         scrollPaneApi = $("#layerlist").jScrollPane().data('jsp');
-        /*
-        //Hacemos "responsive" al scroll
-        $(window).on('resize', function() {
-            scrollPaneApi.getContentPane().reinitialise();
-        });
-        */
+
         //Agregamos 2 capas por defecto
         this.addLayer("Background");
         this.addLayer("Terreno");

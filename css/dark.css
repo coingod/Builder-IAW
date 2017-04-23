@@ -1,0 +1,270 @@
+html {
+    background-color: #212121;
+}
+
+nav {
+    background-color: #212121;
+    /*DodgerBlue;*/
+    height: 56px;
+    line-height: 56px;
+}
+
+nav.nav-extended .nav-wrapper {
+    min-height: 56px;
+    height: auto;
+}
+
+nav i.material-icons {
+    display: block;
+    font-size: 24px;
+    height: 56px;
+    line-height: 56px;
+}
+
+.dropdown-content li>a,
+.dropdown-content li>span {
+    font-size: 16px;
+    color: #212121;
+    display: block;
+    line-height: 22px;
+    padding: 14px 16px;
+}
+
+#editor {
+    position: absolute;
+    top: 56px;
+    background-color: #616161;
+    z-index: 2;
+}
+
+.row .col {
+    padding: 0;
+}
+
+header {
+    position: relative;
+    z-index: 1;
+}
+
+.brand-logo i {
+    margin-left: 20px;
+}
+
+
+/* ====== PANTALLA DE CARGA ====== */
+
+#loading_screen {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 9999;
+    background-color: #616161;
+    display: table;
+}
+
+#loading_screen>div {
+    position: relative;
+    display: table-cell;
+    vertical-align: middle;
+    color: #FFF;
+}
+
+#loading_screen>div>div {
+    width: 50%;
+    margin: auto;
+    padding: 20px;
+    overflow: hidden;
+    border-radius: 20px;
+    background-color: #212121;
+}
+
+#loading_screen i {
+    color: #616161;
+    font-size: 50px;
+}
+
+.progress {
+    background-color: #616161;
+}
+
+.progress .indeterminate {
+    background-color: #484848;
+}
+
+
+/* Barra de desplazamiento */
+
+.jspTrack {
+    background: #484848 !important;
+}
+
+.jspDrag {
+    background: #212121 !important;
+}
+
+
+/* ====== TILESETS ====== */
+
+.tabs {
+    background-color: #484848;
+}
+
+.tabs .tab a {
+    font-size: 32px;
+    color: #fff;
+}
+
+.tabs .tab a:hover,
+.tabs .tab a.active {
+    color: #fff;
+}
+
+.tabs .indicator {
+    background-color: #212121;
+}
+
+#tileset_container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#custom_select {
+    width: 100%;
+    height: 30px;
+    overflow: hidden;
+    text-shadow: 0px -1px #333;
+    text-decoration: none;
+    border-radius: 3px 3px 0px 0px;
+    box-shadow: inset 0px 1px #777;
+    background-color: #555;
+    background-image: url("../img/icons/select_arrow.png");
+    background-position: right;
+    background-repeat: no-repeat;
+}
+
+#custom_select:hover {
+    background-image: url("../img/icons/select_arrow_hover.png");
+}
+
+
+/* Estilo de las vistas previas de los Tiles en el Editor */
+
+.collection .collection-item {
+    background-color: #484848;
+}
+
+.collection .collection-item.avatar {
+    /*padding-left: 40%;*/
+    display: inline-block;
+}
+
+.collection .collection-item.avatar .circle {
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    overflow: hidden;
+    left: 15px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+
+/* Vista previa con bordes redondeados */
+
+.circle {
+    border-radius: 25%;
+}
+
+
+/* Descripcion asociada al tile */
+
+.collection .collection-item.avatar .title {
+    position: relative;
+    font-size: 16px;
+    text-transform: uppercase;
+}
+
+.collection a.collection-item {
+    color: #212121;
+}
+
+.collection a.collection-item i {
+    color: #212121;
+}
+
+
+/* ====== CANVAS ====== */
+
+
+/* z-index negativo para que no tape a la interfaz */
+
+#canvas {
+    position: absolute;
+    z-index: 0;
+    display: block;
+    background-color: #FFF;
+    margin-left: auto;
+    margin-right: auto
+}
+
+
+/* Canvas con grilla desactivada */
+
+#canvas .nogrid {
+    background-image: none !important;
+}
+
+
+/* Estilizamos el cursor con respecto al canvas */
+
+#canvas .cursor {
+    position: absolute;
+    z-index: 99;
+    pointer-events: none;
+}
+
+
+/* Estilo del cursor */
+
+.cursor {
+    box-shadow: inset 0px 0px 0px 1px #000;
+}
+
+
+/* Evitamos que las capas en el canvas dibujen el tilset asignado */
+
+.layer {
+    background-image: none !important;
+}
+
+
+/* ====== LAYERS ====== */
+
+
+/* Items de la lista de capas */
+
+#layerlist {
+    top: 30px;
+    /*
+    margin-left: 5%;
+    margin-right: 5%
+    */
+}
+
+.collection .collection-item.active {
+    background-color: #212121;
+    color: #eafaf9;
+}
+
+.buttons {
+    text-align: center
+}
+
+@media only screen and (max-width: 992px) {
+    header,
+    main,
+    footer {
+        padding-left: 0;
+    }
+}

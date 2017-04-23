@@ -50,10 +50,16 @@ define([
             Editor.currentState.exportar();
             $("#dialog_info").modal("open");
         });
-
-        //Oyentes para el menu de opciones
         $("#import_map").on("click", function() {
             $("#dialog_import").modal("open");
+        });
+        $("#light_theme").on("click", function() {
+            console.log("Light theme");
+            $('link[href="css/dark.css"]').attr('href', 'css/light.css');
+        });
+        $("#dark_theme").on("click", function() {
+            console.log("Dark theme");
+            $('link[href="css/light.css"]').attr('href', 'css/dark.css');
         });
 
         //Seteamos Modo de edicion por defecto

@@ -14,8 +14,10 @@ define([
             "tw": 64,
             "th": 64,
             "categories": [
-                { "name": "Terreno", "path": "img/tilesets/spritesheet.png", "icon": "terrain" },
-                { "name": "Edificios", "path": "img/tilesets/TileSet.png", "icon": "location_city" }
+                { "name": "Terreno", "path": "img/tilesets/terrain.png", "icon": "terrain" },
+                { "name": "Naturaleza", "path": "img/tilesets/nature.png", "icon": "nature" },
+                { "name": "Caminos", "path": "img/tilesets/roads.png", "icon": "directions" },
+                { "name": "Edificios", "path": "img/tilesets/buildings.png", "icon": "store" }
             ],
         };
 
@@ -38,12 +40,7 @@ define([
 
         //Agregamos la barra de desplazamiento vertical al contenedor de tilesets
         scrollPaneApi = $("#tileset_container").jScrollPane().data('jsp');
-        /*
-        //Hacemos "responsive" al scroll
-        $(window).on('resize', function() {
-            scrollPaneApi.getContentPane().reinitialise();
-        });
-        */
+
         //Seteo de oyentes
         $(".tilelist").on("mousedown", "a", this.makeSelection); //Seleccion de tile
         //$(".tilelist").on("mousedown", "a", this.rotarTile); //Seleccion de tile
@@ -122,8 +119,8 @@ define([
                 coords = xAct + "." + yAct;
                 nroit = x + y * celdasX;
                 bufferADibujar.drawImage(img, xAct, yAct, tw, th, 0, 0, tw, th);
-                //tile = $("<a href='#!' class='collection-item avatar' data-tid='" + nroit + "' data-coords='" + coords + "' data-rotate=0><img src='" + bufferADibujar.canvas.toDataURL() + "' class='circle'><span class='title'> TileID:" + nroit + "</span></a>");
-                tile = $("<a href='#!' class='collection-item avatar' data-ts='" + index + "' data-coords='" + coords + "' data-rotate=0><img src='" + bufferADibujar.canvas.toDataURL() + "' class='circle'><span class='title'> TileID:" + nroit + "</span></a>");
+                //tile = $("<a href='#!' class='collection-item avatar' data-ts='" + index + "' data-coords='" + coords + "' data-rotate=0><img src='" + bufferADibujar.canvas.toDataURL() + "' class='circle'><span class='title'> TileID:" + nroit + "</span></a>");
+                tile = $("<a href='#!' class='collection-item avatar' data-ts='" + index + "' data-coords='" + coords + "' data-rotate=0><img src='" + bufferADibujar.canvas.toDataURL() + "' class='circle'></a>");
                 $("#tilelist_" + index).append(tile);
                 bufferADibujar.clearRect(0, 0, tw, th); //Limpio el buffer para que al dibujar elementos transparentes no quede basura del tile anterior
             }
