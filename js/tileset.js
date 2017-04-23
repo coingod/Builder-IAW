@@ -9,28 +9,56 @@ define([
     Tileset.initialize = function(namespace) {
         Editor = namespace;
 
-        //JSON info
+        //Definimos los tilesets por defecto
         Tileset.info = {
             "tw": 64,
             "th": 64,
             "categories": [
+                { "name": "Default", "path": "img/tilesets/default.png", "icon": "extension" },
+                /*
                 { "name": "Terreno", "path": "img/tilesets/terrain.png", "icon": "terrain" },
                 { "name": "Naturaleza", "path": "img/tilesets/nature.png", "icon": "nature" },
                 { "name": "Caminos", "path": "img/tilesets/roads.png", "icon": "directions" },
                 { "name": "Edificios", "path": "img/tilesets/buildings.png", "icon": "store" }
+                */
             ],
         };
+        //Cargamos los tilesets
+        Tileset.load();
+
+        return this;
+
+    };
+
+    //Genera las pestañas para cada Tileset/Categoria y la lista de tiles para cada una
+    Tileset.load = function() {
+        //Vaciamos los datos cargados anteriormente, de existir
+        $("#categorieslist").empty();
+        $("#tileset_container").empty();
+        //Borramos el style de los tilesets viejos
+        $("head style").remove();
 
         //Iteramos sobre la informacion del JSON creando una categoria para cada tileset
-        for (i = 0; i < Tileset.info.categories.length; i++) {
+        var cantidad = Tileset.info.categories.length;
+        for (i = 0; i < cantidad; i++) {
             //Generamos la pestaña de la categoria para el panel del editor
-            //var category = $("<li class='tab col s3'><a href='#tilelist_" + i + "' data-id=" + i + " > " + Tileset.info.categories[i].name + "</a></li>");
             var category = $("<li class='tab col s3'><a href='#tilelist_" + i + "' data-id=" + i + " data-delay='50' data-position='top' data-tooltip='" + Tileset.info.categories[i].name + "' class='material-icons tooltipped'> " + Tileset.info.categories[i].icon + "</a></li>");
             $("#categorieslist").append(category);
 
             //Agregamos un panel para contener la lista de tiles de la categoria
             $("#tileset_container").append("<div id='tilelist_" + i + "' class='tilelist collection col s12'></div>");
+            //Si hay mas de una categoria y no estamos procesando la primera
+            if ((cantidad > 1) && (i > 0)) {
+                //Ocultamos el contenido ya que no esta activo
+                $("#tilelist_" + i).hide();
+            }
             Tileset.add(Tileset.info.categories[i], i, Tileset.info.tw, Tileset.info.th);
+        }
+
+        //Empty puede borrar el indicador de pestaña
+        if (!$("#categorieslist .indicator").length) {
+            console.log("no habia");
+            $("#categorieslist").append("<div class='indicator'></div>");
         }
 
         //Configuramos el alto de la lista de tiles en funcion del alto de la pagina
@@ -44,6 +72,7 @@ define([
         //Seteo de oyentes
         $(".tilelist").on("mousedown", "a", this.makeSelection); //Seleccion de tile
         //$(".tilelist").on("mousedown", "a", this.rotarTile); //Seleccion de tile
+
         //Al cambiar de categoria se ajusta el scroll
         $("#categorieslist").on("mouseup", function() {
             //Debemos esperar unos ms antes de hacerlo para que el cambio de categoria sea registrado
@@ -51,10 +80,7 @@ define([
         });
 
         //Esperamos unos ms y reinicializamos el scroll para que efectivamente se muestre
-        setTimeout(function() { scrollPaneApi.reinitialise(); }, 150);
-
-        return this;
-
+        setTimeout(function() { scrollPaneApi.reinitialise(); }, 200);
     };
 
     Tileset.add = function(category, index, tw, th) {
@@ -68,18 +94,19 @@ define([
 
         img.addEventListener("load", function() {
             var buffer = document.createElement("canvas").getContext("2d");
-            buffer.canvas.width= this.width;
+            buffer.canvas.width = this.width;
             buffer.canvas.height = this.height;
             buffer.drawImage(this, 0, 0);
 
             // Procesado de la imagen de la categoria
             //if (category.alpha) { category.base64 = Tileset.setAlpha(this, category.alpha); }
             //if (category.margin) { category.base64 = Tileset.slice(this, category); }
-           
+
             //Dibujamos la lista de tiles de la categoria
-            Tileset.draw(this,  index);
+            Tileset.draw(this, index);
 
             $(style).attr("id", "tileset_" + id);
+            //$(style).attr("data-size", this.width + "." + this.height);
             css = ".ts_" + id + ", .ts_" + id + " > div {\n";
             css += "\twidth: " + tw + "px;\n";
             css += "\theight: " + th + "px;\n";

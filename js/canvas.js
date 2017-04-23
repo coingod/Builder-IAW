@@ -86,6 +86,38 @@ define([
         return this;
     };
 
+    //Dibuja en la capa actual un elemento especificado
+    Canvas.loadElement = function(tileData) {
+        //Formato: [id_tile, id_tileset, canvas_fila, canvas_columna]
+        var id_tile = tileData[0];
+        var id_ts = tileData[1];
+        var fila = tileData[2];
+        var col = tileData[3];
+
+        //Mapeamos el id del tile al offset dentro de la imagen (tileset)
+        //Consultamos las dimensiones del tileset
+        var img_size = $("#tileset_" + id_ts).attr("data-size");
+        console.log(img_size);
+
+        //Preparo el atributo con las coordenadas normalizadas
+        var coords = fila + "." + col;
+
+        //Debemos crear un div con el atributo data-coords
+        tile = $("<div data-coords='" + coords + "'></div>");
+        //Agregamos al CSS la posicion
+        tile.css({
+            position: "absolute",
+            left: fila * tw + "px",
+            top: col * th + "px",
+        });
+        //Agregamos al CSS la id del tileset
+        $(tile).addClass("ts_" + id_ts);
+        //Agregamos al CSS el offset del tile en el tileset
+        tile.css("background-position", ofx + "px " + ofy + "px");
+        //Agregamos el nuevo elemento a la capa
+        $(currentLayer.layer).append(tile);
+    };
+
     //Dibujamos el elemento selecionado del tileset en la posicion del cursor de la capa actual
     Canvas.draw = function() {
 
@@ -94,11 +126,6 @@ define([
 
         //Obtenemos la capa actualmente activa
         var currentLayer = Editor.Layers.currentLayer();
-
-        //Vinculamos a la capa actual con el CSS de la imagen del tileset
-        //Esto fuerza a una capa a tener un solo tileset activo, cambiar mas adelante!
-        //$(currentLayer.layer).addClass("ts_" + Editor.Tileset.info.id); //("ts_" + tileset.id);
-        //$(currentLayer.layer).attr("data-tileset", "spritesheet.png");//tileset.name);
 
         //Calculamos la posicion del cursor
         var cxp = Canvas.cx * tw;
@@ -134,7 +161,6 @@ define([
             $(tile).addClass("ts_" + ts_id);
             //Agregamos al CSS el offset del tile en el tileset
             tile.css("background-position", ofx + "px " + ofy + "px");
-            //tile.css("background-image", "url(" + img + ")");
             //Agregamos el nuevo elemento a la capa
             $(currentLayer.layer).append(tile);
         } else {
@@ -148,12 +174,7 @@ define([
             $(tile).addClass("ts_" + ts_id);
             //Agregamos al CSS el offset del tile en el tileset
             tile.css("background-position", ofx + "px " + ofy + "px");
-            //tile.css("background-image", "url(" + img + ")");
         }
-		
-		
-        //DEBUGUEANDO COMO UN CAMPEON
-        //Editor.currentState.exportar();
     };
 
     //Removemos el elemento en la posicion del cursor de la capa actual

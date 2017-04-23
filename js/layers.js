@@ -28,21 +28,19 @@ define([
         });
 
         //Registramos los oyentes para agregar/eliminar/toggle capas
-        //$("#layerlist").on("click", "a i", this.toggle);
         $("#layerlist").on("click", "a i", function(event) {
-            //if ($(event.target).text() == icon_visible || $(event.target).text() == icon_not_visible) {
             if ($(event.target).hasClass(icon_visible)) {
                 Layers.toggle(event);
             } else if ($(event.target).text() == icon_remove) {
-                //} else if ($(event.target).hasClass("delete")) {
-                Layers.deleteLayer(event);
+                //Obtenemos la capa que registro el evento
+                var layer = $(event.target).parent();
+                //La eliminamos
+                Layers.deleteLayer(layer);
             }
         });
-        //$("#layers_add").on("click", this.addLayer);
         $("#layers_add").on("click", function() {
             $("#dialog_new_layer").modal("open");
         });
-        //$("#layers_del").on("click", this.deleteLayer);
 
         //Configuramos el alto de la lista de capas en funcion del alto de la pagina
         $("#layerlist").css({
@@ -53,8 +51,8 @@ define([
         scrollPaneApi = $("#layerlist").jScrollPane().data('jsp');
 
         //Agregamos 2 capas por defecto
-        this.addLayer("Background");
-        this.addLayer("Terreno");
+        this.addLayer("Background", true);
+        this.addLayer("Terreno", true);
 
         return this;
     };
@@ -68,7 +66,7 @@ define([
             */
             complete: function() {
                     var name = $("#layer_name").val();
-                    Layers.addLayer(name);
+                    Layers.addLayer(name, true);
                 } // Callback for Modal close
         });
     };
@@ -90,7 +88,7 @@ define([
     };
 
     //Agrega una nueva capa
-    Layers.addLayer = function(name) {
+    Layers.addLayer = function(name, visible) {
 
         //Desmarcamos la capa actual
         $("#layerlist a").removeClass("active");
@@ -99,10 +97,9 @@ define([
         //Si pasamos un nombre lo usamos, sino asignamos uno por defecto
         if (!name) name = "Layer " + currentLayer;
         //Creamos el item con la ID correspondiente
-        //var layer = $("<li class='collection-item active' data-id=" + currentLayer + " > " + name + "<span class='" + icon_visible + "'</span> </li>");
-        //var layer = $("<a href='#!' class='collection-item active' data-id=" + currentLayer + " > " + name + " <i class='secondary-content delete material-icons'> delete </i> <i class='secondary-content visibility material-icons'> visibility</i></a>");
-        var layer = $("<a href='#!' class='collection-item active' data-id=" + currentLayer + " > <i class='layer-name'>" + name + "</i> <i class='secondary-content delete material-icons'>delete</i><i class='secondary-content visibility material-icons'>visibility</i></a>");
-		//Agregamos el item a la interfaz
+        var visibility = ((visible) ? icon_visible : icon_not_visible);
+        var layer = $("<a href='#!' class='collection-item active' data-id=" + currentLayer + " > <i class='layer-name'>" + name + "</i> <i class='secondary-content delete material-icons'>delete</i><i class='secondary-content visibility material-icons'>" + visibility + "</i></a>");
+        //Agregamos el item a la interfaz
         //$("#layerlist").append(layer);
         scrollPaneApi.getContentPane().append(layer);
         //Ajustamos el scroll
@@ -121,24 +118,15 @@ define([
         }
     };
 
+    Layers.removeAll = function() {
+        //Borramos TODAS las capas
+        $("#layerlist > a").each(function() {
+            Layers.deleteLayer($(this));
+        });
+    };
+
     //Elimina la capa actualmente seleccioanda junto con su contenido
-    Layers.deleteLayer = function(event) {
-        /*
-        //Obtenemos la ID de la capa actual
-        var currentLayer = $("#layerlist a").filter(".active").attr('data-id');
-        //Eliminar la capa actual del canvas con todo su contenido
-        $("#tiles > div").filter("[data-id='" + currentLayer + "']").remove();
-
-        //Eliminamos la capa actual de la interfaz
-        $("#layerlist a").filter(".active").remove();
-        //Marcamos la ultima capa como la actual
-        $("#layerlist a").last().addClass("active");
-        //Ajustamos el scroll
-        scrollPaneApi.reinitialise();
-        */
-
-        //Obtenemos la capa que se desea eliminar
-        var layer = $(event.target).parent();
+    Layers.deleteLayer = function(layer) {
         //Eliminar la capa del canvas con todo su contenido
         $("#tiles > div").filter("[data-id='" + layer.attr("data-id") + "']").remove();
         //Chequeamos si es la capa actual

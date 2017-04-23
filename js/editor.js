@@ -46,19 +46,15 @@ define([
         });
 
         //Oyentes para el menu de opciones
-        $("#export_map").on("click", function() {
-            Editor.currentState.exportar();
-            $("#dialog_info").modal("open");
-        });
         $("#import_map").on("click", function() {
             $("#dialog_import").modal("open");
         });
         $("#light_theme").on("click", function() {
-            console.log("Light theme");
+            //console.log("Light theme");
             $('link[href="css/dark.css"]').attr('href', 'css/light.css');
         });
         $("#dark_theme").on("click", function() {
-            console.log("Dark theme");
+            //console.log("Dark theme");
             $('link[href="css/light.css"]').attr('href', 'css/dark.css');
         });
 
@@ -80,6 +76,33 @@ define([
             $('.fixed-action-btn').openFAB();
             //$("#dialog_new_layer").modal("open");
         });
+
+    };
+
+    //Procesa un archivo JSON y genera un nuevo Mapa con los datos del archivo
+    Editor.loadExternal = function() {
+
+        //Obtenemos el JSON que se importo
+        var json = Editor.currentState.json;
+
+        //Elimina todas las capas actuales
+        Editor.Layers.removeAll();
+
+        //Cargamos las categorias nuevas (Tilesets)
+        Editor.Tileset.info = json.tilesetInfo;
+        Editor.Tileset.load();
+
+        //Procesamos la lista de capas
+        json.layersInfo.forEach(function(layer) {
+            //Agregamos la capa con su nombre y estado
+            Editor.Layers.addLayer(layer.nombre, layer.visible);
+            //Agregamos todos los elementos al Canvas
+            layer.listaTiles.forEach(function(element) {
+                //Formato: [id_tile, id_tileset, canvas_fila, canvas_columna]
+                //Editor.Canvas.loadElement(element);
+            }, this);
+        }, this);
+
 
     };
 
