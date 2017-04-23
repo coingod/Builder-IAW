@@ -8,8 +8,13 @@ define([
 		currentState.initialize = function(editor){
 			Editor=editor;
 			tilesetInfo=Editor.Tileset.info; //Obtenemos la info del tileset actual
-			layers=Editor.Layers;			
-			//this.exportar();			
+			layers=Editor.Layers;	
+
+			//Inicializamos getter de archivo
+			document.getElementById('file-input')
+			  .addEventListener('change', currentState.readFile, false);	
+					
+			this.exportar();			
 			return currentState;
 		}
 		
@@ -45,9 +50,43 @@ define([
 					jsonCapas[i].listaTiles[j]=[idTile,idCategoria,cxTile,cyTile];
 				}
 			}
-			currentState.json.layersInfo=jsonCapas;			
+			currentState.json.layersInfo=jsonCapas;	
+			
+			
+			//Creacion de json y boton para descargar. 
+			var jsonse=JSON.stringify(currentState.json);
+			var blob = new Blob([jsonse], {type: "application/json"});
+			var url=URL.createObjectURL(blob);
+			
+			var a=document.createElement('a');
+			a.href=url;
+			a.download="backup.json";
+			a.textContent="Exportar  archivo json";
+			//Esta ni bien arranca el editor declarado. 
+			document.getElementById('json').appendChild(a);
+			
 		}
 		
+		currentState.importar=function(jsonString){	
+			currentState.json=JSON.parse(jsonString);
+			console.log(currentState.json);			  
+		}
+		
+		currentState.readFile = function(e){
+			var stringJson="";
+			//Debemos levantar el json y ponerlo en currentState.json
+			
+			var file = e.target.files[0];
+			if (!file) {
+				return;
+			}
+			var reader = new FileReader();
+			reader.readAsText(file);	
+			reader.onload = function(e) {
+				currentState.importar(e.target.result);
+			};		
+						
+		}
 		currentState.getVisibility=function(string){
 			var toReturn;
 			var arr=string.split(" ");
