@@ -99,11 +99,9 @@ define([
         var ts_height = Editor.Tileset.info.categories[id_ts].height;
 
         //Mapeamos el id del tile al offset dentro de la imagen en filas y columnas (tileset)
-        var ofx = (id_tile) % (ts_width / tw); //col
-        var ofy = (id_tile) / (ts_height / th); //fila
-        console.log("img " + ts_width + "." + ts_height);
-        console.log("id:" + id_tile + " offset:" + ofx + "," + ofy);
-
+        //id_tile= ofx + ofy*(ts_width / tw)
+		var ofx = -((id_tile) % (ts_width / tw)); //col
+        var ofy = -(Math.floor((id_tile) / Math.floor(ts_width / tw))); //fila
         //Preparo el atributo con las coordenadas normalizadas
         var coords = fila + "." + col;
 

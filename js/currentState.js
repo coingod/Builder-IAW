@@ -112,11 +112,7 @@ define([
         var coords = backPos.split("px");
         var cx = Math.abs(parseInt(coords[0]) / tilesetInfo.tw);
         var cy = Math.abs(parseInt(coords[1]) / tilesetInfo.th);
-        var imgPath = tilesetInfo.categories[idCategoria].path;
-        var imagenCategoria = new Image();
-        imagenCategoria.src = imgPath;
-
-        var toReturn = cx + (cy * imagenCategoria.width / tilesetInfo.tw);
+        var toReturn = cx + (cy * tilesetInfo.categories[idCategoria].width / tilesetInfo.tw);
 
         return toReturn;
     };
