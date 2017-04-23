@@ -49,21 +49,21 @@ define([
         $("#import_map").on("click", function() {
             $("#dialog_import").modal("open");
         });
-		
-		//Levantamos el ultimo skin usado.
-		$(localStorage.oldSkin).attr('href',localStorage.skin);
-		
+
+        //Levantamos el ultimo skin usado.
+        $(localStorage.oldSkin).attr('href', localStorage.skin);
+
         $("#light_theme").on("click", function() {
             //console.log("Light theme");
-			$('link[href="css/dark.css"]').attr('href', 'css/light.css');
-			localStorage.oldSkin='link[href="css/dark.css"]';
-			localStorage.skin='css/light.css';            
+            $('link[href="css/dark.css"]').attr('href', 'css/light.css');
+            localStorage.oldSkin = 'link[href="css/dark.css"]';
+            localStorage.skin = 'css/light.css';
         });
         $("#dark_theme").on("click", function() {
             //console.log("Dark theme");
-			$('link[href="css/light.css"]').attr('href', 'css/dark.css');
-			localStorage.oldSkin='link[href="css/light.css"]';
-			localStorage.skin='css/dark.css';	
+            $('link[href="css/light.css"]').attr('href', 'css/dark.css');
+            localStorage.oldSkin = 'link[href="css/light.css"]';
+            localStorage.skin = 'css/dark.css';
         });
 
         //Seteamos Modo de edicion por defecto
@@ -107,7 +107,7 @@ define([
             //Agregamos todos los elementos al Canvas
             layer.listaTiles.forEach(function(element) {
                 //Formato: [id_tile, id_tileset, canvas_fila, canvas_columna]
-                //Editor.Canvas.loadElement(element);
+                Editor.Canvas.loadElement(element);
             }, this);
         }, this);
 

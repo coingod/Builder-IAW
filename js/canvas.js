@@ -94,10 +94,15 @@ define([
         var fila = tileData[2];
         var col = tileData[3];
 
-        //Mapeamos el id del tile al offset dentro de la imagen (tileset)
         //Consultamos las dimensiones del tileset
-        var img_size = $("#tileset_" + id_ts).attr("data-size");
-        console.log(img_size);
+        var ts_width = Editor.Tileset.info.categories[id_ts].width; //$("#tileset_" + id_ts).attr("data-size");
+        var ts_height = Editor.Tileset.info.categories[id_ts].height;
+
+        //Mapeamos el id del tile al offset dentro de la imagen en filas y columnas (tileset)
+        var ofx = (id_tile) % (ts_width / tw); //col
+        var ofy = (id_tile) / (ts_height / th); //fila
+        console.log("img " + ts_width + "." + ts_height);
+        console.log("id:" + id_tile + " offset:" + ofx + "," + ofy);
 
         //Preparo el atributo con las coordenadas normalizadas
         var coords = fila + "." + col;
@@ -113,7 +118,9 @@ define([
         //Agregamos al CSS la id del tileset
         $(tile).addClass("ts_" + id_ts);
         //Agregamos al CSS el offset del tile en el tileset
-        tile.css("background-position", ofx + "px " + ofy + "px");
+        tile.css("background-position", ofx * tw + "px " + ofy * th + "px");
+        //Obtenemos la capa actualmente activa
+        var currentLayer = Editor.Layers.currentLayer();
         //Agregamos el nuevo elemento a la capa
         $(currentLayer.layer).append(tile);
     };

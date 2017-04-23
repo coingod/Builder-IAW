@@ -14,19 +14,18 @@ define([
             "tw": 64,
             "th": 64,
             "categories": [
-                { "name": "Default", "path": "img/tilesets/default.png", "icon": "extension" },
-                /*
-                { "name": "Terreno", "path": "img/tilesets/terrain.png", "icon": "terrain" },
-                { "name": "Naturaleza", "path": "img/tilesets/nature.png", "icon": "nature" },
-                { "name": "Caminos", "path": "img/tilesets/roads.png", "icon": "directions" },
-                { "name": "Edificios", "path": "img/tilesets/buildings.png", "icon": "store" }
-                */
+                /*{ "name": "Default", "path": "img/tilesets/default.png", "icon": "extension", "width": 256, "height": 192 },*/
+
+                { "name": "Terreno", "path": "img/tilesets/terrain.png", "icon": "terrain", "width": 256, "height": 192 },
+                { "name": "Naturaleza", "path": "img/tilesets/nature.png", "icon": "nature", "width": 256, "height": 192 },
+                { "name": "Caminos", "path": "img/tilesets/roads.png", "icon": "directions", "width": 512, "height": 256 },
+                { "name": "Edificios", "path": "img/tilesets/buildings.png", "icon": "store", "width": 256, "height": 192 }
             ],
         };
         //Cargamos los tilesets
         Tileset.load();
 
-		return this;
+        return this;
 
     };
 
@@ -95,7 +94,7 @@ define([
         img.addEventListener("load", function() {
             var buffer = document.createElement("canvas").getContext("2d");
             buffer.canvas.width = Tileset.info.categories.width = this.width;
-            buffer.canvas.height = Tileset.info.categories.height= this.height;
+            buffer.canvas.height = Tileset.info.categories.height = this.height;
             buffer.drawImage(this, 0, 0);
             //Dibujamos la lista de tiles de la categoria
             Tileset.draw(this, index);
