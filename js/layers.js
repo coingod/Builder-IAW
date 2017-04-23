@@ -64,7 +64,7 @@ define([
         return this;
     };
 
-    Layers.setUpDialog = function() {
+    Layers.crearDialog = function() {
         $("#dialog_new_layer").modal({
             dismissible: false, // Modal can be dismissed by clicking outside of the modal
             /*
@@ -145,17 +145,18 @@ define([
         var layer = $(event.target).parent();
         //Eliminar la capa del canvas con todo su contenido
         $("#tiles > div").filter("[data-id='" + layer.attr("data-id") + "']").remove();
-
-        //Si es la capa activa
-        if ($(layer).hasClass("active")) {
-            //Marcamos la ultima capa como activa
-            $("#layerlist a").last().addClass("active");
-        }
-
+        //Chequeamos si es la capa actual
+        var activa = $(layer).hasClass("active");
         //Eliminamos la capa de la interfaz
         layer.remove();
         //Ajustamos el scroll
         scrollPaneApi.reinitialise();
+
+        //Si era la capa actual
+        if (activa) {
+            //Marcamos la ultima capa como activa
+            $("#layerlist a").last().addClass("active");
+        }
 
         //Si solo queda una capa desabilitar eliminar
         if ($("#layerlist a").length == 1) {

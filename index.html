@@ -43,8 +43,8 @@
             <ul id="dropdown_opciones" class="dropdown-content">
                 <li><a href="#!"><b>Mapa</b></a></li>
                 <li><a href="#!">Nuevo</a></li>
-                <li><a href="#!">Importar</a></li>
-                <li><a id="export_map" href="#!">Exportar</a></li>
+                <li id="import_map"><a href="#!">Importar</a></li>
+                <li id="export_map"></li>
                 <li class="divider"></li>
                 <li><a href="#!"><b>Interfaz</b></a></li>
                 <li><a href="#!">Nac&amp;Pop</a></li>
@@ -64,9 +64,6 @@
 
         <!-- Panel Editor lateral -->
         <div id="editor" class="col s3 z-depth-5">
-			<!--Exportar importar-->
-			<div id="json"></div>
-			<input type="file" id="file-input" />
             <section id="tilesets">
                 <nav>
                     <div class="nav-wrapper">
@@ -138,13 +135,35 @@
         <!-- Dialogo generico de informacion -->
         <div id="dialog_info" class="modal">
             <div class="modal-content">
-                <h4>Exportar</h4>
+                <h4>Exportar Mapa</h4>
                 <p>El mapa ha sido exportado satisfactoriamente.</p>
-                </form>
             </div>
             <div class="modal-footer">
                 <a href="#!" class="modal-action modal-close waves-effect waves-blue btn-flat">Confirmar</a>
             </div>
+        </div>
+        <!-- Importar JSON -->
+        <div id="dialog_import" class="modal">
+            <div class="modal-content">
+                <h4>Importar Mapa</h4>
+                <p>Seleccione el JSON correspondiente:</p>
+                <form action="#">
+                    <div class="file-field input-field">
+                        <div class="btn">
+                            <span>Archivo</span>
+                            <input id="file-input" type="file">
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!--
+            <div class="modal-footer">
+                <a href="#!" class="modal-action modal-close waves-effect waves-blue btn-flat">Confirmar</a>
+            </div>
+            -->
         </div>
         <!-- Agregar Capa -->
         <div id="dialog_new_layer" class="modal">

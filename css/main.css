@@ -90,6 +90,7 @@ header {
 /* ====== TILESETS ====== */
 
 .tabs .tab a {
+    font-size: 32px;
     color: #2196F3;
 }
 

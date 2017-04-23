@@ -14,15 +14,16 @@ define([
             "tw": 64,
             "th": 64,
             "categories": [
-                { "name": "Rutas", "path": "img/tilesets/spritesheet.png", "icon": "img/tilesets/icons/route.png" },
-                { "name": "Edificios", "path": "img/tilesets/TileSet.png", "icon": "img/tilesets/icons/building.png" }
+                { "name": "Terreno", "path": "img/tilesets/spritesheet.png", "icon": "terrain" },
+                { "name": "Edificios", "path": "img/tilesets/TileSet.png", "icon": "location_city" }
             ],
         };
 
         //Iteramos sobre la informacion del JSON creando una categoria para cada tileset
         for (i = 0; i < Tileset.info.categories.length; i++) {
             //Generamos la pestaña de la categoria para el panel del editor
-            var category = $("<li class='tab col s3'><a href='#tilelist_" + i + "' data-id=" + i + " > " + Tileset.info.categories[i].name + "</a></li>");
+            //var category = $("<li class='tab col s3'><a href='#tilelist_" + i + "' data-id=" + i + " > " + Tileset.info.categories[i].name + "</a></li>");
+            var category = $("<li class='tab col s3'><a href='#tilelist_" + i + "' data-id=" + i + " data-delay='50' data-position='top' data-tooltip='" + Tileset.info.categories[i].name + "' class='material-icons tooltipped'> " + Tileset.info.categories[i].icon + "</a></li>");
             $("#categorieslist").append(category);
 
             //Agregamos un panel para contener la lista de tiles de la categoria

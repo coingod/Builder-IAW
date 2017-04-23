@@ -25,8 +25,9 @@ define([
 
         //Configuramos la estructura de todos los cuadros de dialogo
         //$(".modal").modal();
-        Editor.Layers.setUpDialog();
+        Editor.Layers.crearDialog();
         $("#dialog_info").modal();
+        Editor.currentState.crearDialog();
 
         //Oyentes de los botones de herramientas
         $("#edit_mode").on("click", function() {
@@ -48,7 +49,11 @@ define([
         $("#export_map").on("click", function() {
             Editor.currentState.exportar();
             $("#dialog_info").modal("open");
-            console.log(Editor.currentState.json);
+        });
+
+        //Oyentes para el menu de opciones
+        $("#import_map").on("click", function() {
+            $("#dialog_import").modal("open");
         });
 
         //Seteamos Modo de edicion por defecto
