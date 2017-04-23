@@ -3,6 +3,7 @@ nav {
     /*DodgerBlue;*/
     height: 56px;
     line-height: 56px;
+	padding-left: 3%;
 }
 
 nav.nav-extended .nav-wrapper {
@@ -101,7 +102,8 @@ header {
 
 /* ====== TILESETS ====== */
 
-.tabs .tab a {
+.tabs .tab a {	
+	padding-top:5%;
     font-size: 32px;
     color: #2196F3;
 }
@@ -119,24 +121,6 @@ header {
     width: 100%;
     margin-left: auto;
     margin-right: auto;
-}
-
-#custom_select {
-    width: 100%;
-    height: 30px;
-    overflow: hidden;
-    text-shadow: 0px -1px #333;
-    text-decoration: none;
-    border-radius: 3px 3px 0px 0px;
-    box-shadow: inset 0px 1px #777;
-    background-color: #555;
-    background-image: url("../img/icons/select_arrow.png");
-    background-position: right;
-    background-repeat: no-repeat;
-}
-
-#custom_select:hover {
-    background-image: url("../img/icons/select_arrow_hover.png");
 }
 
 
@@ -179,6 +163,10 @@ header {
 
 .collection a.collection-item i {
     color: #2196F3;
+}
+
+.collection .collection-item.active .layer-name {
+    color: #fff;
 }
 
 
@@ -240,9 +228,27 @@ header {
     */
 }
 
+#layers_add {
+    background-color: #03a9f4;
+}
+
 .collection .collection-item.active {
     background-color: #2196F3;
     color: #eafaf9;
+}
+
+/* ====== Botones de herramientes ====== */
+
+.btn-large{
+	background-color: red;
+}
+
+#edit_mode .btn-floating{
+	background-color:blue;
+}
+
+#pan_mode .btn-floating{
+	background-color:green;
 }
 
 .buttons {
