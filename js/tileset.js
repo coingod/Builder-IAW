@@ -97,11 +97,6 @@ define([
             buffer.canvas.width = Tileset.info.categories.width = this.width;
             buffer.canvas.height = Tileset.info.categories.height= this.height;
             buffer.drawImage(this, 0, 0);
-
-            // Procesado de la imagen de la categoria
-            //if (category.alpha) { category.base64 = Tileset.setAlpha(this, category.alpha); }
-            //if (category.margin) { category.base64 = Tileset.slice(this, category); }
-
             //Dibujamos la lista de tiles de la categoria
             Tileset.draw(this, index);
 
@@ -185,66 +180,5 @@ define([
         }).attr("class", "cursor ts_" + id);
         $("#canvas .cursor").attr("data-ts", id);
     };
-
-    // Filtra el alpha especificado. Alpha es un color representado de la forma [R,G,B], viene a ser el fondo de cada imagen en el tileset
-    Tileset.setAlpha = function(img, alpha) {
-        var bfr = document.createElement("canvas").getContext("2d"),
-            imgData, red, i, l;
-
-        bfr.canvas.width = img.width;
-        bfr.canvas.height = img.height;
-        bfr.drawImage(img, 0, 0);
-
-        imgData = bfr.getImageData(0, 0, img.width, img.height);
-        //getImageData retorna info para cada pixel del rectangulo donde se muestra el tileset
-        // donde para cada pixel hay valores RGBA (Red, Green, Blue, Alpha)
-        tolerance = 10;
-
-        for (i = 0, l = imgData.data.length; i < l; i += 4) {
-            //i va de 4 en 4 para ir accediendo de a un tile
-            if (
-                ((imgData.data[i] >= alpha[0] - tolerance) && (imgData.data[i] <= alpha[0] + tolerance)) &&
-                ((imgData.data[i + 1] >= alpha[1] - tolerance) && (imgData.data[i + 1] <= alpha[1] + tolerance)) &&
-                ((imgData.data[i + 2] >= alpha[2] - tolerance) && (imgData.data[i + 2] <= alpha[2] + tolerance))
-            ) {
-                imgData.data[i + 3] = 0; //Alpha=0, no queremos dibujarlo! 
-            }
-
-        }
-        bfr.clearRect(0, 0, img.width, img.height); //Deja todo el rectangulo del buffer en blanco.
-        bfr.putImageData(imgData, 0, 0); //Le agregamos la info con el alpha ya filtrado!
-        return bfr.canvas.toDataURL();
-    };
-
-    // Despedazamos el tileset para poder trabajar con cada una de las celdas
-    Tileset.slice = function(img, opts) {
-        var bfr = document.createElement("canvas").getContext("2d"),
-            tw = opts.tilesize.width, // Ancho de celda
-            th = opts.tilesize.height, //Alto de celda
-            imgData,
-            x, y, xAct, yAct,
-            margen = opts.margin;
-
-        bfr.canvas.width = img.width - (img.width / tw) * opts.margin;
-        bfr.canvas.height = img.height - (img.height / th) * opts.margin;
-
-        var celdasY = Math.floor(bfr.canvas.height / th);
-        var celdasX = Math.floor(bfr.canvas.width / tw);
-
-        for (y = 0; y < celdasY; y++) {
-            for (x = 0; x < celdasX; x++) {
-                xAct = x * (tw + margen) + margen;
-                yAct = y * (th + margen) + margen;
-                bfr.drawImage(img, xAct, yAct, tw, th, x * tw, y * th, tw, th);
-                //Explicacion Parametros: drawImage(img,sx,sy,swidth,sheight,x,y,width,height)
-                //sx: x donde empezamos a clippear, sy: y donde empezamos a clippear
-                //swidth:ancho de la imagen a clippear, sheight: largo de la imagen a clippear
-                //x: x donde se va a dibujar en el canvas, y: y donde se va a dibujar en el canvas
-                //width: ancho disponible para dibujar en el canvas, height: alto disponible para dibujar en el canvas
-            }
-        }
-        return bfr.canvas.toDataURL();
-    };
-
     return Tileset;
 });
