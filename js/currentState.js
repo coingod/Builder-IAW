@@ -36,7 +36,18 @@ define([
 	currentState.loadCurrentState=function(){
 		currentState.json = {}; //Esto es lo que vamos a utilizar como objeto 
         currentState.json.tilesetInfo = Editor.Tileset.info;
-        currentState.loadLayerInfo();
+		currentState.json.canvasInfo = {};
+		
+		currentState.json.canvasInfo.tw=Editor.Tileset.info.tw;
+		currentState.json.canvasInfo.th=Editor.Tileset.info.th;
+		var wCanvas=parseInt($("#canvas").css("width"))/currentState.json.canvasInfo.tw;
+		var hCanvas=parseInt($("#canvas").css("height"))/currentState.json.canvasInfo.th;
+		
+		currentState.json.canvasInfo.width=wCanvas;
+		currentState.json.canvasInfo.height=hCanvas;
+		
+		currentState.loadLayerInfo();
+
 		
 		var jsonse = JSON.stringify(currentState.json);
         var blob = new Blob([jsonse], { type: "application/json" });
@@ -52,13 +63,11 @@ define([
         var jsonCapas = new Array();
         var i, j;
 		
-		console.log("Holaaa!");
-
         for (i = 0; i < listaCapas.length; i++) {
             jsonCapas[i] = {};
             listaAct = $(listaCapas).get(i);
-            jsonCapas[i].nombre = currentState.getLayerName($(listaAct).text());
-            jsonCapas[i].visible = currentState.getVisibility($(listaAct).text());
+            jsonCapas[i].nombre = $(listaAct).filter(".layer-name >i").text();
+            jsonCapas[i].visible = $(listaAct).filter(".visibility >i").text();
             jsonCapas[i].listaTiles = new Array();
 
             //Obtenemos cada uno de los tiles de esta capa
@@ -68,8 +77,8 @@ define([
                 infoTile = $(tileAct).css("background-position");
                 idCategoria = parseInt($(tileAct).attr("class").split("_")[1]);
                 idTile = currentState.getId(infoTile, idCategoria);
-                cxTile = $(tileAct).css("left");
-                cyTile = $(tileAct).css("top");
+                cxTile = parseInt($(tileAct).css("left"))/currentState.json.canvasInfo.tw;
+                cyTile = parseInt($(tileAct).css("top"))/currentState.json.canvasInfo.th;
                 jsonCapas[i].listaTiles[j] = [idTile, idCategoria, cxTile, cyTile];
 				console.log(jsonCapas[i].listaTiles[j]);
 			}
@@ -100,21 +109,6 @@ define([
             currentState.importar(e.target.result);
         };
 
-    };
-
-    currentState.getVisibility = function(string) {
-        var toReturn;
-        var arr = string.split(" ");
-        toReturn = arr[arr.length -1]; 
-        return toReturn;
-    };
-
-    currentState.getLayerName = function(string) {
-        var arr = string.split(" ");
-        var i, toReturn = "";
-        for (i = 0; i < (arr.length-3); i++) //en -1 hay un espacio.
-            toReturn += arr[i] + " ";
-        return toReturn;
     };
 
     currentState.getId = function(backPos, idCategoria) {

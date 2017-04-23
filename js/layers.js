@@ -100,8 +100,9 @@ define([
         if (!name) name = "Layer " + currentLayer;
         //Creamos el item con la ID correspondiente
         //var layer = $("<li class='collection-item active' data-id=" + currentLayer + " > " + name + "<span class='" + icon_visible + "'</span> </li>");
-        var layer = $("<a href='#!' class='collection-item active' data-id=" + currentLayer + " > " + name + " <i class='secondary-content delete material-icons'> delete </i> <i class='secondary-content visibility material-icons'> visibility</i></a>");
-        //Agregamos el item a la interfaz
+        //var layer = $("<a href='#!' class='collection-item active' data-id=" + currentLayer + " > " + name + " <i class='secondary-content delete material-icons'> delete </i> <i class='secondary-content visibility material-icons'> visibility</i></a>");
+        var layer = $("<a href='#!' class='collection-item active' data-id=" + currentLayer + " > <i class='layer-name'>" + name + "</i> <i class='secondary-content delete material-icons'>delete</i><i class='secondary-content visibility material-icons'>visibility</i></a>");
+		//Agregamos el item a la interfaz
         //$("#layerlist").append(layer);
         scrollPaneApi.getContentPane().append(layer);
         //Ajustamos el scroll

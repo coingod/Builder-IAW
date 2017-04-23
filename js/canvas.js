@@ -66,8 +66,8 @@ define([
 
         //Modificamos el tamaño del mapa en funcion del tamaño de los tiles
         $("#canvas").css({
-            width: 13 * 64, //tw
-            height: 10 * 64 //th
+            width: 13 * tw, //tw
+            height: 10 * th //th
         });
 
         //Dibujamos la grilla del mapa
