@@ -16,10 +16,10 @@ define([
             "categories": [
                 /*{ "name": "Default", "path": "img/tilesets/default.png", "icon": "extension", "width": 256, "height": 192 },*/
 
-                { "name": "Terreno", "path": "img/tilesets/terrain.png", "icon": "terrain", "width": 256, "height": 192 },
-                { "name": "Naturaleza", "path": "img/tilesets/nature.png", "icon": "nature", "width": 256, "height": 192 },
-                { "name": "Caminos", "path": "img/tilesets/roads.png", "icon": "directions", "width": 512, "height": 256 },
-                { "name": "Edificios", "path": "img/tilesets/buildings.png", "icon": "store", "width": 256, "height": 192 }
+                { "name": "Terreno", "path": "img/tilesets/terrain.png", "icon": "terrain", "width": 256, "height": 192, "emptyTiles":0 },
+                { "name": "Naturaleza", "path": "img/tilesets/nature.png", "icon": "nature", "width": 256, "height": 192, "emptyTiles":0 },
+                { "name": "Caminos", "path": "img/tilesets/roads.png", "icon": "directions", "width": 512, "height": 256, "emptyTiles":2 },
+                { "name": "Edificios", "path": "img/tilesets/buildings.png", "icon": "store", "width": 256, "height": 192, "emptyTiles":0 }
             ],
         };
         //Cargamos los tilesets
@@ -133,16 +133,19 @@ define([
 
         for (y = 0; y < celdasY; y++) {
             for (x = 0; x < celdasX; x++) {
-                xAct = x * tw;
-                yAct = y * th;
-                coords = xAct + "." + yAct;
-                nroit = x + y * celdasX;
-                bufferADibujar.drawImage(img, xAct, yAct, tw, th, 0, 0, tw, th);
-                //tile = $("<a href='#!' class='collection-item avatar' data-ts='" + index + "' data-coords='" + coords + "' data-rotate=0><img src='" + bufferADibujar.canvas.toDataURL() + "' class='circle'><span class='title'> TileID:" + nroit + "</span></a>");
-                tile = $("<a href='#!' class='collection-item avatar' data-ts='" + index + "' data-coords='" + coords + "' data-rotate=0><img src='" + bufferADibujar.canvas.toDataURL() + "' class='circle'></a>");
-                $("#tilelist_" + index).append(tile);
-                bufferADibujar.clearRect(0, 0, tw, th); //Limpio el buffer para que al dibujar elementos transparentes no quede basura del tile anterior
-            }
+				//si no estoy en la ultima fila o si estoy en la ultima fila y x es menor a celdasX-emptyTiles, dibujo, si no no.
+				if(y<celdasY-1 || (y==celdasY-1) & (x<(celdasX-Tileset.info.categories[index].emptyTiles)))
+                {
+					xAct = x * tw;
+					yAct = y * th;
+					coords = xAct + "." + yAct;
+					nroit = x + y * celdasX;
+					bufferADibujar.drawImage(img, xAct, yAct, tw, th, 0, 0, tw, th);
+					tile = $("<a href='#!' class='collection-item avatar' data-ts='" + index + "' data-coords='" + coords + "' data-rotate=0><img src='" + bufferADibujar.canvas.toDataURL() + "' class='circle'></a>");
+					$("#tilelist_" + index).append(tile);
+					bufferADibujar.clearRect(0, 0, tw, th); //Limpio el buffer para que al dibujar elementos transparentes no quede basura del tile anterior
+				}
+			}
         }
     };
 
