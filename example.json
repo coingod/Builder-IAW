@@ -5,22 +5,30 @@
         "categories": [{
                 "name": "Terreno",
                 "path": "img/tilesets/terrain.png",
-                "icon": "terrain"
+                "icon": "terrain",
+				"width": 256,
+				"height": 192
             },
             {
                 "name": "Naturaleza",
                 "path": "img/tilesets/nature.png",
-                "icon": "nature"
+                "icon": "nature",
+				"width": 256,
+				"height": 192
             },
             {
                 "name": "Caminos",
                 "path": "img/tilesets/roads.png",
-                "icon": "directions"
+                "icon": "directions",
+				"width": 512,
+				"height": 256
             },
             {
                 "name": "Edificios",
                 "path": "img/tilesets/buildings.png",
-                "icon": "store"
+                "icon": "store",
+				"width": 256,
+				"height": 192
             }
         ]
     },
