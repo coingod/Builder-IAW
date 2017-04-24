@@ -8,8 +8,8 @@ define([
     var scrollPaneApi, layerABorrar;
 
     //Iconos
-    var icon_visible = "visibility"; //fa fa-eye fa-lg";
-    var icon_not_visible = "visibility_off"; //"fa fa-eye-slash fa-lg";
+    var icon_visible = "visibility";
+    var icon_not_visible = "visibility_off";
     var icon_remove = "delete";
     var icon_not_remove = "delete_forever";
 
@@ -38,11 +38,10 @@ define([
                 $("#layer_delete").modal("open");
             }
         });
-
+        //Oyente de confirmacion de borrado
         $("#si").on("click", function(event) {
             Layers.deleteLayer(layerABorrar);
         });
-
         $("#layers_add").on("click", function() {
             $("#dialog_new_layer").modal("open");
         });
@@ -55,20 +54,21 @@ define([
         //Agregamos la barra de desplazamiento vertical al contenedor de tilesets
         scrollPaneApi = $("#layerlist").jScrollPane().data('jsp');
 
-        //Agregamos 2 capas por defecto
-        this.addLayer("Background", true);
-        this.addLayer("Terreno", true);
+        //Agregamos las capas por defecto
+        this.createDefaultLayers();
 
         return this;
     };
 
+    Layers.createDefaultLayers = function() {
+        //Agregamos 2 capas por defecto
+        Layers.addLayer("Background", true);
+        Layers.addLayer("Terreno", true);
+    }
+
     Layers.crearDialog = function() {
         $("#dialog_new_layer").modal({
             dismissible: false, // Modal can be dismissed by clicking outside of the modal
-            /*
-            startingTop: '25%', // Starting top style attribute
-            endingTop: '25%', // Ending top style attribute
-            */
             complete: function() {
                     var name = $("#layer_name").val();
                     Layers.addLayer(name, true);
@@ -105,10 +105,9 @@ define([
         //Si pasamos un nombre lo usamos, sino asignamos uno por defecto
         if (!name) name = "Layer " + currentLayer;
         //Creamos el item con la ID correspondiente
-        var visibility = ((visible) ? icon_visible : icon_not_visible);
-        var layer = $("<a href='#!' class='collection-item active' data-id=" + currentLayer + " > <i class='layer-name'>" + name + "</i> <i class='secondary-content delete material-icons'>delete</i><i class='secondary-content visibility material-icons'>" + visibility + "</i></a>");
+        //var visibility = ((visible != icon_visible) ? icon_not_visible : icon_visible);
+        var layer = $("<a href='#!' class='collection-item active' data-id=" + currentLayer + " > <i class='layer-name'>" + name + "</i> <i class='secondary-content delete material-icons'>delete</i><i class='secondary-content visibility material-icons'>" + icon_visible + "</i></a>");
         //Agregamos el item a la interfaz
-        //$("#layerlist").append(layer);
         scrollPaneApi.getContentPane().append(layer);
         //Ajustamos el scroll
         scrollPaneApi.reinitialise();
@@ -122,7 +121,6 @@ define([
         //Si antes habia una sola capa ya es posible eliminar
         if ($("#layerlist a").length == 2) {
             $(".secondary-content").filter(".delete").text(icon_remove);
-            //$("#layers_del").removeClass("disabled");
         }
     };
 
@@ -153,7 +151,6 @@ define([
         //Si solo queda una capa desabilitar eliminar
         if ($("#layerlist a").length == 1) {
             $(".secondary-content").filter(".delete").text(icon_not_remove);
-            //$("#layers_del").addClass("disabled");
         }
     };
 

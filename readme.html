@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <head><meta charset="utf-8"> </head>
 <body>
-	<h1> City Builder </h1>
+	<h1> Builder </h1>
 	<h2> Qué es? </h2>
 	<p>
-	City Builder es una aplicación web que corre sobre cualquier navegador
+	Builder es una aplicación web que corre sobre cualquier navegador
 	en la que se le presenta la posibilidad de diseñar una ciudad en dos 
 	dimensiones, utilizando elementos comunes a las mismas: rutas, edificios, 
 	personas, naturaleza... Estos mismos pueden ser reemplazados por elementos 
-	que usted requiera, siempre y cuando respetando los formatos utilizados
+	que usted requiera, siempre y cuando respete los formatos utilizados
 	por la aplicación. Tambien se le presentan distintas herramientas para
-	personalizar la aplicación: mover el mapa, cambiar la hoja de estilos, 
+	personalizar: mover el mapa, cambiar la hoja de estilos, 
 	exportar el mapa en el que está trabajando para poder importarlo en otra
 	sesión y continuar su trabajo.
 	</p>
@@ -20,7 +20,7 @@
 	<p>
 	Para dibujar elementos en el mapa dirijase al sector izquierdo de la
 	aplicacion y clickee sobre el elemento que quiera dibujar, luego mueva
-	su cursor hacia el mapa, verá la selección actual algo transparentada, 
+	su cursor hacia el mapa, verá la selección actual algo transparente, 
 	clickee sobre la grilla donde desea colocar el elemento para que quede
 	definitivamente en la misma. 
 	</p>
@@ -55,8 +55,8 @@
 	</p>
 	<p>
 	También puede mover el canvas de posición si lo cree conveniente, 
-	abajo a la derecha de la aplicación se especifica la respuesta del canvas
-	a un click sobre el mismo: Por defecto está el lapiz seleccionado, indica
+	abajo a la derecha de la aplicación se elegi la herramienta actual
+	de interaccion con el canvas: Por defecto está el lapiz seleccionado, indica
 	que se está dibujando, si selecciona la mano, podrá mover el canvas. 
 	Vuelva a seleccionar el lapiz para continuar dibujando.
 	Presionando sobre el boton de herramienta oculta los dos botones mencionados.
@@ -65,6 +65,8 @@
 	<h3> Mapa </h3>
 	<p>
 	Puede borrar el mapa actual y comenzar de 0 seleccionando la opcion "Nuevo mapa". 
+	Se le solicitara las dimensiones del nuevo mapa, en filas y columnas.
+	El tamaño por defecto de los elementos es de 64x64 pixeles.
 	</p>
 	<p>
 	Seleccione importar para seleccionar un archivo json que haya exportado
@@ -73,30 +75,35 @@
 	<p>
 	Seleccione exportar para descargar un archivo json con la información
 	del mapa que esta modificando actualmente.
+	Se almacenaran las capas junto con los datos de cada una, y ademas
+	se guardara el conjunto de categorias que se esta utilizando con la
+	informacion de la imagen (tileset) asociado. Es posible modificar
+	los tileset que utilizara la aplicacion modificando el json.
+	La aplicacion no cuenta actualmente con metodos para cambiar las
+	categorias, esta funcionabilidad sera agregada en un futuro.
 	</p>
 	<h3> Interfaz </h3>
 	<p>
 	Cambie de interfaz entre "Light" y "Dark" a su preferencia, por defecto
-	se utiliza "Light".
+	se utiliza "Light". El navegador recordara su seleccion.
 	</p>
 	<h2> Librerías </h2>
 	<p>
 	Librerías utilizadas por la aplicación:
 	</p>
 	<p>
-	# jQuery - https://jquery.com/ Para simplificar el manejo de HTML y eventos.
+	# jQuery - <a href="https://jquery.com/">https://jquery.com/</a> Para simplificar el manejo de HTML y eventos.
 	</p>
 	<p>
-	# jQuery UI - https://jqueryui.com/ Manejo de rueda del mouse y barras de 
+	# jQuery UI - <a href="https://jqueryui.com/">https://jqueryui.com/</a> Manejo de rueda del mouse y barras de 
 	navegación
 	</p>
 	<p>
-	# Materialize - http://materializecss.com/ Utilizada para la realización de 
+	# Materialize - <a href="http://materializecss.com/">http://materializecss.com/</a> Utilizada para la realización de 
 	las interfaces.
 	</p>
 	<p>
-	# Require - http://requirejs.org/ Utilizada para mejorar la velocidad y 
-	calidad del código, ya que nos permitió modularizarlo.
+	# Require - <a href="http://requirejs.org/">http://requirejs.org/</a> Utilizada para simplificar la modularizacion, carga de librerias y velocidad de la aplicacion.
 	</p>
 	<p>
 	</p>

@@ -3,9 +3,8 @@
 
 <head>
     <meta charset="utf-8">
-    <title>City Builder!</title>
+    <title>Builder IAW</title>
     <!--Import Google Icon Font-->
-    <!-- https://material.io/icons/ -->
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
     <link type="text/css" rel="stylesheet" href="css/materialize.css" media="screen,projection">
@@ -50,8 +49,8 @@
                 <li><a href="#!"><b>Interfaz</b></a></li>
                 <li id="light_theme"><a href="#!">Light</a></li>
                 <li id="dark_theme"><a href="#!">Dark</a></li>
-				<li class="divider"></li>
-				<li><a href="./readme.html" target="_blank"><b><u>Readme</u></b></a></li>
+                <li class="divider"></li>
+                <li><a href="./readme.html" target="_blank"><b><u>Readme</u></b></a></li>
             </ul>
             <!-- Barra de titulo/navegacion -->
             <nav>
@@ -93,12 +92,6 @@
                     </div>
                 </nav>
                 <div id="layerlist" class="collection"></div>
-                <!--
-                <div class="buttons">
-                    <button id="layers_add" class="waves-effect waves-light btn blue"><i class="material-icons">add_circle_outline</i></button>
-                    <button id="layers_del" class="waves-effect waves-light btn blue"><i class="material-icons">remove_circle_outline</i></button>
-                </div>
-                -->
             </section>
 
         </div>
@@ -142,8 +135,8 @@
                 <p>Está a punto de eliminar una capa, esta accion <b>no se puede deshacer</b>, ¿Desea eliminar esta capa?</p>
             </div>
             <div class="modal-footer">
+                <a href="#!" class="modal-action modal-close waves-effect waves-blue btn-flat">No</a>
                 <a id="si" href="#!" class="modal-action modal-close waves-effect waves-blue btn-flat">Si</a>
-				<a href="#!" class="modal-action modal-close waves-effect waves-blue btn-flat">No</a>
             </div>
         </div>
         <!-- Importar JSON -->
@@ -169,23 +162,25 @@
             </div>
             -->
         </div>
-		<!-- Crear mapa -->
-		<div id="dialog_map" class="modal">
+        <!-- Crear mapa -->
+        <div id="dialog_map" class="modal">
             <div class="modal-content">
                 <h4>Crear nuevo Mapa</h4>
                 <form>
-				  <div class="row">
-					<div class="input-field col s6">
-					  <input id="cantFilas" type="text" class="validate">
-					  <label for="cantFilas">Ingrese cantidad de filas</label>
-					</div>
-					<div class="input-field col s6">
-					  <input id="cantColumnas" type="text" class="validate">
-					  <label for="cantColumnas">Ingrese cantidad de columnas</label>
-					</div>
-				  </div>
-				</form>
-				<a href="#!" class="modal-action modal-close waves-effect waves-blue btn-flat">Ok</a>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input id="cantFilas" type="text" class="validate">
+                            <label for="cantFilas">Ingrese cantidad de filas</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input id="cantColumnas" type="text" class="validate">
+                            <label for="cantColumnas">Ingrese cantidad de columnas</label>
+                        </div>
+                    </div>
+                </form>
+                <a href="#!" class="modal-action modal-close waves-effect waves-blue btn-flat">Ok</a>
             </div>
             <!--
             <div class="modal-footer">

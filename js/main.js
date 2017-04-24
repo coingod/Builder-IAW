@@ -37,6 +37,8 @@ require.config({
 });
 
 require(["jquery", "editor", "materialize"], function($, Editor) {
+    //Levantamos el ultimo skin usado.
+    $(localStorage.oldSkin).attr('href', localStorage.skin);
     $(document).ready(function() {
         Editor.initialize();
     });

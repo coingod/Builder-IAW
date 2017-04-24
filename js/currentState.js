@@ -49,7 +49,7 @@ define([
         var url = URL.createObjectURL(blob);
 
         botonExportar.href = url;
-        botonExportar.download = "backup.json";
+        botonExportar.download = "builder_map.json";
     };
 
     currentState.loadLayerInfo = function() {

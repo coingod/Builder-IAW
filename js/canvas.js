@@ -4,18 +4,16 @@ define([
 ], function($) {
 
     var Canvas = {},
-        Editor, tw, th, cantFilas, cantColumnas;
+        Editor, tw, th;
 
     //Coordenadas actuales del cursor en el canvas
     Canvas.cx = 0;
     Canvas.cy = 0;
 
 
-    Canvas.initialize = function(editor, fil, col) {
+    Canvas.initialize = function(editor) {
         Editor = editor;
-		cantFilas=fil;
-		cantColumnas=col;
-		
+
         //Obtenemos el Tileset que esta activo
         var tileset = Editor.Tileset;
 
@@ -66,18 +64,8 @@ define([
             }
         });
 
-        //Modificamos el tamaño del mapa en funcion del tamaño de los tiles
-        $("#canvas").css({
-            width: cantFilas * tw, //tw
-            height: cantColumnas * th //th
-        });
-
-        //Dibujamos la grilla del mapa
-        Canvas.updateGrid();
-        Canvas.updatePosition();
-
-        //Nos aseguramos de que el canvas se acomode a la ventana
-        //$(window).on("resize", Canvas.updatePosition());
+        //Configuramos el tamaño por defecto
+        Canvas.setSize(13, 10);
 
         //Configuramos el Canvas para que sea posible moverlo
         $("#canvas").draggable({
@@ -87,12 +75,31 @@ define([
 
         return this;
     };
-	
-	Canvas.crearDialog = function(){
-		 $("#dialog_map").modal({
+
+    Canvas.setSize = function(w, h) {
+        //Modificamos el tamaño del mapa en funcion del tamaño de los tiles
+        $("#canvas").css({
+            width: w * tw, //13
+            height: h * th //10
+        });
+
+        //Dibujamos la grilla del mapa
+        Canvas.updateGrid();
+        Canvas.updatePosition();
+    }
+
+    Canvas.crearDialog = function() {
+        $("#dialog_map").modal({
             dismissible: false, // Modal can be dismissed by clicking outside of the modal
-         });
-	};
+            complete: function() {
+                    Editor.Layers.removeAll();
+                    var filas = $("#cantFilas").val();
+                    var col = $("#cantColumnas").val();
+                    Canvas.setSize(col, filas);
+                    Editor.Layers.createDefaultLayers();
+                } // Callback for Modal close
+        });
+    };
 
     //Dibuja en la capa actual un elemento especificado
     Canvas.loadElement = function(tileData) {
@@ -107,8 +114,7 @@ define([
         var ts_height = Editor.Tileset.info.categories[id_ts].height;
 
         //Mapeamos el id del tile al offset dentro de la imagen en filas y columnas (tileset)
-        //id_tile= ofx + ofy*(ts_width / tw)
-		var ofx = -((id_tile) % (ts_width / tw)); //col
+        var ofx = -((id_tile) % (ts_width / tw)); //col
         var ofy = -(Math.floor((id_tile) / Math.floor(ts_width / tw))); //fila
         //Preparo el atributo con las coordenadas normalizadas
         var coords = fila + "." + col;
@@ -184,6 +190,9 @@ define([
             });
             //Obtenemos el tileset de la seleccion actual
             ts_id = $("#canvas .cursor").attr("data-ts");
+            //Eliminamos la referencia al tileset anterior
+            $(tile).removeClass();
+            //Agregamos la nueva referencia
             $(tile).addClass("ts_" + ts_id);
             //Agregamos al CSS el offset del tile en el tileset
             tile.css("background-position", ofx + "px " + ofy + "px");

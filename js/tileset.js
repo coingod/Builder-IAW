@@ -15,7 +15,6 @@ define([
             "th": 64,
             "categories": [
                 /*{ "name": "Default", "path": "img/tilesets/default.png", "icon": "extension", "width": 256, "height": 192 },*/
-
                 { "name": "Terreno", "path": "img/tilesets/terrain.png", "icon": "terrain", "width": 256, "height": 192, "emptyTiles": 0 },
                 { "name": "Naturaleza", "path": "img/tilesets/nature.png", "icon": "nature", "width": 256, "height": 192, "emptyTiles": 0 },
                 { "name": "Caminos", "path": "img/tilesets/roads.png", "icon": "directions", "width": 512, "height": 256, "emptyTiles": 2 },
@@ -34,8 +33,6 @@ define([
     //Genera las pestañas para cada Tileset/Categoria y la lista de tiles para cada una
     Tileset.load = function() {
         //Vaciamos los datos cargados anteriormente, de existir
-        //$("#categorieslist").empty();
-        //$("#tileset_container").empty();
         $(".tilelist").remove();
         $("#categorieslist li").remove();
         //Borramos el style de los tilesets viejos
@@ -105,7 +102,6 @@ define([
             Tileset.draw(this, index);
 
             $(style).attr("id", "tileset_" + id);
-            //$(style).attr("data-size", this.width + "." + this.height);
             css = ".ts_" + id + ", .ts_" + id + " > div {\n";
             css += "\twidth: " + tw + "px;\n";
             css += "\theight: " + th + "px;\n";

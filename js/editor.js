@@ -11,42 +11,23 @@ define([
     Editor.mousedown = false; //Mouse presionado
 
     Editor.Tileset = Tileset.initialize(Editor);
-    Editor.Canvas = Canvas.initialize(Editor, 13, 10);
+    Editor.Canvas = Canvas.initialize(Editor);
     Editor.Layers = Layers.initialize(Editor);
     Editor.currentState = currentState.initialize(Editor);
 
     Editor.initialize = function() {
-		
-		
-        //Levantamos el ultimo skin usado.
-        $(localStorage.oldSkin).attr('href', localStorage.skin);
-
-        $("#light_theme").on("click", function() {
-            //console.log("Light theme");
-            $('link[href="css/dark.css"]').attr('href', 'css/light.css');
-            localStorage.oldSkin = 'link[href="css/dark.css"]';
-            localStorage.skin = 'css/light.css';
-        });
-        $("#dark_theme").on("click", function() {
-            //console.log("Dark theme");
-            $('link[href="css/light.css"]').attr('href', 'css/dark.css');
-            localStorage.oldSkin = 'link[href="css/light.css"]';
-            localStorage.skin = 'css/dark.css';
-        });
-
-
+        /*
         //Estado del mouse
         $(document).on("mousedown mouseup", function(e) {
             Editor.mousedown = (e.type == "mousedown") && (e.which == 1);
         });
-        // e.which indica el click que fue realizado: 1=izquierdo
+        */
 
         //Configuramos la estructura de todos los cuadros de dialogo
-        //$(".modal").modal();
         Editor.Layers.crearDialog();
         $("#dialog_info").modal();
         Editor.currentState.crearDialog();
-		Editor.Canvas.crearDialog();
+        Editor.Canvas.crearDialog();
 
         //Oyentes de los botones de herramientas
         $("#edit_mode").on("click", function() {
@@ -64,12 +45,22 @@ define([
             $("#canvas .cursor").toggle();
         });
 
-        //Oyentes para el menu de opciones
-		$("#new_map").on("click", function() {			
-            Editor.Layers.removeAll();
-			$("#dialog_map").modal("open");			
+        //Oyentes para cambio de skin de la interfaz
+        $("#light_theme").on("click", function() {
+            $('link[href="css/dark.css"]').attr('href', 'css/light.css');
+            localStorage.oldSkin = 'link[href="css/dark.css"]';
+            localStorage.skin = 'css/light.css';
         });
-		
+        $("#dark_theme").on("click", function() {
+            $('link[href="css/light.css"]').attr('href', 'css/dark.css');
+            localStorage.oldSkin = 'link[href="css/light.css"]';
+            localStorage.skin = 'css/dark.css';
+        });
+
+        //Oyentes para el menu de opciones
+        $("#new_map").on("click", function() {
+            $("#dialog_map").modal("open");
+        });
         $("#import_map").on("click", function() {
             $("#dialog_import").modal("open");
         });
@@ -90,7 +81,6 @@ define([
         $("#loading_screen").delay(1000).fadeOut('slow', function() {
             //Desplegamos las herramientas al terminar de cargar
             $('.fixed-action-btn').openFAB();
-            //$("#dialog_new_layer").modal("open");
         });
 
     };
@@ -107,6 +97,11 @@ define([
         //Cargamos las categorias nuevas (Tilesets)
         Editor.Tileset.info = json.tilesetInfo;
         Editor.Tileset.load();
+
+        //Configuramos las dimensiones del canvas
+        var filas = json.canvasInfo.height;
+        var columnas = json.canvasInfo.width;
+        Canvas.setSize(columnas, filas);
 
         //Procesamos la lista de capas
         json.layersInfo.forEach(function(layer) {
