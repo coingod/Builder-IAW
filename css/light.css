@@ -3,7 +3,7 @@ nav {
     /*DodgerBlue;*/
     height: 56px;
     line-height: 56px;
-	padding-left: 3%;
+    padding-left: 3%;
 }
 
 nav.nav-extended .nav-wrapper {
@@ -102,8 +102,8 @@ header {
 
 /* ====== TILESETS ====== */
 
-.tabs .tab a {	
-	padding-top:5%;
+.tabs .tab a {
+    padding-top: 5%;
     font-size: 32px;
     color: #2196F3;
 }
@@ -237,18 +237,30 @@ header {
     color: #eafaf9;
 }
 
+
 /* ====== Botones de herramientes ====== */
 
-.btn-large{
-	background-color: red;
+.btn:focus,
+.btn-large:focus,
+.btn-floating:focus {
+    background-color: #F44336;
 }
 
-#edit_mode .btn-floating{
-	background-color:blue;
+.btn:hover,
+.btn-large:hover {
+    background-color: #F44336;
 }
 
-#pan_mode .btn-floating{
-	background-color:green;
+.btn-large {
+    background-color: #F44336;
+}
+
+#edit_mode .btn-floating {
+    background-color: #2196F3;
+}
+
+#pan_mode .btn-floating {
+    background-color: #4CAF50;
 }
 
 .buttons {
