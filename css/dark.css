@@ -7,7 +7,7 @@ nav {
     /*DodgerBlue;*/
     height: 56px;
     line-height: 56px;
-	padding-left: 3%;
+    padding-left: 3%;
 }
 
 nav.nav-extended .nav-wrapper {
@@ -95,8 +95,8 @@ header {
 
 /* Barra de desplazamiento */
 
-.jspPane > div{
-	border:0px;
+.jspPane>div {
+    border: 0px;
 }
 
 .jspTrack {
@@ -107,6 +107,7 @@ header {
     background: #caae53 !important;
 }
 
+
 /* ====== TILESETS ====== */
 
 .tabs {
@@ -114,7 +115,7 @@ header {
 }
 
 .tabs .tab a {
-	padding-top: 5%;
+    padding-top: 5%;
     font-size: 32px;
     color: #caae53;
 }
@@ -132,7 +133,7 @@ header {
     width: 100%;
     margin-left: auto;
     margin-right: auto;
-	border:1px solid #caae53;
+    border: 1px solid #caae53;
 }
 
 
@@ -141,7 +142,7 @@ header {
 .collection .collection-item.avatar {
     /*padding-left: 40%;*/
     display: inline-block;
-	border: 0px;	
+    border: 0px;
 }
 
 .collection .collection-item.avatar .circle {
@@ -150,7 +151,7 @@ header {
     height: 64px;
     overflow: hidden;
     left: 15px;
-	display: inline-block; 
+    display: inline-block;
     vertical-align: middle;
 }
 
@@ -162,7 +163,6 @@ header {
 }
 
 
-
 /* Descripcion asociada al tile */
 
 .collection .collection-item.avatar .title {
@@ -170,6 +170,7 @@ header {
     font-size: 16px;
     text-transform: uppercase;
 }
+
 
 /* ====== CANVAS ====== */
 
@@ -198,7 +199,6 @@ header {
 #canvas .cursor {
     position: absolute;
     z-index: 99;
-    pointer-events: none;
 }
 
 
@@ -233,17 +233,17 @@ header {
     background-color: #caae53;
 }
 
-.collection{
-	border: 1px solid #caae53;
-}
-.collection .collection-item {
-	background-color:#404040;
-	border: 0px;    
+.collection {
+    border: 1px solid #caae53;
 }
 
-.collection .collection-item i{
-	color:#FFF;
-    
+.collection .collection-item {
+    background-color: #404040;
+    border: 0px;
+}
+
+.collection .collection-item i {
+    color: #FFF;
 }
 
 .collection .collection-item.active {
@@ -255,23 +255,21 @@ header {
     text-align: center
 }
 
+
 /* ====== Botones de herramientes ====== */
 
 .btn-large,
-.btn-large:hover{
-	background-color: #caae53;
+.btn-large:hover {
+    background-color: #caae53;
 }
 
-#edit_mode .btn-floating{
-	background-color: #ffd700;
+#edit_mode .btn-floating {
+    background-color: #ffd700;
 }
 
-#pan_mode .btn-floating{
-	background-color: #ffd700;
+#pan_mode .btn-floating {
+    background-color: #ffd700;
 }
-
-
-
 
 @media only screen and (max-width: 992px) {
     header,
