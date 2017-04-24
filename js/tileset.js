@@ -27,7 +27,6 @@ define([
         $("#tilelist_0").show();
 
         return this;
-
     };
 
     //Genera las pestañas para cada Tileset/Categoria y la lista de tiles para cada una
