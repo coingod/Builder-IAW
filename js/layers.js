@@ -128,7 +128,7 @@ define([
 
     Layers.removeAll = function() {
         //Borramos TODAS las capas
-        $("#layerlist > a").each(function() {
+        $("#layerlist a").each(function() {	
             Layers.deleteLayer($(this));
         });
     };

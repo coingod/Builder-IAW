@@ -4,16 +4,18 @@ define([
 ], function($) {
 
     var Canvas = {},
-        Editor, tw, th;
+        Editor, tw, th, cantFilas, cantColumnas;
 
     //Coordenadas actuales del cursor en el canvas
     Canvas.cx = 0;
     Canvas.cy = 0;
 
 
-    Canvas.initialize = function(editor) {
+    Canvas.initialize = function(editor, fil, col) {
         Editor = editor;
-
+		cantFilas=fil;
+		cantColumnas=col;
+		
         //Obtenemos el Tileset que esta activo
         var tileset = Editor.Tileset;
 
@@ -66,8 +68,8 @@ define([
 
         //Modificamos el tamaño del mapa en funcion del tamaño de los tiles
         $("#canvas").css({
-            width: 13 * tw, //tw
-            height: 10 * th //th
+            width: cantFilas * tw, //tw
+            height: cantColumnas * th //th
         });
 
         //Dibujamos la grilla del mapa
@@ -85,6 +87,12 @@ define([
 
         return this;
     };
+	
+	Canvas.crearDialog = function(){
+		 $("#dialog_map").modal({
+            dismissible: false, // Modal can be dismissed by clicking outside of the modal
+         });
+	};
 
     //Dibuja en la capa actual un elemento especificado
     Canvas.loadElement = function(tileData) {

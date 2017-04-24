@@ -11,11 +11,29 @@ define([
     Editor.mousedown = false; //Mouse presionado
 
     Editor.Tileset = Tileset.initialize(Editor);
-    Editor.Canvas = Canvas.initialize(Editor);
+    Editor.Canvas = Canvas.initialize(Editor, 13, 10);
     Editor.Layers = Layers.initialize(Editor);
     Editor.currentState = currentState.initialize(Editor);
 
     Editor.initialize = function() {
+		
+		
+        //Levantamos el ultimo skin usado.
+        $(localStorage.oldSkin).attr('href', localStorage.skin);
+
+        $("#light_theme").on("click", function() {
+            //console.log("Light theme");
+            $('link[href="css/dark.css"]').attr('href', 'css/light.css');
+            localStorage.oldSkin = 'link[href="css/dark.css"]';
+            localStorage.skin = 'css/light.css';
+        });
+        $("#dark_theme").on("click", function() {
+            //console.log("Dark theme");
+            $('link[href="css/light.css"]').attr('href', 'css/dark.css');
+            localStorage.oldSkin = 'link[href="css/light.css"]';
+            localStorage.skin = 'css/dark.css';
+        });
+
 
         //Estado del mouse
         $(document).on("mousedown mouseup", function(e) {
@@ -28,6 +46,7 @@ define([
         Editor.Layers.crearDialog();
         $("#dialog_info").modal();
         Editor.currentState.crearDialog();
+		Editor.Canvas.crearDialog();
 
         //Oyentes de los botones de herramientas
         $("#edit_mode").on("click", function() {
@@ -46,24 +65,13 @@ define([
         });
 
         //Oyentes para el menu de opciones
+		$("#new_map").on("click", function() {			
+            Editor.Layers.removeAll();
+			$("#dialog_map").modal("open");			
+        });
+		
         $("#import_map").on("click", function() {
             $("#dialog_import").modal("open");
-        });
-
-        //Levantamos el ultimo skin usado.
-        $(localStorage.oldSkin).attr('href', localStorage.skin);
-
-        $("#light_theme").on("click", function() {
-            //console.log("Light theme");
-            $('link[href="css/dark.css"]').attr('href', 'css/light.css');
-            localStorage.oldSkin = 'link[href="css/dark.css"]';
-            localStorage.skin = 'css/light.css';
-        });
-        $("#dark_theme").on("click", function() {
-            //console.log("Dark theme");
-            $('link[href="css/light.css"]').attr('href', 'css/dark.css');
-            localStorage.oldSkin = 'link[href="css/light.css"]';
-            localStorage.skin = 'css/dark.css';
         });
 
         //Seteamos Modo de edicion por defecto

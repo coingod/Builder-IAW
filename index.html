@@ -43,7 +43,7 @@
             <!-- Estructura del Menu de Opciones -->
             <ul id="dropdown_opciones" class="dropdown-content">
                 <li><a href="#!"><b>Mapa</b></a></li>
-                <li><a href="#!">Nuevo</a></li>
+                <li id="new_map"><a href="#!">Nuevo</a></li>
                 <li id="import_map"><a href="#!">Importar</a></li>
                 <li id="export_map"></li>
                 <li class="divider"></li>
@@ -162,6 +162,30 @@
                         </div>
                     </div>
                 </form>
+            </div>
+            <!--
+            <div class="modal-footer">
+                <a href="#!" class="modal-action modal-close waves-effect waves-blue btn-flat">Confirmar</a>
+            </div>
+            -->
+        </div>
+		<!-- Crear mapa -->
+		<div id="dialog_map" class="modal">
+            <div class="modal-content">
+                <h4>Crear nuevo Mapa</h4>
+                <form>
+				  <div class="row">
+					<div class="input-field col s6">
+					  <input id="cantFilas" type="text" class="validate">
+					  <label for="cantFilas">Ingrese cantidad de filas</label>
+					</div>
+					<div class="input-field col s6">
+					  <input id="cantColumnas" type="text" class="validate">
+					  <label for="cantColumnas">Ingrese cantidad de columnas</label>
+					</div>
+				  </div>
+				</form>
+				<a href="#!" class="modal-action modal-close waves-effect waves-blue btn-flat">Ok</a>
             </div>
             <!--
             <div class="modal-footer">
