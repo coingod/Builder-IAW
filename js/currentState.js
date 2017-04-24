@@ -61,8 +61,8 @@ define([
         for (i = 0; i < listaCapas.length; i++) {
             jsonCapas[i] = {};
             listaAct = $(listaCapas).get(i);
-            jsonCapas[i].nombre = $(listaAct).filter(".layer-name >i").text();
-            jsonCapas[i].visible = $(listaAct).filter(".visibility >i").text();
+            jsonCapas[i].nombre = $(listaAct).children(".layer-name").text();
+            jsonCapas[i].visible = $(listaAct).children(".visibility").text();
             jsonCapas[i].listaTiles = new Array();
 
             //Obtenemos cada uno de los tiles de esta capa
@@ -75,7 +75,7 @@ define([
                 cxTile = parseInt($(tileAct).css("left")) / currentState.json.canvasInfo.tw;
                 cyTile = parseInt($(tileAct).css("top")) / currentState.json.canvasInfo.th;
                 jsonCapas[i].listaTiles[j] = [idTile, idCategoria, cxTile, cyTile];
-                console.log(jsonCapas[i].listaTiles[j]);
+                //console.log(jsonCapas[i].listaTiles[j]);
             }
         }
         currentState.json.layersInfo = jsonCapas;

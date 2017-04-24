@@ -32,17 +32,17 @@ define([
             if ($(event.target).hasClass(icon_visible)) {
                 Layers.toggle(event);
             } else if ($(event.target).text() == icon_remove) {
-				//Obtenemos la capa que registro el evento
-				console.log("HOLAA!");
-				layerABorrar= $(event.target).parent();
+                //Obtenemos la capa que registro el evento
+                console.log("HOLAA!");
+                layerABorrar = $(event.target).parent();
                 $("#layer_delete").modal("open");
             }
         });
-		
-		$("#si").on("click", function(event){
-			 Layers.deleteLayer(layerABorrar);
-		});
-		
+
+        $("#si").on("click", function(event) {
+            Layers.deleteLayer(layerABorrar);
+        });
+
         $("#layers_add").on("click", function() {
             $("#dialog_new_layer").modal("open");
         });
@@ -74,9 +74,9 @@ define([
                     Layers.addLayer(name, true);
                 } // Callback for Modal close
         });
-		$("#layer_delete").modal({
+        $("#layer_delete").modal({
             dismissible: false, // Modal can be dismissed by clicking outside of the modal
-           });
+        });
     };
 
     Layers.toggle = function(event) {
@@ -128,7 +128,7 @@ define([
 
     Layers.removeAll = function() {
         //Borramos TODAS las capas
-        $("#layerlist a").each(function() {	
+        $("#layerlist a").each(function() {
             Layers.deleteLayer($(this));
         });
     };
